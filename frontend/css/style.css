@@ -1,0 +1,49 @@
+body {
+    width: 100%;
+    margin: 0%;
+}
+
+#nav-website {
+    background-color: #2f7fff;
+}
+#footer-website {
+    background-color: #b8d3ff;
+}
+
+.bg-beige-apagado {
+    background-color: #b7b7b7;
+}
+
+.bg-beige-suave {
+    background-color: #E8E5D9;
+}
+
+.bg-beige-encendido {
+    background-color: #D2B68A;
+}
+
+.bg-azul-oscuro, .bg-azul-oscuro a:not(.no-apply-a) {
+    background-color: #2e3266;
+    color: white !important;
+    font-weight: 500;
+}
+
+.li-marker-yellow li::marker {
+    color: yellow;
+}
+
+.custom-text-justify {
+    text-align: justify;
+}
+
+.card-recurso {
+    width: 19rem;
+}
+
+.card-recurso img {
+    display: flex;
+    margin: auto;
+    width: 80%;
+    height: auto;
+    border-radius: 1%;
+}

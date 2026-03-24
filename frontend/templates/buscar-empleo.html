@@ -1,0 +1,75 @@
+<form class="row g-2 align-items-end">
+    <div class="col-auto">
+        <button type="button" id="btn-show-filters" class="btn btn-primary mx-md-3"><i class="bi bi-list me-1"></i>Filtros</button>
+    </div> 
+    <div class="col-md-5">
+        <input type="text" name="empleo" id="empleo" placeholder="Cargo, empresa o habilidad..." class="form-control">
+    </div>
+    <div class="col-md-3">
+        <input list="ubicaciones" name="ubicacion" id="ubicacion" autocomplete="off" placeholder="Pais, Ciudad o Región" class="form-control">
+        <datalist id="ubicaciones">
+            <option value="Ahuchapan"></option>
+            <option value="Santa Ana"></option>
+            <option value="San Salvador"></option>
+            <option value="San Miguel"></option>
+        </datalist>
+    </div>
+    <div class="col-md-2 d-flex">
+        <button type="submit" class="btn btn-warning flex-grow-1 flex-md-grow-0 m-2 m-md-0 ">Buscar</button>
+    </div>
+
+    <div id="div-filtros" class="w-auto border shadow bg-body-tertiary rounded-2 p-2 px-3 mt-3 mx-3" style="display: none;">
+        <div class="d-flex justify-content-between">
+            <h5 class="fs-6">Filtros de busqueda</h5>
+            <button type="button" id="btn-close-filters" class="btn btn-outline-secondary"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="d-flex gap-3">
+            <div>
+                <label for="modalidadId" class="form-label">Modalidad de empleo</label>
+                <select name="modalidadId" id="modalidadId" class="form-select" d>
+                    <option value="1">Todas</option>
+                    <option value="2">Presencial</option>
+                    <option value="3">Remoto</option>
+                    <option value="4">Hbrido</option>
+                </select>
+            </div>
+            <div>
+                <label for="tipoEmpleoId" class="form-label">Tipo de empleo</label>
+                <select name="tipoEmpleoId" id="tipoEmpleoId" class="form-select" d>
+                    <option value="1">Todas</option>
+                    <option value="2">Tiempo compleo</option>
+                    <option value="3">Medio tiempo</option>
+                    <option value="4">Por contrato</option>
+                    <option value="4">Voluntario</option>
+                </select>
+            </div>
+            <div>
+                <label for="nivelExperienciaId" class="form-label">Nivel de experiencia</label>
+                <select name="nivelExperienciaId" id="nivelExperienciaId" class="form-select" d>
+                    <option value="1">Cualquiera</option>
+                    <option value="2">Sin experiencia 1</option>
+                    <option value="3">Nivel de entrada / Junior</option>
+                    <option value="4">Nivel medio (2 - 5 años)</option>
+                    <option value="5">Nivel senior (5 - 10+ años)</option>
+                    <option value="6">Nivel gerencial (10+ años)</option>
+                    <option value="7">Nivel ejecutivo (10+ años)</option>
+                    <option value="8">Pasantia</option>
+                </select>
+            </div>
+            <div>
+                <label for="sueldoId" class="form-label">Sueldo</label>
+                <select name="sueldoId" id="sueldoId" class="form-select" d>
+                    <option value="1">$0.00 - $400.00</option>
+                    <option value="2">$500.00 - $1000.00</option>
+                    <option value="3">$1000.00 - $1500.00</option>
+                    <option value="4">$2000.00 - $2500.00</option>
+                    <option value="5">$2500.00 - $3000.00</option>
+                    <option value="7">$3000.00+</option>
+                </select>
+            </div>
+        </div>
+        <div class="text-end mt-2">
+            <button type="button" id="s" class="btn btn-primary">Aplicar</button>
+        </div>
+    </div>
+</form>
