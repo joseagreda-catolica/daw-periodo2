@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success"><%= success %></div>
+  <% } %>
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <section class="hero">
+
+      <div class="bg-beige-suave rounded-1 p-3">
+        <h4 class="fs-3">Encuentra tu prxima oportunidad laboral</h4>
+        <p>Miles de vacantes actualizadas. Conectamos talento con empresas de El Salvador.</p>
+        <form action="/vacantes" method="GET" class="row g-2 align-items-end">
+            <div class="col-md-4">
+                <label for="palabra_clave" class="form-label">Empleo</label>
+              <input type="text" name="palabra_clave" placeholder="Puesto, empresa o palabra clave..." class="form-control">
+              </div>
+            <div class="col-md-3">
+                <label for="ubicacion" class="form-label">Ubicación</label>
+                <select name="ubicacion" class="form-select">
+                  <option value="">Ubicación</option>
+                  <option value="San Salvador">San Salvador</option>
+                  <option value="Santa Ana">Santa Ana</option>
+                  <option value="San Miguel">San Miguel</option>
+                  <option value="Remoto">Remoto</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="tipo_contrato" class="form-label">Tipo de trabajo</label>
+                  <select name="tipo_contrato" class="form-select">
+                    <option value="">Tipo de trabajo</option>
+                    <option value="tiempo_completo">Tiempo completo</option>
+                    <option value="medio_tiempo">Medio tiempo</option>
+                    <option value="freelance">Freelance</option>
+                    <option value="temporal">Temporal</option>
+                    <option value="practicas">Prácticas</option>
+                  </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-warning">Buscar</button>
+            </div>
+        </form>
+    </div>
+  </section>
+
+
+      <div class="row gap-3 gap-md-5 m-4 my-5 justify-content-center">
+        <div class="col-md-2 bg-beige-suave text-center rounded-2 p-2">
+            <i class="bi bi-building-fill-check fs-4"></i>
+            <p class="fs-5 fw-bolder mb-0"><%= metricas.totalEmpresas %></p>
+            <p class="text-secondary mt-0">Empresas registradas</p>
+        </div>
+        <div class="col-md-2 bg-beige-suave text-center rounded-2 p-2">
+            <i class="bi bi-bag-check-fill fs-4"></i>
+            <p class="fs-5 fw-bolder mb-0"><%= metricas.totalUsuarios %></p>
+            <p class="text-secondary mt-0">Vacantes activas</p>
+        </div>
+        <div class="col-md-2 bg-beige-suave text-center rounded-2 p-2">
+            <i class="bi bi-people-fill fs-4"></i>
+            <p class="fs-5 fw-bolder mb-0"><%= metricas.totalVacantes %>  </p>
+            <p class="text-secondary mt-0">Candidatos</p>
+        </div>
+        <div class="col-md-2 bg-beige-suave text-center rounded-2 p-2">
+            <i class="bi bi-check-lg fs-4"></i>
+            <p class="fs-5 fw-bolder mb-0"><%= metricas.totalPostulaciones %></p>
+            <p class="text-secondary mt-0">Postulaciones</p>
+        </div>
+    </div>  
+
+
+  <section class="vacantes-recientes">
+    <div class="container">
+      <h2>Vacantes Recientes</h2>
+      <div class="vacantes-grid">
+        <% vacantesRecientes.forEach(v => { %>
+          <div class="bg-beige-suave rounded-2 py-2 px-3">
+            <h3><a class="fw-bold mb-0" href="/vacantes/<%= v.id_vacante %>"><%= v.titulo %></a></h3>
+            <p class="text-secondary mt-0"><%= v.nombre_empresa %></p>
+            <p class="ubicacion"><%= v.ubicacion || 'No especificada' %></p>
+            <span class="rounded-2 bg-beige-encendido py-1 px-2"><%= v.tipo_contrato.replace('_', ' ') %></span>
+            <span class="rounded-2 bg-beige-apagado py-1 px-2"><%= v.nivel_experiencia.replace('_', ' ') %></span>
+          </div>
+        <% }) %>
+      </div>
+      <div class="text-center">
+        <a href="/vacantes" class="btn btn-primary">Ver todas las vacantes</a>
+      </div>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

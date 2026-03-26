@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container mt-4">
+
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <h2 class="fw-bold mb-4">
+      Postulaciones - <%= vacante.titulo %>
+    </h2>
+
+    <% if (postulaciones.length === 0) { %>
+      <p class="text-muted">No hay postulaciones para esta vacante.</p>
+    <% } else { %>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Título</th>
+                  <th>CV</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <% postulaciones.forEach(p => { %>
+                  <tr>
+                    <td><%= p.nombre %> <%= p.apellido %></td>
+
+                    <td><%= p.email %></td>
+
+                    <td><%= p.titulo_profesional || '-' %></td>
+
+                    <td>
+                      <% if (p.cv_url) { %>
+                        <a href="<%= p.cv_url %>" target="_blank" class="btn btn-sm btn-outline-primary">
+                          Ver CV
+                        </a>
+                      <% } else { %>
+                        -
+                      <% } %>
+                    </td>
+
+                    <td>
+                      <span class="badge 
+                        <%= p.estado === 'enviada' ? 'bg-secondary' :
+                            p.estado === 'en_revision' ? 'bg-info text-dark' :
+                            p.estado === 'entrevista' ? 'bg-primary' :
+                            p.estado === 'rechazada' ? 'bg-danger' :
+                            'bg-success' %>">
+                        <%= p.estado %>
+                      </span>
+                    </td>
+
+                    <td>
+                      <form action="/empresa/postulaciones/<%= p.id_postulacion %>?_method=PUT" method="POST">
+                        <select 
+                          name="estado" 
+                          class="form-select form-select-sm"
+                          onchange="this.form.submit()"
+                        >
+                          <option value="enviada" <%= p.estado === 'enviada' ? 'selected' : '' %>>Enviada</option>
+                          <option value="en_revision" <%= p.estado === 'en_revision' ? 'selected' : '' %>>En revisión</option>
+                          <option value="entrevista" <%= p.estado === 'entrevista' ? 'selected' : '' %>>Entrevista</option>
+                          <option value="rechazada" <%= p.estado === 'rechazada' ? 'selected' : '' %>>Rechazada</option>
+                          <option value="contratado" <%= p.estado === 'contratado' ? 'selected' : '' %>>Contratado</option>
+                        </select>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    <% } %>
+
+    <a href="/empresa/panel" class="btn btn-outline-secondary mt-3">
+      Volver al panel
+    </a>
+
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+  <%- include('../partials/header') %>
+
+  <main class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">Gestión de Vacantes</h2>
+      <a href="/admin" class="btn btn-outline-secondary">Volver</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Título</th>
+              <th>Empresa</th>
+              <th>Ubicación</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% vacantes.forEach(v => { %>
+              <tr>
+                <td class="fw-semibold">
+                  <a href="/vacantes/<%= v.id_vacante %>" class="text-decoration-none">
+                    <%= v.titulo %>
+                  </a>
+                </td>
+
+                <td><%= v.nombre_empresa %></td>
+
+                <td><%= v.ubicacion || '-' %></td>
+
+                <td class="text-capitalize">
+                  <%= v.tipo_contrato.replace('_', ' ') %>
+                </td>
+
+                <td>
+                  <span class="badge 
+                    <%= v.estado === 'activa' ? 'bg-success' : 
+                        v.estado === 'cerrada' ? 'bg-secondary' : 
+                        'bg-warning text-dark' %>">
+                    <%= v.estado %>
+                  </span>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <%- include('../partials/footer') %>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

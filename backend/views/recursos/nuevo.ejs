@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container mt-4" style="max-width:700px;">
+
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+
+    <h2 class="fw-bold mb-4">Compartir Recurso</h2>
+
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+
+        <form action="/recursos" method="POST">
+
+          <div class="mb-3">
+            <label class="form-label">
+              Título <span class="text-danger">*</span>
+            </label>
+            <input 
+              type="text" 
+              name="titulo" 
+              class="form-control" 
+              required 
+              maxlength="255"
+            >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">
+              Tipo de Recurso <span class="text-danger">*</span>
+            </label>
+            <select name="tipo" class="form-select" required>
+              <option value="">Seleccionar...</option>
+              <option value="articulo">Artículo</option>
+              <option value="video">Video</option>
+              <option value="curso">Curso</option>
+              <option value="guia">Guía</option>
+              <option value="herramienta">Herramienta</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">
+              URL del Recurso <span class="text-danger">*</span>
+            </label>
+            <input 
+              type="url" 
+              name="url_recurso" 
+              class="form-control" 
+              placeholder="https://..." 
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea 
+              name="descripcion" 
+              class="form-control" 
+              rows="4" 
+              placeholder="Breve descripción del recurso..."
+            ></textarea>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+              Publicar Recurso
+            </button>
+
+            <a href="/recursos" class="btn btn-outline-secondary">
+              Cancelar
+            </a>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

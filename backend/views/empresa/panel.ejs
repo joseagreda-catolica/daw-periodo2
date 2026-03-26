@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container mt-4">
+
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+
+    <h2 class="fw-bold mb-4">Panel Empresarial</h2>
+
+    <div class="row g-4">
+
+      <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+          <div class="card-body">
+
+            <h5 class="fw-semibold mb-3">Datos de la Empresa</h5>
+
+            <form action="/empresa/perfil" method="POST">
+
+              <div class="mb-3">
+                <label class="form-label">Nombre de empresa</label>
+                <input 
+                  type="text" 
+                  name="nombre_empresa" 
+                  class="form-control"
+                  value="<%= empresa ? empresa.nombre_empresa : '' %>" 
+                  required
+                >
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <textarea 
+                  name="descripcion" 
+                  class="form-control" 
+                  rows="3"
+                ><%= empresa ? empresa.descripcion || '' : '' %></textarea>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Sitio web</label>
+                  <input 
+                    type="text" 
+                    name="sitio_web" 
+                    class="form-control"
+                    value="<%= empresa ? empresa.sitio_web || '' : '' %>"
+                  >
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Sector</label>
+                  <input 
+                    type="text" 
+                    name="sector" 
+                    class="form-control"
+                    value="<%= empresa ? empresa.sector || '' : '' %>"
+                  >
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Ubicación</label>
+                  <input 
+                    type="text" 
+                    name="ubicacion" 
+                    class="form-control"
+                    value="<%= empresa ? empresa.ubicacion || '' : '' %>"
+                  >
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Teléfono</label>
+                  <input 
+                    type="text" 
+                    name="telefono" 
+                    class="form-control"
+                    value="<%= empresa ? empresa.telefono || '' : '' %>"
+                  >
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Guardar
+              </button>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card shadow-sm border-0 text-center">
+          <div class="card-body">
+
+            <h5 class="fw-semibold mb-3">Valoración promedio</h5>
+
+            <h2 class="fw-bold text-primary mb-1">
+              <%= valoracion.promedio ? Number(valoracion.promedio).toFixed(1) : 'N/A' %> / 5
+            </h2>
+
+            <p class="text-muted mb-0">
+              <%= valoracion.total %> valoraciones
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card shadow-sm border-0 mt-4">
+      <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-semibold mb-0">Mis Vacantes</h5>
+          <a href="/empresa/nueva-vacante" class="btn btn-primary btn-sm">
+            Publicar Vacante
+          </a>
+        </div>
+
+        <% if (vacantes.length === 0) { %>
+          <p class="text-muted mb-0">No has publicado vacantes aún.</p>
+        <% } else { %>
+
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Título</th>
+                  <th>Estado</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <% vacantes.forEach(v => { %>
+                  <tr>
+                    <td><%= v.titulo %></td>
+
+                    <td>
+                      <span class="badge 
+                        <%= v.estado === 'activa' ? 'bg-success' : 
+                            v.estado === 'cerrada' ? 'bg-danger' : 
+                            'bg-warning text-dark' %>">
+                        <%= v.estado %>
+                      </span>
+                    </td>
+
+                    <td>
+                      <%= new Date(v.fecha_publicacion).toLocaleDateString('es') %>
+                    </td>
+
+                    <td class="d-flex gap-2">
+                      <a href="/empresa/vacantes/<%= v.id_vacante %>/postulaciones" class="btn btn-sm btn-outline-primary">
+                        Postulaciones
+                      </a>
+
+                      <a href="/empresa/vacantes/<%= v.id_vacante %>/editar" class="btn btn-sm btn-outline-secondary">
+                        Editar
+                      </a>
+                    </td>
+                  </tr>
+                <% }) %>
+
+              </tbody>
+            </table>
+          </div>
+
+        <% } %>
+
+      </div>
+    </div>
+
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

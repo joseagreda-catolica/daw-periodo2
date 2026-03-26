@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+<main class="container mt-4">
+  <h2 class="fw-bold mb-4">Buscar Empleos</h2>
+
+  <div class="row g-4">
+    
+    <!-- SIDEBAR -->
+    <aside class="col-md-4 col-lg-3">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="fw-semibold mb-3">Filtros</h5>
+
+          <form action="/vacantes" method="GET">
+            
+            <div class="mb-3">
+              <label class="form-label">Palabra clave</label>
+              <input type="text" class="form-control" name="palabra_clave" value="<%= filtros.palabra_clave || '' %>">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Ubicación</label>
+              <input type="text" class="form-control" name="ubicacion" value="<%= filtros.ubicacion || '' %>">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tipo de contrato</label>
+              <select class="form-select" name="tipo_contrato">
+                <option value="">Todos</option>
+                <option value="tiempo_completo" <%= filtros.tipo_contrato === 'tiempo_completo' ? 'selected' : '' %>>Tiempo completo</option>
+                <option value="medio_tiempo" <%= filtros.tipo_contrato === 'medio_tiempo' ? 'selected' : '' %>>Medio tiempo</option>
+                <option value="freelance" <%= filtros.tipo_contrato === 'freelance' ? 'selected' : '' %>>Freelance</option>
+                <option value="temporal" <%= filtros.tipo_contrato === 'temporal' ? 'selected' : '' %>>Temporal</option>
+                <option value="practicas" <%= filtros.tipo_contrato === 'practicas' ? 'selected' : '' %>>Prácticas</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Nivel de experiencia</label>
+              <select class="form-select" name="nivel_experiencia">
+                <option value="">Todos</option>
+                <option value="sin_experiencia" <%= filtros.nivel_experiencia === 'sin_experiencia' ? 'selected' : '' %>>Sin experiencia</option>
+                <option value="junior" <%= filtros.nivel_experiencia === 'junior' ? 'selected' : '' %>>Junior</option>
+                <option value="mid" <%= filtros.nivel_experiencia === 'mid' ? 'selected' : '' %>>Mid</option>
+                <option value="senior" <%= filtros.nivel_experiencia === 'senior' ? 'selected' : '' %>>Senior</option>
+                <option value="directivo" <%= filtros.nivel_experiencia === 'directivo' ? 'selected' : '' %>>Directivo</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+              Filtrar
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RESULTADOS -->
+    <section class="col-md-8 col-lg-9">
+      <p class="text-muted"><%= vacantes.length %> resultado(s) encontrado(s)</p>
+
+      <% if (vacantes.length === 0) { %>
+        <p class="text-muted">No se encontraron vacantes con los filtros seleccionados.</p>
+      <% } %>
+
+      <div class="d-flex flex-column gap-3">
+        <% vacantes.forEach(v => { %>
+          
+          <div class="card shadow-sm border-0">
+            <div class="card-body">
+              
+              <h5 class="card-title mb-1">
+                <a href="/vacantes/<%= v.id_vacante %>" class="text-decoration-none text-dark fw-semibold">
+                  <%= v.titulo %>
+                </a>
+              </h5>
+
+              <p class="mb-1 fw-medium text-secondary">
+                <%= v.nombre_empresa %>
+              </p>
+
+              <p class="text-muted small mb-2">
+                <%= v.ubicacion || 'No especificada' %>
+              </p>
+
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-primary-subtle text-primary">
+                  <%= v.tipo_contrato.replace('_', ' ') %>
+                </span>
+
+                <span class="badge bg-secondary-subtle text-secondary">
+                  <%= v.nivel_experiencia.replace('_', ' ') %>
+                </span>
+
+                <% if (v.salario_min || v.salario_max) { %>
+                  <span class="fw-semibold text-success">
+                    $<%= v.salario_min || '?' %> - $<%= v.salario_max || '?' %>
+                  </span>
+                <% } %>
+              </div>
+
+            </div>
+          </div>
+
+        <% }) %>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

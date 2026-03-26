@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container mt-4">
+
+    <h2 class="fw-bold mb-4">Editar Vacante</h2>
+
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+
+        <form action="/empresa/vacantes/<%= vacante.id_vacante %>?_method=PUT" method="POST">
+
+          <div class="mb-3">
+            <label class="form-label">Título</label>
+            <input 
+              type="text" 
+              name="titulo" 
+              class="form-control" 
+              value="<%= vacante.titulo %>" 
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea 
+              name="descripcion" 
+              class="form-control" 
+              rows="6" 
+              required
+            ><%= vacante.descripcion %></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Ubicación</label>
+              <input 
+                type="text" 
+                name="ubicacion" 
+                class="form-control" 
+                value="<%= vacante.ubicacion || '' %>"
+              >
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Tipo de contrato</label>
+              <select name="tipo_contrato" class="form-select">
+                <option value="tiempo_completo" <%= vacante.tipo_contrato === 'tiempo_completo' ? 'selected' : '' %>>Tiempo completo</option>
+                <option value="medio_tiempo" <%= vacante.tipo_contrato === 'medio_tiempo' ? 'selected' : '' %>>Medio tiempo</option>
+                <option value="freelance" <%= vacante.tipo_contrato === 'freelance' ? 'selected' : '' %>>Freelance</option>
+                <option value="temporal" <%= vacante.tipo_contrato === 'temporal' ? 'selected' : '' %>>Temporal</option>
+                <option value="practicas" <%= vacante.tipo_contrato === 'practicas' ? 'selected' : '' %>>Prácticas</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Salario mínimo</label>
+              <input 
+                type="number" 
+                name="salario_min" 
+                class="form-control" 
+                value="<%= vacante.salario_min || '' %>" 
+                step="0.01"
+              >
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Salario máximo</label>
+              <input 
+                type="number" 
+                name="salario_max" 
+                class="form-control" 
+                value="<%= vacante.salario_max || '' %>" 
+                step="0.01"
+              >
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nivel de experiencia</label>
+              <select name="nivel_experiencia" class="form-select">
+                <option value="sin_experiencia" <%= vacante.nivel_experiencia === 'sin_experiencia' ? 'selected' : '' %>>Sin experiencia</option>
+                <option value="junior" <%= vacante.nivel_experiencia === 'junior' ? 'selected' : '' %>>Junior</option>
+                <option value="mid" <%= vacante.nivel_experiencia === 'mid' ? 'selected' : '' %>>Mid</option>
+                <option value="senior" <%= vacante.nivel_experiencia === 'senior' ? 'selected' : '' %>>Senior</option>
+                <option value="directivo" <%= vacante.nivel_experiencia === 'directivo' ? 'selected' : '' %>>Directivo</option>
+              </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Estado</label>
+              <select name="estado" class="form-select">
+                <option value="activa" <%= vacante.estado === 'activa' ? 'selected' : '' %>>Activa</option>
+                <option value="cerrada" <%= vacante.estado === 'cerrada' ? 'selected' : '' %>>Cerrada</option>
+                <option value="pausada" <%= vacante.estado === 'pausada' ? 'selected' : '' %>>Pausada</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Fecha de cierre</label>
+            <input 
+              type="date" 
+              name="fecha_cierre" 
+              class="form-control"
+              value="<%= vacante.fecha_cierre ? new Date(vacante.fecha_cierre).toISOString().split('T')[0] : '' %>"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            Actualizar Vacante
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

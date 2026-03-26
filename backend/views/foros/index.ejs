@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="container mt-4">
+
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold mb-0">Foro de la Comunidad</h2>
+
+      <% if (user) { %>
+        <a href="/foros/nuevo" class="btn btn-primary">
+          + Nuevo Tema
+        </a>
+      <% } %>
+    </div>
+
+    <% if (temas.length === 0) { %>
+      <div class="text-center text-muted py-5">
+        <p class="mb-0">No hay temas en el foro todavía. ¡Sé el primero en publicar!</p>
+      </div>
+    <% } else { %>
+
+      <div class="d-flex flex-column gap-3">
+        <% temas.forEach(t => { %>
+
+          <div class="card shadow-sm border-0">
+            <div class="card-body">
+
+              <h5 class="mb-1">
+                <a href="/foros/<%= t.id_tema %>" class="text-decoration-none text-dark fw-semibold">
+                  <%= t.titulo %>
+                </a>
+              </h5>
+
+              <p class="text-muted small mb-2">
+                Por <strong><%= t.nombre %> <%= t.apellido %></strong>
+                &middot; <%= new Date(t.fecha_publicacion).toLocaleDateString('es') %>
+                &middot;
+                <span class="badge bg-primary-subtle text-primary">
+                  <%= t.total_respuestas %> respuestas
+                </span>
+              </p>
+
+              <p class="text-secondary mb-0">
+                <%= t.contenido.substring(0, 120) %><%= t.contenido.length > 120 ? '...' : '' %>
+              </p>
+
+            </div>
+          </div>
+
+        <% }) %>
+      </div>
+
+    <% } %>
+
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>
