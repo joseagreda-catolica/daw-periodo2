@@ -45,13 +45,15 @@
             <label class="col-form-label fw-semibold">Filtrar por tipo:</label>
           </div>
           <div class="col-md-4">
+            <% let tipoFiltro = typeof tipo !== 'undefined' ? tipo : ''; %>
+
             <select name="tipo" class="form-select" onchange="this.form.submit()">
               <option value="">Todos los tipos</option>
-              <option value="articulo" <%= tipo === 'articulo' ? 'selected' : '' %>>Artículos</option>
-              <option value="video" <%= tipo === 'video' ? 'selected' : '' %>>Videos</option>
-              <option value="curso" <%= tipo === 'curso' ? 'selected' : '' %>>Cursos</option>
-              <option value="guia" <%= tipo === 'guia' ? 'selected' : '' %>>Guías</option>
-              <option value="herramienta" <%= tipo === 'herramienta' ? 'selected' : '' %>>Herramientas</option>
+              <option value="articulo" <%= tipoFiltro === 'articulo' ? 'selected' : '' %>>Artículos</option>
+              <option value="video" <%= tipoFiltro === 'video' ? 'selected' : '' %>>Videos</option>
+              <option value="curso" <%= tipoFiltro === 'curso' ? 'selected' : '' %>>Cursos</option>
+              <option value="guia" <%= tipoFiltro === 'guia' ? 'selected' : '' %>>Guías</option>
+              <option value="herramienta" <%= tipoFiltro === 'herramienta' ? 'selected' : '' %>>Herramientas</option>
             </select>
           </div>
         </form>
