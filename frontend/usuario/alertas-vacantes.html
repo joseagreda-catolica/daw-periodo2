@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO-LAB - Mis Alertas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .card-alerta { border: none; border-radius: 12px; transition: transform 0.2s; }
+        .card-alerta:hover { transform: translateY(-3px); }
+        .form-check-input:checked { background-color: #2e3266; border-color: #2e3266; }
+    </style>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">CO-LAB</a>
+            <div class="d-flex align-items-center gap-3 ms-auto">
+                <i class="bi bi-bell text-white fs-5"></i>
+                <i class="bi bi-chat-dots text-white fs-5"></i>
+                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                    <i class="bi bi-person text-white"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="fw-bold mb-4">Alertas de Empleo</h2>
+        
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="bg-secondary bg-opacity-10 p-4 rounded-4 h-100">
+                    <h5 class="fw-bold mb-4">Tus Alertas</h5>
+                    
+                    <div class="card card-alerta shadow-sm p-3 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="fw-bold mb-1">Desarrollador Web</h6>
+                                <p class="small text-muted mb-0">Sueldo: $2000 - $3000 | Frecuencia: Diaria</p>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="sw1" checked style="width: 2.5em; height: 1.2em;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-alerta shadow-sm p-3 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="fw-bold mb-1">DBA Junior</h6>
+                                <p class="small text-muted mb-0">Sueldo: $1500 - $2200 | Frecuencia: Diaria</p>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="sw2" checked style="width: 2.5em; height: 1.2em;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card border-0 shadow p-4 rounded-4">
+                    <h5 class="fw-bold mb-4">Crear nueva alerta</h5>
+                    
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Puesto o palabra clave</label>
+                        <select class="form-select bg-light border-0 p-2">
+                            <option selected>Desarrollador web</option>
+                            <option>Analista de datos</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Ubicación</label>
+                        <input type="text" class="form-control bg-light border-0 p-2" placeholder="Ej. San Salvador">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Frecuencia</label>
+                        <div class="d-flex gap-2">
+                            <input type="radio" class="btn-check" name="freq" id="diaria" checked>
+                            <label class="btn btn-outline-primary w-50" for="diaria">Diaria</label>
+                            
+                            <input type="radio" class="btn-check" name="freq" id="semanal">
+                            <label class="btn btn-outline-primary w-50" for="semanal">Semanal</label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark w-100 py-2 fw-bold" style="background-color: #2e3266; border: none;">
+                        Guardar alerta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
