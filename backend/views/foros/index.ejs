@@ -58,7 +58,7 @@
               </p>
 
               <p class="text-secondary mb-0">
-                <%= t.contenido.substring(0, 120) %><%= t.contenido.length > 120 ? '...' : '' %>
+                <%= (t.contenido || '').substring(0, 120) %><%= (t.contenido || '').length > 120 ? '...' : '' %>
               </p>
 
             </div>

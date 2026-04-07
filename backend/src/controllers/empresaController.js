@@ -4,22 +4,7 @@ const Postulacion = require('../models/Postulacion');
 
 const empresaController = {
   async panel(req, res) {
-    try {
-      const empresa = await Empresa.buscarPorUsuario(req.session.user.id);
-      const vacantes = empresa ? await Vacante.listarPorEmpresa(empresa.id_empresa) : [];
-      const valoracion = empresa ? await Empresa.obtenerPromedioValoracion(empresa.id_empresa) : { promedio: 0, total: 0 };
-
-      res.render('empresa/panel', {
-        title: 'Panel Empresarial',
-        empresa,
-        vacantes,
-        valoracion
-      });
-    } catch (err) {
-      console.error(err);
-      req.flash('error', 'Error al cargar panel');
-      res.redirect('/');
-    }
+    res.redirect('/comunidad_recursos/empresa.html');
   },
 
   async editarPerfil(req, res) {

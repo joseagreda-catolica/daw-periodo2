@@ -2,7 +2,7 @@ USE portal_trabajo;
 
 -- USUARIOS
 -- -----------------------------------------------
-INSERT INTO usuario (nombre, apellido, email, password_$2a$10$wqJ7s8PzR6Yk3FhG9LmN0uVbXcD1E2f3G4h5I6j7K8l9M0nOpQrS, rol) VALUES
+INSERT INTO usuario (nombre, apellido, email, password_hash, rol) VALUES
 ('Juan','Perez','juan1@mail.com','$2a$10$wqJ7s8PzR6Yk3FhG9LmN0uVbXcD1E2f3G4h5I6j7K8l9M0nOpQrS','candidato'),
 ('Ana','Lopez','ana2@mail.com','$2a$10$wqJ7s8PzR6Yk3FhG9LmN0uVbXcD1E2f3G4h5I6j7K8l9M0nOpQrS','candidato'),
 ('Carlos','Gomez','carlos3@mail.com','$2a$10$wqJ7s8PzR6Yk3FhG9LmN0uVbXcD1E2f3G4h5I6j7K8l9M0nOpQrS','candidato'),

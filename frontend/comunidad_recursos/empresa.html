@@ -24,7 +24,7 @@
                 </ul>
                 <div class="d-flex align-items-center gap-3">
                     <div class="text-end d-none d-md-block text-white">
-                        <p class="small mb-0 fw-bold">Tech Solutions S.A.</p>
+                        <p class="small mb-0 fw-bold" id="empresa-nombre-nav">Tech Solutions S.A.</p>
                         <p class="text-secondary small mb-0" style="font-size: 0.7rem;">Plan Premium</p>
                     </div>
                     <div class="dropdown">
@@ -35,7 +35,7 @@
                             <li><a class="dropdown-item" href="#config">Configuración</a></li>
                             <li><a class="dropdown-item" href="#analitica">Analítica</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#">Cerrar Sesión</a></li>
+                            <li><a class="dropdown-item text-danger" href="/auth/logout">Cerrar Sesión</a></li>
                         </ul>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         <div class="card border-0 shadow-sm p-3 h-100">
                             <p class="text-muted small mb-1">Candidatos Activos</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="fw-bold mb-0">156</h3>
+                                <h3 class="fw-bold mb-0" id="stat-candidatos">156</h3>
                                 <i class="bi bi-graph-up text-success fs-4"></i>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         <div class="card border-0 shadow-sm p-3 h-100">
                             <p class="text-muted small mb-1">Vacantes Abiertas</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="fw-bold mb-0">12</h3>
+                                <h3 class="fw-bold mb-0" id="stat-vacantes">12</h3>
                                 <a href="#vacantes" class="text-dark"><i class="bi bi-arrow-right-short fs-3"></i></a>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                         <div class="card border-0 shadow-sm p-3 h-100">
                             <p class="text-muted small mb-1">Reputación Marca</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="fw-bold mb-0">4.8</h3>
+                                <h3 class="fw-bold mb-0" id="stat-reputacion">4.8</h3>
                                 <div class="text-warning small">★★★★★</div>
                             </div>
                         </div>
@@ -119,21 +119,8 @@
                                 <th>Acción</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="fw-bold text-primary">Analista de Datos</td>
-                                <td>01/04/2026</td>
-                                <td><span class="badge bg-success">Activa</span></td>
-                                <td class="fw-bold">45</td>
-                                <td><button class="btn btn-sm btn-light border">Editar</button></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold text-primary">Gerente de Marketing</td>
-                                <td>28/03/2026</td>
-                                <td><span class="badge bg-warning text-dark">En Revisión</span></td>
-                                <td class="fw-bold">12</td>
-                                <td><button class="btn btn-sm btn-light border">Editar</button></td>
-                            </tr>
+                        <tbody id="tabla-vacantes">
+                            <tr><td colspan="5" class="text-center text-muted">Cargando vacantes...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -183,5 +170,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/empresa-panel.js"></script>
 </body>
 </html>

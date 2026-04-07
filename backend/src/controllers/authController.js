@@ -4,11 +4,11 @@ const Empresa = require('../models/Empresa');
 
 const authController = {
   loginForm(req, res) {
-    res.render('auth/login', { title: 'Iniciar Sesión' });
+    res.redirect('/usuario/usuario-login.html');
   },
 
   registerForm(req, res) {
-    res.render('auth/register', { title: 'Registrarse' });
+    res.redirect('/usuario/crear-cuenta.html');
   },
 
   async login(req, res) {
@@ -18,18 +18,18 @@ const authController = {
 
       if (!usuario) {
         req.flash('error', 'Email o contraseña incorrectos');
-        return res.redirect('/auth/login');
+        return res.redirect('/usuario/usuario-login.html');
       }
 
       if (!usuario.activo) {
         req.flash('error', 'Tu cuenta está desactivada. Contacta al administrador');
-        return res.redirect('/auth/login');
+        return res.redirect('/usuario/usuario-login.html');
       }
 
       const valid = await Usuario.verificarPassword(password, usuario.password_hash);
       if (!valid) {
         req.flash('error', 'Email o contraseña incorrectos');
-        return res.redirect('/auth/login');
+        return res.redirect('/usuario/usuario-login.html');
       }
 
       req.session.user = {
@@ -43,14 +43,14 @@ const authController = {
       req.flash('success', `Bienvenido, ${usuario.nombre}`);
 
       switch (usuario.rol) {
-        case 'admin': return res.redirect('/admin');
-        case 'empresa': return res.redirect('/empresa/panel');
-        default: return res.redirect('/candidato/perfil');
+        case 'admin':    return res.redirect('/admin/admin.html');
+        case 'empresa':  return res.redirect('/comunidad_recursos/empresa.html');
+        default:         return res.redirect('/usuario/usuario.html');
       }
     } catch (err) {
       console.error('Error en login:', err);
       req.flash('error', 'Error del servidor');
-      res.redirect('/auth/login');
+      res.redirect('/usuario/usuario-login.html');
     }
   },
 
@@ -60,13 +60,13 @@ const authController = {
 
       if (password !== password2) {
         req.flash('error', 'Las contraseñas no coinciden');
-        return res.redirect('/auth/register');
+        return res.redirect('/usuario/crear-cuenta.html');
       }
 
       const existe = await Usuario.buscarPorEmail(email);
       if (existe) {
         req.flash('error', 'El email ya está registrado');
-        return res.redirect('/auth/register');
+        return res.redirect('/usuario/crear-cuenta.html');
       }
 
       const idUsuario = await Usuario.crear({ nombre, apellido, email, password, rol: rol || 'candidato' });
@@ -78,17 +78,17 @@ const authController = {
       }
 
       req.flash('success', 'Cuenta creada exitosamente. Inicia sesión');
-      res.redirect('/auth/login');
+      res.redirect('/usuario/usuario-login.html');
     } catch (err) {
       console.error('Error en registro:', err);
       req.flash('error', 'Error al crear la cuenta');
-      res.redirect('/auth/register');
+      res.redirect('/usuario/crear-cuenta.html');
     }
   },
 
   logout(req, res) {
     req.session.destroy(() => {
-      res.redirect('/');
+      res.redirect('/usuario/usuario-login.html');
     });
   }
 };

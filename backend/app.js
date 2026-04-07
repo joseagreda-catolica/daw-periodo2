@@ -3,7 +3,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const methodOverride = require('method-override');
 const path = require('path');
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 
 const app = express();
 
@@ -13,6 +13,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../frontend'), { index: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
@@ -45,6 +46,7 @@ const adminRoutes = require('./src/routes/admin');
 const recursosRoutes = require('./src/routes/recursos');
 const forosRoutes = require('./src/routes/foros');
 const valoracionesRoutes = require('./src/routes/valoraciones');
+const apiRoutes = require('./src/routes/api');
 
 app.use('/', homeRoutes);
 app.use('/auth', authRoutes);
@@ -55,6 +57,7 @@ app.use('/admin', adminRoutes);
 app.use('/recursos', recursosRoutes);
 app.use('/foros', forosRoutes);
 app.use('/valoraciones', valoracionesRoutes);
+app.use('/api', apiRoutes);
 
 // 404
 app.use((req, res) => {

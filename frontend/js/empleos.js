@@ -13,45 +13,35 @@ container_card_empleos.addEventListener("click", (event) => {
 
 
 export function loadEmpleoById(idEmpleo) {
-    alert(`empleo id ${idEmpleo}`);
-    
+    window.location.href = `/usuario/detalle-vacante.html?id=${idEmpleo}`;
 }
 
 
 
 
-const vacantes = [
-  {
-    id: 1,
-    titulo: "Desarrollador Frontend",
-    ubicacion: "Remoto (España)",
-    salario: "35,000€ - 45,000€",
-    tipoEmpleo: "Tiempo completo"
-  },
-  {
-    id: 2,
-    titulo: "Diseñador UX/UI",
-    ubicacion: "Ciudad de México",
-    salario: "$30,000 - $40,000 MXN",
-    tipoEmpleo: "Híbrido"
-  },
-  {
-    id: 3,
-    titulo: "Data Analyst",
-    ubicacion: "Buenos Aires, Argentina",
-    salario: "A convenir",
-    tipoEmpleo: "Proyecto / Freelance"
-  },
-  {
-    id: 4,
-    titulo: "Backend Developer (Node.js)",
-    ubicacion: "Bogotá, Colombia",
-    salario: "$8'000.000 COP",
-    tipoEmpleo: "Tiempo completo"
-  }
-];
+fetchAndLoadVacantes();
 
-loadCardsEmpleos(vacantes);
+async function fetchAndLoadVacantes() {
+  try {
+    const res = await fetch('/api/vacantes', { credentials: 'include' });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.message);
+
+    const vacantes = data.vacantes.map(v => ({
+      id: v.id_vacante,
+      titulo: v.titulo,
+      ubicacion: v.ubicacion || 'El Salvador',
+      salario: v.salario_min && v.salario_max
+        ? `$${v.salario_min} - $${v.salario_max}`
+        : 'A convenir',
+      tipoEmpleo: v.tipo_contrato ? v.tipo_contrato.replace('_', ' ') : ''
+    }));
+
+    loadCardsEmpleos(vacantes);
+  } catch (err) {
+    console.error('Error cargando vacantes:', err);
+  }
+}
 
 export async function loadCardsEmpleos(empleosDataList) {
     const TEXT_REPLACE = "{{}}";
