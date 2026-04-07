@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO-LAB - Detalle de Vacante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">CO-LAB</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <section class="mb-5 pt-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">Detalle de la Vacante</h2>
+                <button class="btn btn-primary shadow-sm px-4" data-bs-toggle="modal" data-bs-target="#modalPostular">
+                    Postularme
+                </button>
+            </div>
+
+            <div class="bg-secondary bg-opacity-10 p-5 rounded-4 mb-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 class="fw-bold text-primary mb-1">Desarrollador Web Senior</h1>
+                        <p class="text-muted fs-5">Tech Solutions Inc.</p>
+                        
+                        <div class="d-flex gap-3 mt-4 mb-4">
+                            <span class="badge bg-white text-dark border p-2 shadow-sm">
+                                <i class="bi bi-currency-dollar text-success"></i> $2000 - $3000
+                            </span>
+                            <span class="badge bg-white text-dark border p-2 shadow-sm">
+                                <i class="bi bi-geo-alt text-danger"></i> Remoto
+                            </span>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-4 shadow-sm mt-4">
+                            <h5 class="fw-bold mb-3 border-bottom pb-2">Descripción del Puesto</h5>
+                            <p class="text-secondary" style="text-align: justify;">
+                                Lorem ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. 
+                                Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal fade" id="modalPostular" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="fw-bold">Enviar postulación a Tech Solutions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <input type="text" class="form-control bg-light border-0 p-3" placeholder="Nombre completo">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control bg-light border-0 p-3" rows="4" placeholder="Carta de Presentación..."></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="small text-muted mb-2">Adjuntar CV (PDF)</label>
+                        <input type="file" class="form-control bg-light border-0">
+                    </div>
+                    <button class="btn btn-primary w-100 py-3 fw-bold shadow">Enviar Postulación</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
