@@ -4,7 +4,8 @@ body {
 }
 
 #nav-website {
-    background-color: #2f7fff;
+    background-color: #2e3266;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
 #footer-website {
     background-color: #b8d3ff;

@@ -7,72 +7,161 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <title>Mi Perfil - TrabajoSV</title>
+    <style>
+        body { background-color: #f0f2f8; }
+
+        /* Profile hero */
+        .profile-hero {
+            background: linear-gradient(135deg, #2e3266 0%, #4a51b5 100%);
+            padding: 40px 0 70px;
+        }
+        .profile-avatar {
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 3px solid rgba(255,255,255,0.5);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem;
+            color: #fff;
+        }
+        .profile-card-wrapper {
+            margin-top: -50px;
+        }
+
+        /* Cards */
+        .info-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            overflow: hidden;
+        }
+        .info-card-header {
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .info-card-body { padding: 16px 20px; }
+        .section-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+        }
+
+        /* Skills */
+        .skill-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: #eef2ff;
+            color: #2e3266;
+            border: 1px solid #c7d2fe;
+        }
+
+        /* Postulaciones */
+        .postulacion-item {
+            border-radius: 10px;
+            border: 1px solid #f3f4f6;
+            padding: 14px 16px;
+            background: #fff;
+            transition: box-shadow 0.15s;
+        }
+        .postulacion-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .estado-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
     <nav id="nav-website" class="navbar navbar-expand-lg"></nav>
 
-    <div class="container-fluid flex-grow-1 py-4">
-
-        <!-- Perfil header -->
-        <div class="row mx-2 mb-4 align-items-center bg-beige-suave rounded-3 p-4">
-            <div class="col-auto">
-                <div class="rounded-circle bg-azul-oscuro d-flex align-items-center justify-content-center" style="width:72px;height:72px;">
-                    <i class="bi bi-person-fill fs-1 text-white"></i>
+    <!-- Hero -->
+    <div class="profile-hero">
+        <div class="container">
+            <div class="d-flex align-items-center gap-4">
+                <div class="profile-avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <div>
+                    <h4 class="text-white fw-bold mb-1" id="perfil-nombre">Cargando...</h4>
+                    <p class="text-white-50 mb-1 small" id="perfil-titulo-ubicacion"></p>
+                    <p class="text-white-50 mb-0 small" id="perfil-email"></p>
+                </div>
+                <div class="ms-auto d-none d-md-block">
+                    <a href="#" class="btn btn-light btn-sm rounded-pill px-3 shadow-sm">
+                        <i class="bi bi-pencil-fill me-1"></i>Editar perfil
+                    </a>
                 </div>
             </div>
-            <div class="col">
-                <h4 class="fw-bold mb-0" id="perfil-nombre">Juan Pérez</h4>
-                <p class="text-secondary mb-0" id="perfil-titulo-ubicacion">Ingeniería de Sistemas &nbsp;·&nbsp; San Salvador, El Salvador</p>
-                <p class="text-secondary small mb-0" id="perfil-email">juan@mail.com</p>
-            </div>
-            <div class="col-auto">
-                <a href="#" class="btn btn-warning btn-sm"><i class="bi bi-pencil-fill me-1"></i>Editar perfil</a>
-            </div>
         </div>
+    </div>
 
-        <div class="row mx-2 gap-3 gap-md-0">
+    <!-- Main content -->
+    <div class="container profile-card-wrapper flex-grow-1 pb-5">
+        <div class="row g-4">
 
-            <!-- Columna izquierda -->
+            <!-- Left column -->
             <div class="col-md-4 d-flex flex-column gap-3">
 
-                <!-- Resumen -->
-                <div class="bg-beige-suave rounded-3 p-3">
-                    <h6 class="fw-bold border-bottom pb-2 mb-3">Sobre mí</h6>
-                    <p class="small text-secondary mb-0" id="perfil-resumen">Desarrollador con experiencia en tecnologías web. Apasionado por crear soluciones eficientes y de calidad. Disponible para nuevas oportunidades.</p>
+                <!-- Sobre mí -->
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span class="section-title"><i class="bi bi-person-lines-fill me-1"></i>Sobre mí</span>
+                    </div>
+                    <div class="info-card-body">
+                        <p class="small text-secondary mb-0" id="perfil-resumen">—</p>
+                    </div>
                 </div>
 
                 <!-- Habilidades -->
-                <div class="bg-beige-suave rounded-3 p-3">
-                    <h6 class="fw-bold border-bottom pb-2 mb-3">Habilidades</h6>
-                    <div class="d-flex flex-wrap gap-2" id="perfil-habilidades">
-                        <span class="badge bg-beige-encendido text-dark fw-medium">JavaScript</span>
-                        <span class="badge bg-beige-encendido text-dark fw-medium">Node.js</span>
-                        <span class="badge bg-beige-encendido text-dark fw-medium">React</span>
-                        <span class="badge bg-beige-encendido text-dark fw-medium">SQL</span>
-                        <span class="badge bg-beige-encendido text-dark fw-medium">Git</span>
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span class="section-title"><i class="bi bi-stars me-1"></i>Habilidades</span>
+                    </div>
+                    <div class="info-card-body">
+                        <div class="d-flex flex-wrap gap-2" id="perfil-habilidades">
+                            <span class="text-muted small">Sin habilidades registradas</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- CV -->
-                <div class="bg-beige-suave rounded-3 p-3">
-                    <h6 class="fw-bold border-bottom pb-2 mb-3">Curriculum Vitae</h6>
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <i class="bi bi-file-earmark-pdf-fill text-danger fs-4"></i>
-                        <span class="small">cv_juan_perez.pdf</span>
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span class="section-title"><i class="bi bi-file-earmark-person-fill me-1"></i>Curriculum Vitae</span>
                     </div>
-                    <a href="#" class="btn btn-outline-secondary btn-sm w-100"><i class="bi bi-upload me-1"></i>Subir nuevo CV</a>
+                    <div class="info-card-body">
+                        <div class="d-flex align-items-center gap-3 p-2 rounded-3" style="background:#fff7ed;">
+                            <i class="bi bi-file-earmark-pdf-fill text-danger fs-3"></i>
+                            <div class="small">
+                                <div class="fw-semibold text-dark">cv_perfil.pdf</div>
+                                <div class="text-muted" style="font-size:0.72rem;">Documento adjunto</div>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-outline-secondary btn-sm w-100 mt-3 rounded-pill">
+                            <i class="bi bi-upload me-1"></i>Subir nuevo CV
+                        </a>
+                    </div>
                 </div>
 
             </div>
 
-            <!-- Columna derecha: postulaciones -->
+            <!-- Right column -->
             <div class="col-md-8">
-                <div class="bg-beige-suave rounded-3 p-3">
-                    <h6 class="fw-bold border-bottom pb-2 mb-3">Mis Postulaciones</h6>
-
-                    <div class="d-flex flex-column gap-2" id="perfil-postulaciones">
-                        <p class="text-secondary small">Cargando postulaciones...</p>
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <span class="section-title"><i class="bi bi-send-fill me-1"></i>Mis Postulaciones</span>
+                    </div>
+                    <div class="info-card-body d-flex flex-column gap-2" id="perfil-postulaciones">
+                        <p class="text-muted small text-center py-3">Cargando postulaciones...</p>
                     </div>
                 </div>
             </div>

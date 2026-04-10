@@ -30,21 +30,31 @@ async function loadAdmin() {
       if (usersData.usuarios.length === 0) {
         tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No hay usuarios.</td></tr>';
       } else {
+        const rolColors = { admin: '#2e3266', empresa: '#059669', candidato: '#ea580c' };
         tbody.innerHTML = usersData.usuarios.map(u => {
           const activo = u.activo;
-          const badge = activo
-            ? '<span class="badge bg-success">Activo</span>'
-            : '<span class="badge bg-secondary">Inactivo</span>';
+          const initials = (u.nombre[0] + (u.apellido[0] || '')).toUpperCase();
+          const rolColor = rolColors[u.rol] || '#6b7280';
+          const estadoBadge = activo
+            ? '<span class="badge rounded-pill" style="background:#ecfdf5;color:#059669;font-size:0.72rem;">● Activo</span>'
+            : '<span class="badge rounded-pill" style="background:#f3f4f6;color:#6b7280;font-size:0.72rem;">● Inactivo</span>';
           const btnClass = activo ? 'btn-outline-danger' : 'btn-outline-success';
           const btnLabel = activo ? 'Desactivar' : 'Activar';
           return `
             <tr>
-              <td>${u.nombre} ${u.apellido}</td>
-              <td>${u.email}</td>
-              <td><span class="badge bg-light text-dark border">${u.rol}</span></td>
-              <td>${badge}</td>
               <td>
-                <button class="btn btn-sm ${btnClass}" onclick="toggleUsuario(${u.id_usuario}, this)">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="user-avatar">${initials}</div>
+                  <div>
+                    <div class="fw-semibold" style="font-size:0.875rem;color:#1a1d2e;">${u.nombre} ${u.apellido}</div>
+                    <div class="text-muted" style="font-size:0.78rem;">${u.email}</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge-rol" style="background:${rolColor}20;color:${rolColor};">${u.rol}</span></td>
+              <td>${estadoBadge}</td>
+              <td class="text-end">
+                <button class="btn btn-sm ${btnClass} rounded-pill px-3" style="font-size:0.78rem;" onclick="toggleUsuario(${u.id_usuario})">
                   ${btnLabel}
                 </button>
               </td>
@@ -58,7 +68,7 @@ async function loadAdmin() {
   }
 }
 
-async function toggleUsuario(id, btn) {
+async function toggleUsuario(id) {
   try {
     const res = await fetch(`/api/admin/usuarios/${id}/toggle`, {
       method: 'PUT',

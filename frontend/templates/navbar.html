@@ -1,22 +1,87 @@
-<div class="container-fluid">
-    <a class="navbar-brand" href="/index.html">TrabajoSV</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<style>
+  #nav-website .nav-link {
+    color: rgba(255,255,255,0.75) !important;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 6px 14px !important;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+  }
+  #nav-website .nav-link:hover {
+    color: #fff !important;
+    background: rgba(255,255,255,0.12);
+  }
+  #nav-website .nav-link.active-link {
+    color: #fff !important;
+    background: rgba(255,255,255,0.18);
+  }
+  #nav-website .navbar-toggler {
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 4px 8px;
+  }
+  #nav-website .navbar-toggler-icon {
+    filter: brightness(0) invert(1);
+  }
+</style>
+
+<div class="container-fluid px-4">
+
+  <!-- Brand -->
+  <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="/index.html">
+    <div class="d-flex align-items-center justify-content-center rounded-2"
+         style="width:34px;height:34px;background:rgba(255,255,255,0.15);">
+      <i class="bi bi-briefcase-fill text-white" style="font-size:1rem;"></i>
+    </div>
+    <span class="text-white fw-bold" style="font-size:1.05rem;letter-spacing:-0.01em;">TrabajoSV</span>
+  </a>
+
+  <!-- Toggler (mobile) -->
+  <button class="navbar-toggler" type="button"
+    data-bs-toggle="collapse" data-bs-target="#navbarMain"
+    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-            <a class="nav-link" href="/index.html">INICIO</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/website/empleos.html">EMPLEOS</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/website/recursos.html">RECURSOS</a>
-        </li>
+  </button>
+
+  <!-- Nav links + auth -->
+  <div class="collapse navbar-collapse" id="navbarMain">
+
+    <!-- Center links -->
+    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
+      <li class="nav-item">
+        <a class="nav-link" href="/index.html">
+          <i class="bi bi-house-fill me-1" style="font-size:0.8rem;"></i>Inicio
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/website/empleos.html">
+          <i class="bi bi-bag-fill me-1" style="font-size:0.8rem;"></i>Empleos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/website/recursos.html">
+          <i class="bi bi-book-fill me-1" style="font-size:0.8rem;"></i>Recursos
+        </a>
+      </li>
     </ul>
+
+    <!-- Auth area (filled by app.js) -->
     <div id="nav-auth-area" class="d-flex align-items-center gap-2">
-        <a class="btn btn-warning" href="/usuario/usuario-login.html">Ingresar</a>
+      <a class="btn btn-warning btn-sm px-4 fw-semibold rounded-pill"
+         href="/usuario/usuario-login.html">Ingresar</a>
     </div>
-    </div>
+
+  </div>
 </div>
+
+<script>
+  // Highlight active nav link based on current path
+  (function() {
+    const path = window.location.pathname;
+    document.querySelectorAll('#nav-website .nav-link').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && (path === href || (href !== '/index.html' && path.startsWith(href.replace('.html',''))))) {
+        link.classList.add('active-link');
+      }
+    });
+  })();
+</script>
