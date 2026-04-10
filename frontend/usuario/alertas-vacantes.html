@@ -3,101 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CO-LAB - Mis Alertas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Alertas de Empleo - TrabajoSV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <style>
-        .card-alerta { border: none; border-radius: 12px; transition: transform 0.2s; }
-        .card-alerta:hover { transform: translateY(-3px); }
-        .form-check-input:checked { background-color: #2e3266; border-color: #2e3266; }
+        body { background-color: #f0f2f8; }
+
+        .page-hero {
+            background: linear-gradient(135deg, #2e3266 0%, #4a51b5 100%);
+            padding: 36px 0 60px;
+        }
+
+        .content-wrapper {
+            margin-top: -36px;
+        }
+
+        .info-card {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #eef0f5;
+            box-shadow: 0 2px 12px rgba(46,50,102,0.07);
+            padding: 24px;
+        }
+
+        .alerta-item {
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid #eef0f5;
+            background: #fafbff;
+            margin-bottom: 10px;
+            transition: box-shadow 0.15s;
+        }
+        .alerta-item:hover { box-shadow: 0 2px 8px rgba(46,50,102,0.1); }
+        .alerta-item:last-child { margin-bottom: 0; }
+
+        .form-check-input:checked {
+            background-color: #2e3266;
+            border-color: #2e3266;
+        }
+
+        .btn-freq {
+            border: 1px solid #dee2e6;
+            background: #f8f9fa;
+            color: #495057;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border-radius: 20px;
+            padding: 5px 16px;
+            transition: background 0.15s, color 0.15s;
+        }
+        .btn-freq.active, .btn-freq:hover {
+            background: #2e3266;
+            color: #fff;
+            border-color: #2e3266;
+        }
+        input[type="radio"].btn-check:checked + .btn-freq {
+            background: #2e3266;
+            color: #fff;
+            border-color: #2e3266;
+        }
     </style>
 </head>
-<body class="bg-light">
+<body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 sticky-top shadow">
+    <nav id="nav-website" class="navbar navbar-expand-lg sticky-top"></nav>
+
+    <!-- Hero -->
+    <div class="page-hero">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">CO-LAB</a>
-            <div class="d-flex align-items-center gap-3 ms-auto">
-                <i class="bi bi-bell text-white fs-5"></i>
-                <i class="bi bi-chat-dots text-white fs-5"></i>
-                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
-                    <i class="bi bi-person text-white"></i>
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
+                     style="width:48px;height:48px;background:rgba(255,255,255,0.15);">
+                    <i class="bi bi-bell-fill text-white" style="font-size:1.4rem;"></i>
                 </div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container mt-5">
-        <h2 class="fw-bold mb-4">Alertas de Empleo</h2>
-        
-        <div class="row g-4">
-            <div class="col-lg-7">
-                <div class="bg-secondary bg-opacity-10 p-4 rounded-4 h-100">
-                    <h5 class="fw-bold mb-4">Tus Alertas</h5>
-                    
-                    <div class="card card-alerta shadow-sm p-3 mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="fw-bold mb-1">Desarrollador Web</h6>
-                                <p class="small text-muted mb-0">Sueldo: $2000 - $3000 | Frecuencia: Diaria</p>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="sw1" checked style="width: 2.5em; height: 1.2em;">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card card-alerta shadow-sm p-3 mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="fw-bold mb-1">DBA Junior</h6>
-                                <p class="small text-muted mb-0">Sueldo: $1500 - $2200 | Frecuencia: Diaria</p>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="sw2" checked style="width: 2.5em; height: 1.2em;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-5">
-                <div class="card border-0 shadow p-4 rounded-4">
-                    <h5 class="fw-bold mb-4">Crear nueva alerta</h5>
-                    
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Puesto o palabra clave</label>
-                        <select class="form-select bg-light border-0 p-2">
-                            <option selected>Desarrollador web</option>
-                            <option>Analista de datos</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Ubicación</label>
-                        <input type="text" class="form-control bg-light border-0 p-2" placeholder="Ej. San Salvador">
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label small fw-bold">Frecuencia</label>
-                        <div class="d-flex gap-2">
-                            <input type="radio" class="btn-check" name="freq" id="diaria" checked>
-                            <label class="btn btn-outline-primary w-50" for="diaria">Diaria</label>
-                            
-                            <input type="radio" class="btn-check" name="freq" id="semanal">
-                            <label class="btn btn-outline-primary w-50" for="semanal">Semanal</label>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-dark w-100 py-2 fw-bold" style="background-color: #2e3266; border: none;">
-                        Guardar alerta
-                    </button>
+                <div>
+                    <h4 class="text-white fw-bold mb-0">Alertas de Empleo</h4>
+                    <p class="text-white mb-0" style="opacity:0.75;font-size:0.875rem;">Recibe notificaciones de nuevas vacantes que te interesan</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Content -->
+    <div class="container content-wrapper pb-5">
+        <div class="row g-4">
+
+            <!-- Alertas activas -->
+            <div class="col-lg-7">
+                <div class="info-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0" style="color:#1a1d2e;">Tus alertas activas</h6>
+                        <span class="badge rounded-pill" style="background:#eef2ff;color:#2e3266;font-size:0.72rem;" id="contador-alertas">0</span>
+                    </div>
+                    <div id="lista-alertas">
+                        <p class="text-muted small py-2 mb-0">No tienes alertas configuradas aún.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crear alerta -->
+            <div class="col-lg-5">
+                <div class="info-card">
+                    <h6 class="fw-bold mb-4" style="color:#1a1d2e;">Crear nueva alerta</h6>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold" style="color:#374151;">Puesto o palabra clave</label>
+                        <input type="text" id="alerta-keyword" class="form-control" placeholder="Ej. Desarrollador Web"
+                               style="border-color:#e5e7eb;border-radius:8px;font-size:0.875rem;">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold" style="color:#374151;">Ubicación</label>
+                        <input type="text" id="alerta-ubicacion" class="form-control" placeholder="Ej. San Salvador"
+                               style="border-color:#e5e7eb;border-radius:8px;font-size:0.875rem;">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold" style="color:#374151;">Frecuencia</label>
+                        <div class="d-flex gap-2">
+                            <input type="radio" class="btn-check" name="freq" id="freq-diaria" value="Diaria" checked>
+                            <label class="btn-freq" for="freq-diaria">Diaria</label>
+
+                            <input type="radio" class="btn-check" name="freq" id="freq-semanal" value="Semanal">
+                            <label class="btn-freq" for="freq-semanal">Semanal</label>
+                        </div>
+                    </div>
+
+                    <button id="btn-guardar-alerta" class="btn btn-warning w-100 fw-semibold rounded-pill py-2">
+                        <i class="bi bi-bell-plus me-2"></i>Guardar alerta
+                    </button>
+                    <div id="alerta-feedback" class="mt-2" style="font-size:0.8rem;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer id="footer-website" class="py-3 mt-4"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmDEEgt7pkS3R4LxQmvO2iM8KS3e" crossorigin="anonymous"></script>
+    <script src="/js/app.js"></script>
+    <script>
+        // Alertas se guardan en localStorage (funcionalidad client-side)
+        // En el futuro se puede migrar a un endpoint /api/alertas
+        const STORAGE_KEY = 'trabajosv_alertas';
+
+        function getAlertas() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+            catch { return []; }
+        }
+
+        function saveAlertas(lista) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
+        }
+
+        function renderAlertas() {
+            const lista = getAlertas();
+            const el = document.getElementById('lista-alertas');
+            const contador = document.getElementById('contador-alertas');
+            const activas = lista.filter(a => a.activa);
+            contador.textContent = activas.length;
+
+            if (lista.length === 0) {
+                el.innerHTML = '<p class="text-muted small py-2 mb-0">No tienes alertas configuradas aún.</p>';
+                return;
+            }
+
+            el.innerHTML = lista.map((a, i) => `
+                <div class="alerta-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="fw-semibold mb-0" style="font-size:0.875rem;color:#1a1d2e;">${a.keyword}</p>
+                        <p class="text-muted mb-0" style="font-size:0.78rem;">
+                            ${a.ubicacion ? '<i class="bi bi-geo-alt-fill text-danger" style="font-size:0.65rem;"></i> ' + a.ubicacion + ' · ' : ''}
+                            <i class="bi bi-clock" style="font-size:0.65rem;"></i> ${a.frecuencia}
+                        </p>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="form-check form-switch mb-0">
+                            <input class="form-check-input" type="checkbox" id="sw-${i}"
+                                   ${a.activa ? 'checked' : ''}
+                                   onchange="toggleAlerta(${i})"
+                                   style="width:2.2em;height:1.1em;cursor:pointer;">
+                        </div>
+                        <button class="btn btn-sm p-1" onclick="eliminarAlerta(${i})"
+                                style="color:#dc2626;background:none;border:none;line-height:1;">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAlerta(i) {
+            const lista = getAlertas();
+            lista[i].activa = !lista[i].activa;
+            saveAlertas(lista);
+            renderAlertas();
+        }
+
+        function eliminarAlerta(i) {
+            const lista = getAlertas();
+            lista.splice(i, 1);
+            saveAlertas(lista);
+            renderAlertas();
+        }
+
+        document.getElementById('btn-guardar-alerta').addEventListener('click', () => {
+            const keyword = document.getElementById('alerta-keyword').value.trim();
+            const ubicacion = document.getElementById('alerta-ubicacion').value.trim();
+            const frecuencia = document.querySelector('input[name="freq"]:checked').value;
+            const feedback = document.getElementById('alerta-feedback');
+
+            if (!keyword) {
+                feedback.innerHTML = '<span class="text-danger">Ingresa un puesto o palabra clave.</span>';
+                return;
+            }
+
+            const lista = getAlertas();
+            lista.push({ keyword, ubicacion, frecuencia, activa: true });
+            saveAlertas(lista);
+
+            document.getElementById('alerta-keyword').value = '';
+            document.getElementById('alerta-ubicacion').value = '';
+            feedback.innerHTML = '<span class="text-success"><i class="bi bi-check-circle me-1"></i>Alerta guardada.</span>';
+            setTimeout(() => feedback.innerHTML = '', 3000);
+            renderAlertas();
+        });
+
+        // Verificar sesión
+        (async () => {
+            const res = await fetch('/api/auth/check-session', { credentials: 'include' });
+            const data = await res.json();
+            if (!data.logged) window.location.href = '/usuario/usuario-login.html';
+        })();
+
+        renderAlertas();
+    </script>
 </body>
 </html>
