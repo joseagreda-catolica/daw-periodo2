@@ -59,6 +59,16 @@ app.use('/foros', forosRoutes);
 app.use('/valoraciones', valoracionesRoutes);
 app.use('/api', apiRoutes);
 
+// Error handler centralizado (debe definirse antes del 404)
+app.use((err, req, res, _next) => {
+  console.error(err.stack);
+  const status = err.status || 500;
+  if (req.path.startsWith('/api/')) {
+    return res.status(status).json({ ok: false, message: err.message || 'Error interno del servidor' });
+  }
+  res.status(status).render('404', { title: 'Error' });
+});
+
 // 404
 app.use((req, res) => {
   res.status(404).render('404', { title: 'Página no encontrada' });

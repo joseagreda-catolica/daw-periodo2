@@ -120,14 +120,14 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label small fw-semibold" style="color:#374151;">Frecuencia</label>
-                        <div class="d-flex gap-2">
-                            <input type="radio" class="btn-check" name="freq" id="freq-diaria" value="Diaria" checked>
-                            <label class="btn-freq" for="freq-diaria">Diaria</label>
-
-                            <input type="radio" class="btn-check" name="freq" id="freq-semanal" value="Semanal">
-                            <label class="btn-freq" for="freq-semanal">Semanal</label>
-                        </div>
+                        <label class="form-label small fw-semibold" style="color:#374151;">Tipo de trabajo</label>
+                        <select id="alerta-tipo" class="form-select" style="border-color:#e5e7eb;border-radius:8px;font-size:0.875rem;">
+                            <option value="">Cualquier tipo</option>
+                            <option value="tiempo_completo">Tiempo completo</option>
+                            <option value="medio_tiempo">Medio tiempo</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="practicas">Prácticas</option>
+                        </select>
                     </div>
 
                     <button id="btn-guardar-alerta" class="btn btn-warning w-100 fw-semibold rounded-pill py-2">
@@ -145,48 +145,60 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmDEEgt7pkS3R4LxQmvO2iM8KS3e" crossorigin="anonymous"></script>
     <script src="/js/app.js"></script>
     <script>
-        // Alertas se guardan en localStorage (funcionalidad client-side)
-        // En el futuro se puede migrar a un endpoint /api/alertas
-        const STORAGE_KEY = 'trabajosv_alertas';
+        // ── Verificar sesión ───────────────────────────────────────────────────
+        (async () => {
+            const res = await fetch('/api/auth/check-session', { credentials: 'include' });
+            const data = await res.json();
+            if (!data.logged || data.user.rol !== 'candidato') {
+                window.location.href = '/usuario/usuario-login.html';
+                return;
+            }
+            loadAlertas();
+        })();
 
-        function getAlertas() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-            catch { return []; }
+        // ── Cargar alertas desde el backend ────────────────────────────────────
+        async function loadAlertas() {
+            const res = await fetch('/api/candidato/alertas', { credentials: 'include' });
+            const data = await res.json();
+            renderAlertas(data.ok ? data.alertas : []);
         }
 
-        function saveAlertas(lista) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
-        }
-
-        function renderAlertas() {
-            const lista = getAlertas();
-            const el = document.getElementById('lista-alertas');
+        // ── Renderizar lista ───────────────────────────────────────────────────
+        function renderAlertas(alertas) {
+            const el       = document.getElementById('lista-alertas');
             const contador = document.getElementById('contador-alertas');
-            const activas = lista.filter(a => a.activa);
+            const activas  = alertas.filter(a => a.activo);
             contador.textContent = activas.length;
 
-            if (lista.length === 0) {
+            if (!alertas || alertas.length === 0) {
                 el.innerHTML = '<p class="text-muted small py-2 mb-0">No tienes alertas configuradas aún.</p>';
                 return;
             }
 
-            el.innerHTML = lista.map((a, i) => `
+            const tipoLabel = {
+                tiempo_completo: 'Tiempo completo',
+                medio_tiempo:    'Medio tiempo',
+                freelance:       'Freelance',
+                practicas:       'Prácticas'
+            };
+
+            el.innerHTML = alertas.map(a => `
                 <div class="alerta-item d-flex justify-content-between align-items-center">
                     <div>
-                        <p class="fw-semibold mb-0" style="font-size:0.875rem;color:#1a1d2e;">${a.keyword}</p>
+                        <p class="fw-semibold mb-0" style="font-size:0.875rem;color:#1a1d2e;">${a.palabra_clave}</p>
                         <p class="text-muted mb-0" style="font-size:0.78rem;">
                             ${a.ubicacion ? '<i class="bi bi-geo-alt-fill text-danger" style="font-size:0.65rem;"></i> ' + a.ubicacion + ' · ' : ''}
-                            <i class="bi bi-clock" style="font-size:0.65rem;"></i> ${a.frecuencia}
+                            ${a.tipo_trabajo ? '<i class="bi bi-briefcase" style="font-size:0.65rem;"></i> ' + (tipoLabel[a.tipo_trabajo] || a.tipo_trabajo) : ''}
                         </p>
                     </div>
                     <div class="d-flex align-items-center gap-2">
                         <div class="form-check form-switch mb-0">
-                            <input class="form-check-input" type="checkbox" id="sw-${i}"
-                                   ${a.activa ? 'checked' : ''}
-                                   onchange="toggleAlerta(${i})"
+                            <input class="form-check-input" type="checkbox" id="sw-${a.id_alerta}"
+                                   ${a.activo ? 'checked' : ''}
+                                   onchange="toggleAlerta(${a.id_alerta})"
                                    style="width:2.2em;height:1.1em;cursor:pointer;">
                         </div>
-                        <button class="btn btn-sm p-1" onclick="eliminarAlerta(${i})"
+                        <button class="btn btn-sm p-1" onclick="eliminarAlerta(${a.id_alerta})"
                                 style="color:#dc2626;background:none;border:none;line-height:1;">
                             <i class="bi bi-trash3"></i>
                         </button>
@@ -195,50 +207,61 @@
             `).join('');
         }
 
-        function toggleAlerta(i) {
-            const lista = getAlertas();
-            lista[i].activa = !lista[i].activa;
-            saveAlertas(lista);
-            renderAlertas();
+        // ── Toggle alerta ──────────────────────────────────────────────────────
+        async function toggleAlerta(id) {
+            await fetch(`/api/candidato/alertas/${id}/toggle`, {
+                method: 'PUT', credentials: 'include'
+            });
+            loadAlertas();
         }
 
-        function eliminarAlerta(i) {
-            const lista = getAlertas();
-            lista.splice(i, 1);
-            saveAlertas(lista);
-            renderAlertas();
+        // ── Eliminar alerta ────────────────────────────────────────────────────
+        async function eliminarAlerta(id) {
+            await fetch(`/api/candidato/alertas/${id}`, {
+                method: 'DELETE', credentials: 'include'
+            });
+            loadAlertas();
         }
 
-        document.getElementById('btn-guardar-alerta').addEventListener('click', () => {
-            const keyword = document.getElementById('alerta-keyword').value.trim();
+        // ── Guardar nueva alerta ───────────────────────────────────────────────
+        document.getElementById('btn-guardar-alerta').addEventListener('click', async () => {
+            const keyword   = document.getElementById('alerta-keyword').value.trim();
             const ubicacion = document.getElementById('alerta-ubicacion').value.trim();
-            const frecuencia = document.querySelector('input[name="freq"]:checked').value;
-            const feedback = document.getElementById('alerta-feedback');
+            const tipo      = document.getElementById('alerta-tipo').value;
+            const feedback  = document.getElementById('alerta-feedback');
 
             if (!keyword) {
                 feedback.innerHTML = '<span class="text-danger">Ingresa un puesto o palabra clave.</span>';
                 return;
             }
 
-            const lista = getAlertas();
-            lista.push({ keyword, ubicacion, frecuencia, activa: true });
-            saveAlertas(lista);
+            try {
+                const res = await fetch('/api/candidato/alertas', {
+                    method:  'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify({
+                        palabra_clave: keyword,
+                        ubicacion:     ubicacion || null,
+                        tipo_trabajo:  tipo      || null
+                    })
+                });
+                const data = await res.json();
 
-            document.getElementById('alerta-keyword').value = '';
-            document.getElementById('alerta-ubicacion').value = '';
-            feedback.innerHTML = '<span class="text-success"><i class="bi bi-check-circle me-1"></i>Alerta guardada.</span>';
-            setTimeout(() => feedback.innerHTML = '', 3000);
-            renderAlertas();
+                if (data.ok) {
+                    document.getElementById('alerta-keyword').value  = '';
+                    document.getElementById('alerta-ubicacion').value = '';
+                    document.getElementById('alerta-tipo').value      = '';
+                    feedback.innerHTML = '<span class="text-success"><i class="bi bi-check-circle me-1"></i>Alerta guardada.</span>';
+                    setTimeout(() => feedback.innerHTML = '', 3000);
+                    loadAlertas();
+                } else {
+                    feedback.innerHTML = `<span class="text-danger">${data.message}</span>`;
+                }
+            } catch (err) {
+                feedback.innerHTML = '<span class="text-danger">Error de conexión.</span>';
+            }
         });
-
-        // Verificar sesión
-        (async () => {
-            const res = await fetch('/api/auth/check-session', { credentials: 'include' });
-            const data = await res.json();
-            if (!data.logged) window.location.href = '/usuario/usuario-login.html';
-        })();
-
-        renderAlertas();
     </script>
 </body>
 </html>

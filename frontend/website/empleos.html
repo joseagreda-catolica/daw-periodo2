@@ -10,7 +10,6 @@
     <style>
         body { background-color: #f8f9fc; }
 
-        /* Filter bar */
         .filter-bar {
             background: #E8E5D9;
             border-radius: 12px;
@@ -27,7 +26,6 @@
             border-color: #2e3266;
         }
 
-        /* Job list panel */
         .jobs-panel {
             background: #fff;
             border-radius: 12px;
@@ -52,7 +50,6 @@
             gap: 8px;
         }
 
-        /* Detail panel */
         .detail-panel {
             background: #fff;
             border-radius: 12px;
@@ -89,12 +86,12 @@
         <!-- Filter bar -->
         <div id="container-filter" class="filter-bar mb-3">
             <form class="row g-2 align-items-end">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <label class="form-label small fw-semibold mb-1" style="color:#4a4740;">Buscar empleo</label>
                     <input type="text" name="buscar" placeholder="Cargo, empresa o habilidad..."
                         class="form-control">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="form-label small fw-semibold mb-1" style="color:#4a4740;">Ubicación</label>
                     <input list="ubicaciones-list" name="ubicacion" autocomplete="off"
                         placeholder="Ciudad o departamento" class="form-control">
@@ -103,9 +100,34 @@
                         <option value="Santa Ana"></option>
                         <option value="San Salvador"></option>
                         <option value="San Miguel"></option>
+                        <option value="La Libertad"></option>
+                        <option value="Sonsonate"></option>
+                        <option value="Chalatenango"></option>
                     </datalist>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold mb-1" style="color:#4a4740;">Tipo</label>
+                    <select name="tipo" class="form-select">
+                        <option value="">Cualquier tipo</option>
+                        <option value="tiempo_completo">Tiempo completo</option>
+                        <option value="medio_tiempo">Medio tiempo</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="practicas">Prácticas</option>
+                        <option value="temporal">Temporal</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label small fw-semibold mb-1" style="color:#4a4740;">Nivel</label>
+                    <select name="nivel" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="sin_experiencia">Sin exp.</option>
+                        <option value="junior">Junior</option>
+                        <option value="mid">Mid</option>
+                        <option value="senior">Senior</option>
+                        <option value="directivo">Directivo</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
                     <button type="submit" class="btn btn-warning w-100 fw-semibold">
                         <i class="bi bi-search me-1"></i>Buscar
                     </button>
@@ -130,38 +152,66 @@
             <!-- Right: Job detail -->
             <div class="col-md-8">
                 <div class="detail-panel">
-                    <div class="detail-header">
-                        <h5 class="text-white fw-bold mb-1">Desarrollador Backend Java</h5>
-                        <p class="text-white-50 small mb-0">
-                            <i class="bi bi-building me-1"></i>Banco Agrícola
-                            &nbsp;·&nbsp;
-                            <i class="bi bi-geo-alt me-1"></i>San Salvador
-                        </p>
-                    </div>
-                    <div class="detail-body">
-                        <div class="d-flex flex-wrap gap-2 mb-4">
-                            <span class="meta-chip"><i class="bi bi-geo-alt-fill text-danger"></i> San Salvador</span>
-                            <span class="meta-chip"><i class="bi bi-clock-fill" style="color:#2e3266;"></i> Tiempo completo</span>
-                            <span class="meta-chip"><i class="bi bi-cash-coin text-warning"></i> $2,500 - $3,000</span>
-                        </div>
 
-                        <h6 class="fw-bold mb-2" style="color:#1a1d2e;">Descripción del puesto</h6>
-                        <p class="text-muted small custom-text-justify">
-                            Buscamos un desarrollador backend Java con experiencia en microservicios, Spring Boot y bases de datos relacionales. El candidato ideal tiene capacidad para trabajar en equipo, sigue buenas prácticas de código y se adapta a entornos ágiles.
-                        </p>
-                        <p class="text-muted small custom-text-justify">
-                            Responsabilidades incluyen diseño e implementación de APIs REST, mantenimiento de sistemas existentes, participación en revisiones de código y colaboración estrecha con equipos de frontend y QA.
-                        </p>
+                    <!-- Placeholder inicial -->
+                    <div id="detail-placeholder" class="detail-body text-center py-5">
+                        <i class="bi bi-briefcase" style="font-size:3rem;color:#d1d5db;"></i>
+                        <p class="text-muted mt-3">Selecciona una vacante para ver los detalles</p>
+                    </div>
 
-                        <div class="d-flex justify-content-end mt-3">
-                            <a href="/usuario/usuario-login.html" class="btn btn-warning px-4 fw-semibold rounded-pill">
-                                <i class="bi bi-send-fill me-1"></i>Postularme
-                            </a>
+                    <!-- Contenido del detalle (oculto hasta seleccionar) -->
+                    <div id="detail-panel-content" style="display:none;">
+                        <div class="detail-header">
+                            <h5 class="text-white fw-bold mb-1" id="detail-titulo">—</h5>
+                            <p class="text-white-50 small mb-0">
+                                <i class="bi bi-building me-1"></i><span id="detail-empresa"></span>
+                                &nbsp;·&nbsp;
+                                <i class="bi bi-geo-alt me-1"></i><span id="detail-ubicacion-header"></span>
+                            </p>
+                        </div>
+                        <div class="detail-body">
+                            <div id="detail-chips" class="d-flex flex-wrap gap-2 mb-4"></div>
+
+                            <h6 class="fw-bold mb-2" style="color:#1a1d2e;">Descripción del puesto</h6>
+                            <p class="text-muted small custom-text-justify" id="detail-descripcion"
+                               style="white-space:pre-wrap;"></p>
+
+                            <div class="d-flex justify-content-end mt-3">
+                                <button id="btn-postular-empleos"
+                                    class="btn btn-warning px-4 fw-semibold rounded-pill"
+                                    data-bs-toggle="modal" data-bs-target="#modalPostularEmpleos">
+                                    <i class="bi bi-send-fill me-1"></i>Postularme
+                                </button>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <!-- Modal Postulación -->
+    <div class="modal fade" id="modalPostularEmpleos" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold">Enviar Postulación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="modal-feedback-empleos"></div>
+                    <label class="form-label small fw-semibold">Carta de presentación <span class="text-muted fw-normal">(opcional)</span></label>
+                    <textarea id="carta-empleos" class="form-control" rows="5"
+                        placeholder="Cuéntale al empleador por qué eres el candidato ideal..."></textarea>
+                    <button id="btn-enviar-postulacion-empleos"
+                        class="btn w-100 fw-semibold rounded-pill py-2 mt-3"
+                        style="background:#2e3266;color:#fff;">
+                        <i class="bi bi-send-fill me-1"></i>Enviar Postulación
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -170,5 +220,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script type="module" src="/js/app.js"></script>
     <script type="module" src="/js/empleos.js"></script>
+    <script src="/js/filter-search.js"></script>
 </body>
 </html>

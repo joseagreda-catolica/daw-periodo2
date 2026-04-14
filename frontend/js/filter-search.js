@@ -1,21 +1,46 @@
+// Conecta el formulario de búsqueda al endpoint GET /api/vacantes
+// El formulario ya existe en empleos.html — solo adjuntamos el listener
 
-const pathBuscarEmpleoComp = '/templates/buscar-empleo.html';
-const container_filter_dom = document.getElementById("container-filter");
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('#container-filter form');
+  if (!form) return;
 
-loadFilterSearch();
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-export async function loadFilterSearch() {
-    console.log('ok');
-    
-    const comp_buscar_empleo = await fetch(pathBuscarEmpleoComp);
-    const html = await comp_buscar_empleo.text();
-    container_filter_dom.innerHTML = html;
-    console.log('ok2');
-    
-    const div_filters = document.getElementById("div-filtros");
-    const btn_show_filter = document.getElementById("btn-show-filters");
-    const btn_close_filter = document.getElementById("btn-close-filters");
-    btn_show_filter.addEventListener('click', () => {div_filters.style.display = "";});
-    btn_close_filter.addEventListener('click', () => {div_filters.style.display = "none";});
-    
-};
+    const buscar    = form.querySelector('[name="buscar"]')?.value?.trim()    || '';
+    const ubicacion = form.querySelector('[name="ubicacion"]')?.value?.trim() || '';
+    const tipo      = form.querySelector('[name="tipo"]')?.value              || '';
+    const nivel     = form.querySelector('[name="nivel"]')?.value             || '';
+    const salario   = form.querySelector('[name="salario_min"]')?.value       || '';
+
+    const params = new URLSearchParams();
+    if (buscar)    params.set('search',      buscar);
+    if (ubicacion) params.set('ubicacion',   ubicacion);
+    if (tipo)      params.set('tipo',        tipo);
+    if (nivel)     params.set('nivel',       nivel);
+    if (salario)   params.set('salario_min', salario);
+
+    try {
+      const res  = await fetch('/api/vacantes?' + params.toString(), { credentials: 'include' });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.message);
+
+      const vacantes = data.vacantes.map(v => ({
+        id:         v.id_vacante,
+        titulo:     v.titulo,
+        ubicacion:  v.ubicacion || 'El Salvador',
+        salario:    v.salario_min && v.salario_max
+                      ? `$${v.salario_min} - $${v.salario_max}`
+                      : 'A convenir',
+        tipoEmpleo: v.tipo_contrato ? v.tipo_contrato.replace(/_/g, ' ') : ''
+      }));
+
+      if (window.renderCardsEmpleos) {
+        window.renderCardsEmpleos(vacantes);
+      }
+    } catch (err) {
+      console.error('Error en búsqueda:', err);
+    }
+  });
+});
