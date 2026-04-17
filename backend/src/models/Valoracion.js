@@ -1,6 +1,14 @@
 const pool = require('../config/database');
 
 const Valoracion = {
+  async existeValoracion(idEmpresa, idCandidato) {
+    const [rows] = await pool.execute(
+      'SELECT id_valoracion FROM valoracion WHERE id_empresa = ? AND id_candidato = ?',
+      [idEmpresa, idCandidato]
+    );
+    return rows.length > 0;
+  },
+
   async crear(datos) {
     const [result] = await pool.execute(
       'INSERT INTO valoracion (id_empresa, id_candidato, puntuacion, comentario) VALUES (?, ?, ?, ?)',

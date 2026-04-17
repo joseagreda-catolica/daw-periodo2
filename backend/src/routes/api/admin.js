@@ -40,6 +40,11 @@ router.get('/usuarios', ...adminAuth, async (req, res) => {
 
 router.put('/usuarios/:id/toggle', ...adminAuth, async (req, res) => {
   try {
+    // No permitir que un admin se desactive a sí mismo
+    if (parseInt(req.params.id) === req.session.user.id) {
+      return res.status(400).json({ ok: false, message: 'No puedes desactivar tu propia cuenta' });
+    }
+
     const usuario = await Usuario.buscarPorId(req.params.id);
     if (!usuario) return res.status(404).json({ ok: false, message: 'Usuario no encontrado' });
     await Usuario.actualizarEstado(req.params.id, usuario.activo ? 0 : 1);

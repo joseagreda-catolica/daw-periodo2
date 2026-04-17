@@ -9,15 +9,25 @@ const app = express();
 // Middlewares
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '../frontend'), { index: false }));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+app.use(express.json({ limit: '1mb' }));
+
+// Validar que SESSION_SECRET esté definido
+if (!process.env.SESSION_SECRET) {
+  throw new Error('SESSION_SECRET no está definida en .env');
+}
 
 // Sesión
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'daw',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 horas
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production'
+  }
 }));
 
 app.use(flash());

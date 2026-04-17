@@ -21,8 +21,8 @@ const Alerta = {
     await pool.execute('DELETE FROM alerta WHERE id_alerta = ? AND id_candidato = ?', [idAlerta, idCandidato]);
   },
 
-  async toggleActivo(idAlerta) {
-    await pool.execute('UPDATE alerta SET activo = NOT activo WHERE id_alerta = ?', [idAlerta]);
+  async toggleActivo(idAlerta, idCandidato) {
+    await pool.execute('UPDATE alerta SET activo = NOT activo WHERE id_alerta = ? AND id_candidato = ?', [idAlerta, idCandidato]);
   }
 };
 

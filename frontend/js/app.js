@@ -13,7 +13,7 @@ async function loadNavFooter() {
     const navbarTmpl = await fetch('/templates/navbar.html');
     const footerTmpl = await fetch('/templates/footer.html');
 
-    nav.innerHTML = await navbarTmpl.text();
+    if (nav) nav.innerHTML = await navbarTmpl.text();
     if (footer) footer.innerHTML = await footerTmpl.text();
 }
 

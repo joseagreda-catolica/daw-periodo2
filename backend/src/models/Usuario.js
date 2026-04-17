@@ -17,7 +17,7 @@ const Usuario = {
   },
 
   async buscarPorId(id) {
-    const [rows] = await pool.execute('SELECT * FROM usuario WHERE id_usuario = ?', [id]);
+    const [rows] = await pool.execute('SELECT id_usuario, nombre, apellido, email, rol, activo, fecha_registro FROM usuario WHERE id_usuario = ?', [id]);
     return rows[0];
   },
 

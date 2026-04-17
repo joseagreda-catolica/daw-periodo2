@@ -24,6 +24,12 @@ router.post('/:id_empresa', apiAuth, apiRole('candidato'), async (req, res) => {
     const candidato = await Candidato.buscarPorUsuario(req.session.user.id);
     if (!candidato) return res.status(400).json({ ok: false, message: 'Completa tu perfil de candidato primero' });
 
+    // Verificar que no ya existe una valoración de este candidato para esta empresa
+    const yaValoro = await Valoracion.existeValoracion(req.params.id_empresa, candidato.id_candidato);
+    if (yaValoro) {
+      return res.status(409).json({ ok: false, message: 'Ya has valorado esta empresa' });
+    }
+
     const puntuacion = parseInt(req.body.puntuacion);
     if (!puntuacion || puntuacion < 1 || puntuacion > 5) {
       return res.status(400).json({ ok: false, message: 'La puntuación debe ser entre 1 y 5' });

@@ -197,17 +197,10 @@ async function verPostulaciones(idVacante, titulo) {
                 </td>
                 <td class="small text-muted">${new Date(p.fecha_postulacion).toLocaleDateString('es-SV')}</td>
                 <td>
-                  <select class="form-select form-select-sm" style="min-width:130px;"
+                  <select class="form-select form-select-sm estado-select" data-estado="${p.estado}" style="min-width:130px;"
                     onchange="actualizarEstado(${p.id_postulacion}, this.value)">
                     ${estadoOpciones}
                   </select>
-                  <script>
-                    (function() {
-                      var selects = document.querySelectorAll('#lista-postulaciones select');
-                      var s = selects[selects.length - 1];
-                      if (s) s.value = '${p.estado}';
-                    })();
-                  <\/script>
                 </td>
               </tr>
             `).join('')}
@@ -215,6 +208,12 @@ async function verPostulaciones(idVacante, titulo) {
         </table>
       </div>
     `;
+
+    // Preselectionar estados en los select
+    document.querySelectorAll('.estado-select').forEach(select => {
+      const estado = select.getAttribute('data-estado');
+      if (estado) select.value = estado;
+    });
   } catch (err) {
     if (lista) lista.innerHTML = '<p class="text-danger text-center py-3">Error al cargar postulaciones.</p>';
     console.error(err);
