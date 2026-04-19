@@ -4,46 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrabajoSV - Comunidad</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <style>
-        body { background: #f0f2f8; }
-        .page-hero {
-            background: linear-gradient(135deg, #2e3266, #4a51b5);
-            padding: 36px 0 60px;
+        /* Paleta de colores de la imagen */
+        :root {
+            --ts-blue: #2c3e60;
+            --ts-beige: #ebe8de;
+            --ts-accent: #d4b991;
+            --ts-light: #f3f3f1;
+            --ts-white: #ffffff;
         }
-        .content-wrapper { margin-top: -36px; }
+
+        body { background: var(--ts-white); }
+
+        /* Hero con el azul marino sólido del diseño */
+        .page-hero {
+            background: var(--ts-blue);
+            padding: 40px 0 65px;
+        }
+
+        .content-wrapper { margin-top: -40px; }
+
+        /* Contenedor tipo tarjeta del diseño original */
         .info-card {
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #eef0f5;
-            box-shadow: 0 2px 12px rgba(46,50,102,.07);
+            background: var(--ts-beige);
+            border-radius: 4px;
+            border: none;
             padding: 24px;
         }
+
+        /* Tarjetas internas blancas como en la imagen */
         .tema-card {
-            border-radius: 10px;
-            border: 1px solid #eef0f5;
-            background: #fafbff;
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            transition: box-shadow .15s;
+            border-radius: 4px;
+            border: none;
+            background: var(--ts-white);
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            transition: transform 0.2s;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .tema-card:hover { box-shadow: 0 2px 8px rgba(46,50,102,.1); }
+        .tema-card:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Estilo de estrellas personalizado */
         .star-radio input { display:none; }
-        .star-radio label { font-size:1.6rem; color:#d1d5db; cursor:pointer; transition:color .1s; }
+        .star-radio label { font-size:1.6rem; color:#d1d5db; cursor:pointer; }
         .star-radio input:checked ~ label,
         .star-radio label:hover,
-        .star-radio label:hover ~ label { color:#FFC107; }
+        .star-radio label:hover ~ label { color: var(--ts-accent); }
         .star-radio { display:flex; flex-direction:row-reverse; gap:2px; }
+
+        /* Botones con los colores de la paleta */
+        .btn-custom-blue { background: var(--ts-blue); color: white; border: none; }
+        .btn-custom-blue:hover { background: #1e2b44; color: white; }
+        
+        .btn-custom-accent { background: var(--ts-accent); color: white; border: none; }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-    <nav id="nav-website" class="navbar navbar-expand-lg sticky-top"></nav>
+    <nav id="nav-website" class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: var(--ts-blue); border-bottom: 1px solid rgba(255,255,255,0.1);"></nav>
 
-    <!-- Hero -->
     <div class="page-hero">
         <div class="container">
             <h4 class="text-white fw-bold mb-1">Comunidad TrabajoSV</h4>
@@ -54,51 +82,52 @@
     <div class="container content-wrapper pb-5">
         <div class="row g-4">
 
-            <!-- ══ Foro ══ -->
             <div class="col-lg-8">
-                <div class="info-card mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="fw-bold mb-0"><i class="bi bi-chat-dots me-2" style="color:#2e3266;"></i>Foro de Discusión</h5>
-                        <button class="btn btn-warning btn-sm fw-semibold rounded-pill px-3" id="btn-nuevo-debate">
+                <div class="info-card shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0 text-uppercase small" style="letter-spacing: 1px; color: var(--ts-blue);">
+                            <i class="bi bi-chat-dots me-2"></i>Foro de Discusión
+                        </h5>
+                        <button class="btn btn-custom-accent btn-sm fw-semibold rounded-pill px-3 shadow-sm" id="btn-nuevo-debate">
                             <i class="bi bi-plus me-1"></i>Nuevo debate
                         </button>
                     </div>
 
-                    <!-- Filtro por categoría -->
-                    <div class="d-flex gap-2 mb-3 flex-wrap" id="filtros-categoria">
-                        <button class="btn btn-sm btn-outline-secondary rounded-pill active" data-cat="">Todos</button>
-                        <button class="btn btn-sm btn-outline-secondary rounded-pill" data-cat="empleo">Empleo</button>
-                        <button class="btn btn-sm btn-outline-secondary rounded-pill" data-cat="networking">Networking</button>
-                        <button class="btn btn-sm btn-outline-secondary rounded-pill" data-cat="recursos">Recursos</button>
-                        <button class="btn btn-sm btn-outline-secondary rounded-pill" data-cat="general">General</button>
+                    <div class="d-flex gap-2 mb-4 flex-wrap" id="filtros-categoria">
+                        <button class="btn btn-sm btn-light border-0 rounded-pill px-3 active shadow-sm" data-cat="">Todos</button>
+                        <button class="btn btn-sm btn-white border-0 rounded-pill px-3 bg-white shadow-sm" data-cat="empleo">Empleo</button>
+                        <button class="btn btn-sm btn-white border-0 rounded-pill px-3 bg-white shadow-sm" data-cat="networking">Networking</button>
                     </div>
 
                     <div id="lista-temas-foro">
+                        <div class="tema-card shadow-sm">
+                            <div>
+                                <p class="fw-bold mb-0" style="color: var(--ts-blue);">Cómo mejorar tu currículum</p>
+                                <small class="text-muted">20 Marzo 2026</small>
+                            </div>
+                            <span style="color: var(--ts-blue);">→</span>
+                        </div>
                         <p class="text-muted small text-center py-3">Cargando temas...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- ══ Sidebar ══ -->
             <div class="col-lg-4 d-flex flex-column gap-4">
 
-                <!-- Valorar empresa -->
-                <div class="info-card">
-                    <h5 class="fw-bold mb-3"><i class="bi bi-star me-2 text-warning"></i>Valorar Empresa</h5>
+                <div class="info-card shadow-sm">
+                    <h5 class="fw-bold mb-3 small text-uppercase" style="color: var(--ts-blue);">
+                        <i class="bi bi-star me-2"></i>Valorar Empresa
+                    </h5>
 
                     <div class="mb-3">
-                        <label class="form-label small fw-semibold">Selecciona la empresa</label>
-                        <select id="select-empresa-valorar" class="form-select form-select-sm">
+                        <label class="form-label small fw-semibold text-muted">Selecciona la empresa</label>
+                        <select id="select-empresa-valorar" class="form-select form-select-sm border-0 shadow-sm">
                             <option value="">Cargando empresas...</option>
                         </select>
                     </div>
 
-                    <!-- Valoraciones existentes -->
-                    <div id="lista-valoraciones-empresa" class="mb-3"></div>
-
-                    <!-- Formulario nueva valoración -->
-                    <div id="form-valoracion">
-                        <label class="form-label small fw-semibold">Tu valoración</label>
+                    <div id="form-valoracion" class="bg-white p-3 rounded shadow-sm">
+                        <label class="form-label small fw-semibold text-muted">Tu valoración</label>
                         <div class="star-radio mb-2" id="star-rating">
                             <input type="radio" name="puntuacion" id="star5" value="5"><label for="star5">★</label>
                             <input type="radio" name="puntuacion" id="star4" value="4"><label for="star4">★</label>
@@ -106,12 +135,10 @@
                             <input type="radio" name="puntuacion" id="star2" value="2"><label for="star2">★</label>
                             <input type="radio" name="puntuacion" id="star1" value="1"><label for="star1">★</label>
                         </div>
-                        <textarea id="valoracion-comentario" class="form-control form-control-sm mb-2" rows="3"
-                            placeholder="Comparte tu experiencia trabajando con esta empresa..."></textarea>
-                        <div id="valoracion-feedback" class="mb-2"></div>
-                        <button id="btn-enviar-valoracion"
-                            class="btn btn-sm w-100 fw-semibold rounded-pill"
-                            style="background:#2e3266;color:#fff;">
+                        <textarea id="valoracion-comentario" class="form-control form-control-sm mb-3 border-0 bg-light" rows="3"
+                            placeholder="Comparte tu experiencia..."></textarea>
+                        
+                        <button id="btn-enviar-valoracion" class="btn btn-custom-blue btn-sm w-100 fw-semibold rounded-pill py-2 shadow-sm">
                             <i class="bi bi-send me-1"></i>Enviar valoración
                         </button>
                     </div>
@@ -121,75 +148,9 @@
         </div>
     </div>
 
-    <footer id="footer-website" class="mt-3"></footer>
+    <footer id="footer-website" class="mt-auto py-4" style="background: var(--ts-light);"></footer>
 
-    <!-- ══ Modal: Nuevo Debate ══ -->
-    <div class="modal fade" id="modalNuevoDebate" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 rounded-4 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold">Nuevo Debate</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div id="debate-feedback" class="mb-2"></div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Título del debate *</label>
-                        <input type="text" id="debate-titulo" class="form-control"
-                            placeholder="Ej. ¿Cómo mejorar el CV para empresas tech?">
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label small fw-semibold">Categoría</label>
-                        <select id="debate-categoria" class="form-select">
-                            <option value="general">General</option>
-                            <option value="empleo">Empleo</option>
-                            <option value="networking">Networking</option>
-                            <option value="recursos">Recursos</option>
-                        </select>
-                    </div>
-                    <button id="btn-crear-debate"
-                        class="btn w-100 fw-semibold rounded-pill py-2"
-                        style="background:#2e3266;color:#fff;">
-                        <i class="bi bi-chat-dots me-1"></i>Publicar debate
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ══ Modal: Ver Tema / Respuestas ══ -->
-    <div class="modal fade" id="modalTema" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content border-0 rounded-4 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <div>
-                        <h5 class="fw-bold mb-0" id="modal-tema-titulo">—</h5>
-                        <small class="text-muted" id="modal-tema-autor"></small>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div id="lista-respuestas" class="mb-4"></div>
-                    <div id="form-responder" style="display:none;">
-                        <label class="form-label small fw-semibold">Tu respuesta</label>
-                        <textarea id="respuesta-contenido" class="form-control" rows="3"
-                            placeholder="Escribe tu respuesta..."></textarea>
-                        <div id="respuesta-feedback" class="mt-2"></div>
-                        <button id="btn-enviar-respuesta"
-                            class="btn btn-sm fw-semibold rounded-pill px-4 mt-2"
-                            style="background:#2e3266;color:#fff;">
-                            <i class="bi bi-send me-1"></i>Responder
-                        </button>
-                    </div>
-                    <div id="responder-login-msg" class="text-muted small" style="display:none;">
-                        <a href="/usuario/usuario-login.html">Inicia sesión</a> para responder.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/js/app.js"></script>
     <script type="module" src="/js/comunidad.js"></script>
 </body>

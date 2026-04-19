@@ -4,43 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CO-LAB - Comunidad (Invitado)</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --custom-blue: #2c3e60;
+            --custom-beige: #ebe8de;
+            --custom-accent: #d4b991;
+            --custom-light: #f3f3f1;
+        }
+        body { background-color: #ffffff; }
+        .text-custom-blue { color: var(--custom-blue); }
+        .bg-custom-blue { background-color: var(--custom-blue); }
+        .bg-custom-beige { background-color: var(--custom-beige); }
+        .bg-custom-accent { background-color: var(--custom-accent); }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark py-3 sticky-top shadow" style="background-color: #2c3e50;">
+    <nav class="navbar navbar-expand-lg navbar-dark py-3 sticky-top shadow-sm" style="background-color: var(--custom-blue);">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">CO-LAB</a>
             <div class="d-flex align-items-center gap-2">
-                <a href="login.html" class="btn btn-outline-light btn-sm px-3">Iniciar Sesión</a>
-                <a href="registro.html" class="btn btn-sm px-3 fw-bold text-white" style="background-color: #d4b483;">Registrarse</a>
+                <a href="login.html" class="btn btn-outline-light btn-sm px-3 border-0">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-sm px-3 fw-bold text-white shadow-sm" style="background-color: var(--custom-accent);">Registrarse</a>
             </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-        <div class="alert border-0 shadow-sm d-flex justify-content-between align-items-center py-3 text-white" style="background-color: #2c3e50;">
+        <div class="alert border-0 shadow-sm d-flex justify-content-between align-items-center py-3 text-white shadow-sm" style="background-color: var(--custom-blue); border-radius: 4px;">
             <div>
-                <i class="bi bi-person-slash me-2" style="color: #d4b483;"></i>
+                <i class="bi bi-person-slash me-2" style="color: var(--custom-accent);"></i>
                 Navegas como <strong>Invitado</strong>. Regístrate para desbloquear todas las funciones.
             </div>
-            <a href="registro.html" class="btn btn-sm fw-bold px-3" style="background-color: #d4b483; color: #2c3e50;">Crear Cuenta</a>
+            <a href="registro.html" class="btn btn-sm fw-bold px-3 shadow-sm" style="background-color: var(--custom-accent); color: white;">Crear Cuenta</a>
         </div>
 
         <section id="panel" class="mb-5 pt-4">
-            <h2 class="mb-4 fw-bold" style="color: #2c3e50;">Bienvenido a CO-LAB</h2>
+            <h2 class="mb-4 fw-bold" style="color: var(--custom-blue);">Bienvenido a CO-LAB</h2>
             <div class="position-relative">
                 <div class="position-absolute top-50 start-50 translate-middle z-3 text-center w-100">
-                    <span class="badge p-3 rounded-pill shadow-lg text-white" style="background-color: #2c3e50;">
-                        <i class="bi bi-lock-fill me-2" style="color: #d4b483;"></i>Regístrate para ver estadísticas
+                    <span class="badge p-3 rounded-pill shadow-lg text-white" style="background-color: var(--custom-blue);">
+                        <i class="bi bi-lock-fill me-2" style="color: var(--custom-accent);"></i>Regístrate para ver estadísticas
                     </span>
                 </div>
-                <div class="bg-secondary bg-opacity-10 p-4 rounded-4 opacity-50" style="filter: blur(4px);">
-                    <div class="row g-3">
-                        <div class="col-md-4"><div class="card border-0 p-4 shadow-sm text-center"><h3>--</h3></div></div>
-                        <div class="col-md-4"><div class="card border-0 p-4 shadow-sm text-center"><h3>--</h3></div></div>
-                        <div class="col-md-4"><div class="card border-0 p-4 shadow-sm text-center"><h3>--</h3></div></div>
+                <div class="p-4 rounded-1 opacity-50" style="background-color: var(--custom-beige); filter: blur(3px);">
+                    <div class="row g-3 text-center">
+                        <div class="col-md-4"><div class="card border-0 p-4 shadow-sm"><h3>--</h3><small class="text-muted">Tópicos</small></div></div>
+                        <div class="col-md-4"><div class="card border-0 p-4 shadow-sm"><h3>--</h3><small class="text-muted">Páginas</small></div></div>
+                        <div class="col-md-4"><div class="card border-0 p-4 shadow-sm"><h3>--</h3><small class="text-muted">Valoración</small></div></div>
                     </div>
                 </div>
             </div>
@@ -48,61 +61,27 @@
 
         <section id="foro" class="mb-5 pt-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold" style="color: #2c3e50;">Temas de Discusión</h2>
-                <button class="btn btn-secondary px-4 disabled shadow-sm border-0"><i class="bi bi-lock"></i> Nuevo Debate</button>
+                <h2 class="fw-bold" style="color: var(--custom-blue);">Temas de Discusión</h2>
+                <button class="btn btn-secondary px-4 disabled shadow-sm border-0" style="background-color: var(--custom-accent); opacity: 0.6;">
+                    <i class="bi bi-lock"></i> Nuevo Debate
+                </button>
             </div>
             
             <div class="position-relative">
                 <div class="position-absolute top-50 start-50 translate-middle z-3 text-center w-100">
-                    <span class="badge p-3 rounded-pill shadow-lg text-white" style="background-color: #2c3e50;">
-                        <i class="bi bi-shield-lock me-2" style="color: #d4b483;"></i>Inicia sesión para leer el foro
+                    <span class="badge p-3 rounded-pill shadow-lg text-white" style="background-color: var(--custom-blue);">
+                        <i class="bi bi-shield-lock me-2" style="color: var(--custom-accent);"></i>Inicia sesión para leer el foro
                     </span>
                 </div>
-                <div class="bg-secondary bg-opacity-10 p-4 rounded-4 opacity-50" style="filter: blur(4px);">
+                <div class="p-4 rounded-1 opacity-50" style="background-color: var(--custom-beige); filter: blur(3px);">
                     <div class="vstack gap-3">
-                        <div class="bg-white p-3 rounded shadow-sm border-start border-4 border-secondary">
-                            <h6 class="fw-bold text-muted">Contenido restringido...</h6>
-                            <div class="bg-light rounded w-75 py-2 mt-2"></div>
+                        <div class="bg-white p-4 rounded shadow-sm d-flex justify-content-between align-items-center">
+                            <div class="w-75 bg-light py-2 rounded"></div>
+                            <span style="color: var(--custom-blue);">→</span>
                         </div>
-                        <div class="bg-white p-3 rounded shadow-sm border-start border-4 border-secondary">
-                            <h6 class="fw-bold text-muted">Contenido restringido...</h6>
-                            <div class="bg-light rounded w-50 py-2 mt-2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="recursos" class="mb-5 pt-4">
-            <h2 class="fw-bold mb-4" style="color: #2c3e50;">Biblioteca de Recursos</h2>
-            <div class="position-relative">
-                <div class="position-absolute top-50 start-50 translate-middle z-3 text-center w-100">
-                    <span class="badge p-3 rounded-pill shadow-lg text-white" style="background-color: #2c3e50;">
-                        <i class="bi bi-file-earmark-lock me-2" style="color: #d4b483;"></i>Acceso exclusivo para miembros
-                    </span>
-                </div>
-                <div class="bg-secondary bg-opacity-10 p-4 rounded-4 opacity-50" style="filter: blur(4px);">
-                    <div class="row g-4 text-center">
-                        <div class="col-md-4">
-                            <div class="bg-white p-4 rounded shadow-sm h-100">
-                                <i class="bi bi-file-earmark-lock fs-1 text-muted"></i>
-                                <h6 class="fw-bold mt-2">Material Premium</h6>
-                                <button class="btn w-100 mt-3 disabled border-0 text-white" style="background-color: #d4b483;">Ver Recurso</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="bg-white p-4 rounded shadow-sm h-100">
-                                <i class="bi bi-camera-video-off fs-1 text-muted"></i>
-                                <h6 class="fw-bold mt-2">Video Tutoriales</h6>
-                                <button class="btn w-100 mt-3 disabled border-0 text-white" style="background-color: #d4b483;">Ver Recurso</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="bg-white p-4 rounded shadow-sm h-100">
-                                <i class="bi bi-lock fs-1 text-muted"></i>
-                                <h6 class="fw-bold mt-2">Cursos Avanzados</h6>
-                                <button class="btn w-100 mt-3 disabled border-0 text-white" style="background-color: #d4b483;">Ver Recurso</button>
-                            </div>
+                        <div class="bg-white p-4 rounded shadow-sm d-flex justify-content-between align-items-center">
+                            <div class="w-50 bg-light py-2 rounded"></div>
+                            <span style="color: var(--custom-blue);">→</span>
                         </div>
                     </div>
                 </div>
@@ -110,19 +89,19 @@
         </section>
 
         <section id="valoraciones" class="pb-5 pt-4">
-            <h2 class="fw-bold mb-4" style="color: #2c3e50;">Valoraciones</h2>
+            <h2 class="fw-bold mb-4" style="color: var(--custom-blue);">Valoraciones</h2>
             <div class="position-relative">
                 <div class="position-absolute top-50 start-50 translate-middle z-3 text-center w-100">
-                    <span class="badge p-3 rounded-pill shadow-lg text-white" style="background-color: #2c3e50;">
-                        <i class="bi bi-star-half me-2" style="color: #d4b483;"></i>Regístrate para valorar
+                    <span class="badge p-3 rounded-pill shadow-lg text-white" style="background-color: var(--custom-blue);">
+                        <i class="bi bi-star-half me-2" style="color: var(--custom-accent);"></i>Regístrate para valorar
                     </span>
                 </div>
-                <div class="bg-secondary bg-opacity-10 p-4 rounded-4 opacity-50" style="filter: blur(4px);">
+                <div class="p-4 rounded-1 opacity-50" style="background-color: var(--custom-beige); filter: blur(3px);">
                     <div class="bg-white p-4 rounded shadow-sm">
-                        <label class="form-label fw-bold small text-muted">Tu opinión:</label>
-                        <textarea class="form-control bg-light mb-3 border-0" rows="3" disabled placeholder="Necesitas una cuenta para comentar..."></textarea>
-                        <div class="text-end">
-                            <button class="btn px-4 disabled border-0 text-white" style="background-color: #d4b483;">Enviar Valoración</button>
+                        <div class="mb-3 text-warning fs-4">☆☆☆☆☆</div>
+                        <div class="bg-light rounded w-100 py-4 mt-2"></div>
+                        <div class="text-end mt-3">
+                            <button class="btn px-4 disabled border-0 text-white shadow-sm" style="background-color: var(--custom-accent);">Enviar Valoración</button>
                         </div>
                     </div>
                 </div>
@@ -130,6 +109,6 @@
         </section>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
