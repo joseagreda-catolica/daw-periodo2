@@ -54,8 +54,12 @@ const Vacante = {
     sql += ' ORDER BY v.fecha_publicacion DESC';
 
     if (filtros.limite) {
-      sql += ' LIMIT ?';
-      params.push(parseInt(filtros.limite));
+      const limite = parseInt(filtros.limite, 10);
+      if (Number.isFinite(limite) && limite > 0) {
+        const maxLimite = Math.min(limite, 100);
+        sql += ' LIMIT ?';
+        params.push(maxLimite);
+      }
     }
 
     const [rows] = await pool.execute(sql, params);

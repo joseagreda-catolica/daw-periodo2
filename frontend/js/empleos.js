@@ -4,9 +4,9 @@ const container_card_empleos = document.getElementById('container-card-empleos')
 
 // ── Click en tarjeta → cargar detalle en panel derecho ────────────────────────
 container_card_empleos.addEventListener('click', (event) => {
-  const btn = event.target.closest('[data-id-empledo]');
+  const btn = event.target.closest('[data-id-empleo]');
   if (btn) {
-    loadEmpleoById(btn.getAttribute('data-id-empledo'));
+    loadEmpleoById(btn.getAttribute('data-id-empleo'));
   }
 });
 

@@ -53,7 +53,7 @@ async function loadUsuarios() {
   const rolColors = { admin: '#2e3266', empresa: '#059669', candidato: '#ea580c' };
   tbody.innerHTML = usersData.usuarios.map(u => {
     const activo     = u.activo;
-    const initials   = (u.nombre[0] + (u.apellido[0] || '')).toUpperCase();
+    const initials   = ((u.nombre || '?')[0] + ((u.apellido || '?')[0] || '')).toUpperCase();
     const rolColor   = rolColors[u.rol] || '#6b7280';
     const estadoBadge = activo
       ? '<span class="badge rounded-pill" style="background:#ecfdf5;color:#059669;font-size:0.72rem;">● Activo</span>'

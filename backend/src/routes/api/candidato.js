@@ -109,7 +109,10 @@ router.delete('/alertas/:id', apiAuth, apiRole('candidato'), async (req, res) =>
 
 router.put('/alertas/:id/toggle', apiAuth, apiRole('candidato'), async (req, res) => {
   try {
-    await Alerta.toggleActivo(req.params.id);
+    const candidato = await Candidato.buscarPorUsuario(req.session.user.id);
+    if (!candidato) return res.status(404).json({ ok: false, message: 'Perfil no encontrado' });
+
+    await Alerta.toggleActivo(req.params.id, candidato.id_candidato);
     res.json({ ok: true, message: 'Estado de alerta actualizado' });
   } catch (err) {
     console.error(err);

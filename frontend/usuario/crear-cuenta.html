@@ -69,7 +69,7 @@
                     </div>
                     <div id="campo-empresa" style="display:none;">
                         <label for="nombre_empresa">Nombre de empresa</label>
-                        <input type="text" id="nombre_empresa" name="nombre_empresa" placeholder="Mi Empresa SV" class="form-control">
+                        <input type="text" id="nombre_empresa" name="nombre_empresa" placeholder="Mi Empresa SV" class="form-control" required>
                     </div>
                     <div>
                         <label for="email">Correo Electrónico</label>
@@ -82,21 +82,52 @@
                     <div>
                         <label for="password2">Confirmar Contraseña</label>
                         <input type="password" id="password2" name="password2" placeholder="••••••••" class="form-control" required>
+                        <small class="text-danger d-none" id="password-mismatch">Las contraseñas no coinciden</small>
                     </div>
 
-                    <button type="submit" class="btn btn-warning flex-grow-1 w-50 mx-auto">Crear mi cuenta gratis</button>
+                    <button type="submit" class="btn btn-warning flex-grow-1 w-50 mx-auto" id="btn-submit">Crear mi cuenta gratis</button>
                 </form>
                 <script>
                   function setRol(rol) {
                     document.getElementById('rol-input').value = rol;
-                    document.getElementById('campo-empresa').style.display = rol === 'empresa' ? '' : 'none';
+                    const campoEmpresa = document.getElementById('campo-empresa');
+                    const inputEmpresa = document.getElementById('nombre_empresa');
+                    campoEmpresa.style.display = rol === 'empresa' ? '' : 'none';
+                    if (rol === 'empresa') {
+                      inputEmpresa.setAttribute('required', 'required');
+                    } else {
+                      inputEmpresa.removeAttribute('required');
+                    }
                     document.getElementById('btn-candidato').className = 'btn flex-grow-1 ' + (rol === 'candidato' ? 'btn-primary' : 'btn-light');
                     document.getElementById('btn-empresa').className   = 'btn flex-grow-1 ' + (rol === 'empresa'   ? 'btn-primary' : 'btn-light');
                   }
+
+                  // Validación de contraseñas que coincidan
+                  const form = document.querySelector('form');
+                  const password = document.getElementById('password');
+                  const password2 = document.getElementById('password2');
+                  const passwordMismatch = document.getElementById('password-mismatch');
+
+                  function validatePasswords() {
+                    if (password.value !== password2.value) {
+                      passwordMismatch.classList.remove('d-none');
+                      return false;
+                    } else {
+                      passwordMismatch.classList.add('d-none');
+                      return true;
+                    }
+                  }
+
+                  password2.addEventListener('blur', validatePasswords);
+                  form.addEventListener('submit', (e) => {
+                    if (!validatePasswords()) {
+                      e.preventDefault();
+                    }
+                  });
                 </script>
                 <p class="text-center">
-                    Ya tienes una cuenta? 
-                    <a href="/usuario/usuario-login.html">Inicis sesion</a>
+                    Ya tienes una cuenta?
+                    <a href="/usuario/usuario-login.html">Inicia sesión</a>
                 </p>
             </div>
         </div>

@@ -70,14 +70,22 @@ router.post('/vacantes', apiAuth, apiRole('empresa'), async (req, res) => {
     if (!empresa) return res.status(404).json({ ok: false, message: 'Empresa no encontrada' });
     if (!req.body.titulo) return res.status(400).json({ ok: false, message: 'El título es requerido' });
 
+    // Validar salarios si ambos están presentes
+    const salarioMin = req.body.salario_min ? parseFloat(req.body.salario_min) : null;
+    const salarioMax = req.body.salario_max ? parseFloat(req.body.salario_max) : null;
+
+    if ((salarioMin || salarioMax) && salarioMin && salarioMax && salarioMin > salarioMax) {
+      return res.status(400).json({ ok: false, message: 'El salario mínimo no puede ser mayor que el máximo' });
+    }
+
     const id = await Vacante.crear({
       id_empresa:        empresa.id_empresa,
       titulo:            req.body.titulo,
       descripcion:       req.body.descripcion       || null,
       ubicacion:         req.body.ubicacion          || null,
       tipo_contrato:     req.body.tipo_contrato      || 'tiempo_completo',
-      salario_min:       req.body.salario_min        || null,
-      salario_max:       req.body.salario_max        || null,
+      salario_min:       salarioMin,
+      salario_max:       salarioMax,
       nivel_experiencia: req.body.nivel_experiencia  || 'junior',
       fecha_cierre:      req.body.fecha_cierre       || null
     });
@@ -99,13 +107,21 @@ router.put('/vacantes/:id', apiAuth, apiRole('empresa'), async (req, res) => {
     if (vacante.id_empresa !== empresa.id_empresa)
       return res.status(403).json({ ok: false, message: 'Sin permisos para editar esta vacante' });
 
+    // Validar salarios si se están actualizando
+    const salarioMin = req.body.salario_min != null ? parseFloat(req.body.salario_min) : vacante.salario_min;
+    const salarioMax = req.body.salario_max != null ? parseFloat(req.body.salario_max) : vacante.salario_max;
+
+    if ((salarioMin || salarioMax) && salarioMin && salarioMax && salarioMin > salarioMax) {
+      return res.status(400).json({ ok: false, message: 'El salario mínimo no puede ser mayor que el máximo' });
+    }
+
     await Vacante.actualizar(req.params.id, {
       titulo:            req.body.titulo             || vacante.titulo,
       descripcion:       req.body.descripcion         || vacante.descripcion,
       ubicacion:         req.body.ubicacion           || vacante.ubicacion,
       tipo_contrato:     req.body.tipo_contrato       || vacante.tipo_contrato,
-      salario_min:       req.body.salario_min        != null ? req.body.salario_min : vacante.salario_min,
-      salario_max:       req.body.salario_max        != null ? req.body.salario_max : vacante.salario_max,
+      salario_min:       salarioMin,
+      salario_max:       salarioMax,
       nivel_experiencia: req.body.nivel_experiencia   || vacante.nivel_experiencia,
       estado:            req.body.estado              || vacante.estado,
       fecha_cierre:      req.body.fecha_cierre        || vacante.fecha_cierre
@@ -144,6 +160,18 @@ router.put('/postulaciones/:id', apiAuth, apiRole('empresa'), async (req, res) =
     if (!estadosValidos.includes(req.body.estado)) {
       return res.status(400).json({ ok: false, message: 'Estado no válido' });
     }
+
+    // Verificar que la postulación pertenece a una vacante de esta empresa
+    const postulacion = await Postulacion.buscarPorId(req.params.id);
+    if (!postulacion) {
+      return res.status(404).json({ ok: false, message: 'Postulación no encontrada' });
+    }
+
+    const empresa = await Empresa.buscarPorUsuario(req.session.user.id);
+    if (!empresa || postulacion.id_empresa !== empresa.id_empresa) {
+      return res.status(403).json({ ok: false, message: 'Sin permisos para esta acción' });
+    }
+
     await Postulacion.actualizarEstado(req.params.id, req.body.estado);
     res.json({ ok: true, message: 'Estado actualizado' });
   } catch (err) {

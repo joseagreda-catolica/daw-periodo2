@@ -41,6 +41,16 @@ const Postulacion = {
     return rows.length > 0;
   },
 
+  async buscarPorId(idPostulacion) {
+    const [rows] = await pool.execute(
+      `SELECT p.*, v.id_empresa FROM postulacion p
+       JOIN vacante v ON p.id_vacante = v.id_vacante
+       WHERE p.id_postulacion = ?`,
+      [idPostulacion]
+    );
+    return rows[0] || null;
+  },
+
   async actualizarEstado(idPostulacion, estado) {
     await pool.execute('UPDATE postulacion SET estado = ? WHERE id_postulacion = ?', [estado, idPostulacion]);
   },

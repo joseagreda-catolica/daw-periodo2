@@ -50,6 +50,11 @@ router.post('/:id/postular', apiAuth, apiRole('candidato'), async (req, res) => 
     const candidato = await Candidato.buscarPorUsuario(req.session.user.id);
     if (!candidato) return res.status(400).json({ ok: false, message: 'Perfil de candidato no encontrado' });
 
+    // Verificar que la vacante existe y está activa
+    const vacante = await Vacante.buscarPorId(req.params.id);
+    if (!vacante) return res.status(404).json({ ok: false, message: 'Vacante no encontrada' });
+    if (vacante.estado !== 'activa') return res.status(400).json({ ok: false, message: 'Esta vacante no está disponible' });
+
     const yaPostulado = await Postulacion.yaPostulado(req.params.id, candidato.id_candidato);
     if (yaPostulado) return res.status(400).json({ ok: false, message: 'Ya te postulaste a esta vacante' });
 
