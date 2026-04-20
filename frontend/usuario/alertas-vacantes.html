@@ -1,267 +1,275 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alertas de Empleo - TrabajoSV</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-        body { background-color: #f0f2f8; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alertas de Empleo - TrabajoSV</title>
 
-        .page-hero {
-            background: linear-gradient(135deg, #2e3266 0%, #4a51b5 100%);
-            padding: 36px 0 60px;
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-        .content-wrapper {
-            margin-top: -36px;
-        }
+<style>
 
-        .info-card {
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #eef0f5;
-            box-shadow: 0 2px 12px rgba(46,50,102,0.07);
-            padding: 24px;
-        }
+:root {
+    --ts-blue: #2c3e60;
+    --ts-beige: #e9e6d9;
+    --ts-light: #f3f3f1;
+}
 
-        .alerta-item {
-            padding: 14px 16px;
-            border-radius: 10px;
-            border: 1px solid #eef0f5;
-            background: #fafbff;
-            margin-bottom: 10px;
-            transition: box-shadow 0.15s;
-        }
-        .alerta-item:hover { box-shadow: 0 2px 8px rgba(46,50,102,0.1); }
-        .alerta-item:last-child { margin-bottom: 0; }
+body {
+    background: #f3f3f1; /* más suave que el gris actual */
+}
 
-        .form-check-input:checked {
-            background-color: #2e3266;
-            border-color: #2e3266;
-        }
+.page-hero {
+    background: var(--ts-blue);
+    padding: 20px 0 50px; /* ↓ antes era demasiado grande */
+}
 
-        .btn-freq {
-            border: 1px solid #dee2e6;
-            background: #f8f9fa;
-            color: #495057;
-            font-size: 0.82rem;
-            font-weight: 600;
-            border-radius: 20px;
-            padding: 5px 16px;
-            transition: background 0.15s, color 0.15s;
-        }
-        .btn-freq.active, .btn-freq:hover {
-            background: #2e3266;
-            color: #fff;
-            border-color: #2e3266;
-        }
-        input[type="radio"].btn-check:checked + .btn-freq {
-            background: #2e3266;
-            color: #fff;
-            border-color: #2e3266;
-        }
-    </style>
+.page-hero {
+    min-height: 120px;
+}
+
+.page-hero h4 {
+    font-size: 1.6rem;
+}
+
+.page-hero p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.content-wrapper {
+    margin-top: -60px; /* antes -36px → muy poco */
+}
+.info-card {
+    background: var(--ts-beige);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+
+.alerta-item {
+    background: var(--ts-beige);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border: none;
+    transition: all 0.15s ease;
+}
+
+.alerta-item:hover {
+    transform: translateY(-2px);
+}
+
+.text-title {
+    font-size: 0.875rem;
+    color: #1a1d2e;
+}
+
+.form-control, .form-select {
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.container {
+    max-width: 1100px; /* reduce el ancho general */
+}
+
+.btn-warning {
+    background-color: var(--ts-blue);
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.btn-warning:hover {
+    background-color: #1f2f4d;
+}
+
+#alerta-feedback {
+    transition: opacity 0.3s ease;
+}
+</style>
 </head>
+
 <body>
 
-    <nav id="nav-website" class="navbar navbar-expand-lg sticky-top"></nav>
+<nav class="navbar navbar-dark" style="background:#2c3e60;">
+<div class="container">
+<span class="navbar-brand fw-bold">TrabajoSV</span>
+</div>
+</nav>
 
-    <!-- Hero -->
-    <div class="page-hero">
-        <div class="container">
-            <div class="d-flex align-items-center gap-3">
-                <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
-                     style="width:48px;height:48px;background:rgba(255,255,255,0.15);">
-                    <i class="bi bi-bell-fill text-white" style="font-size:1.4rem;"></i>
-                </div>
-                <div>
-                    <h4 class="text-white fw-bold mb-0">Alertas de Empleo</h4>
-                    <p class="text-white mb-0" style="opacity:0.75;font-size:0.875rem;">Recibe notificaciones de nuevas vacantes que te interesan</p>
-                </div>
+<div class="page-hero">
+<div class="container">
+<h4 class="text-white fw-bold">Alertas de Empleo</h4>
+<p class="text-white-50">Recibe notificaciones de nuevas vacantes</p>
+</div>
+</div>
+
+<div class="container content-wrapper pb-5">
+<div class="row g-4">
+
+<!-- LISTA -->
+<div class="col-lg-7">
+<div class="info-card">
+<div class="d-flex justify-content-between mb-3">
+<h6 class="fw-bold">Tus alertas</h6>
+<span id="contador-alertas" class="badge bg-light text-dark">0</span>
+</div>
+<div id="lista-alertas"></div>
+</div>
+</div>
+
+<!-- FORM -->
+<div class="col-lg-5">
+<div class="info-card">
+
+<h6 class="fw-bold mb-4">Crear nueva alerta</h6>
+
+<input id="alerta-keyword" class="form-control mb-3" placeholder="Puesto o palabra clave">
+<input id="alerta-ubicacion" class="form-control mb-3" placeholder="Ubicación">
+
+<select id="alerta-tipo" class="form-select mb-3">
+<option value="">Cualquier tipo</option>
+<option value="tiempo_completo">Tiempo completo</option>
+<option value="medio_tiempo">Medio tiempo</option>
+<option value="freelance">Freelance</option>
+<option value="practicas">Prácticas</option>
+</select>
+
+<button id="btn-guardar-alerta" class="btn btn-warning w-100">
+Guardar alerta
+</button>
+
+<div id="alerta-feedback" class="mt-2 small"></div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+async function loadAlertas() {
+    const res = await fetch('/api/candidato/alertas', { credentials:'include' });
+    const data = await res.json();
+    renderAlertas(data.ok ? data.alertas : []);
+}
+
+function renderAlertas(alertas) {
+    const el = document.getElementById('lista-alertas');
+    const contador = document.getElementById('contador-alertas');
+
+    const activas = alertas.filter(a => a.activo);
+    contador.textContent = activas.length;
+
+    if (!alertas.length) {
+        el.innerHTML = '<p class="text-muted small">No hay alertas.</p>';
+        return;
+    }
+
+    const tipoLabel = {
+        tiempo_completo:'Tiempo completo',
+        medio_tiempo:'Medio tiempo',
+        freelance:'Freelance',
+        practicas:'Prácticas'
+    };
+
+    el.innerHTML = alertas.map(a => `
+        <div class="alerta-item d-flex justify-content-between align-items-center">
+            <div>
+                <p class="fw-semibold mb-0 text-title">${a.palabra_clave}</p>
+                <p class="text-muted small mb-0">
+                    ${a.ubicacion ? `📍 ${a.ubicacion} · ` : ''}
+                    ${a.tipo_trabajo ? `💼 ${tipoLabel[a.tipo_trabajo]}` : ''}
+                </p>
+            </div>
+
+            <div class="d-flex gap-2">
+                <input type="checkbox" class="form-check-input toggle-alerta"
+                    data-id="${a.id_alerta}" ${a.activo ? 'checked':''}>
+                <button class="btn btn-sm btn-eliminar" data-id="${a.id_alerta}">
+                    🗑
+                </button>
             </div>
         </div>
-    </div>
+    `).join('');
+}
 
-    <!-- Content -->
-    <div class="container content-wrapper pb-5">
-        <div class="row g-4">
+document.addEventListener("click", async (e) => {
 
-            <!-- Alertas activas -->
-            <div class="col-lg-7">
-                <div class="info-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="fw-bold mb-0" style="color:#1a1d2e;">Tus alertas activas</h6>
-                        <span class="badge rounded-pill" style="background:#eef2ff;color:#2e3266;font-size:0.72rem;" id="contador-alertas">0</span>
-                    </div>
-                    <div id="lista-alertas">
-                        <p class="text-muted small py-2 mb-0">No tienes alertas configuradas aún.</p>
-                    </div>
-                </div>
-            </div>
+    if (e.target.closest(".btn-eliminar")) {
+        const id = e.target.closest(".btn-eliminar").dataset.id;
 
-            <!-- Crear alerta -->
-            <div class="col-lg-5">
-                <div class="info-card">
-                    <h6 class="fw-bold mb-4" style="color:#1a1d2e;">Crear nueva alerta</h6>
+        if (!confirm("¿Eliminar alerta?")) return;
 
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold" style="color:#374151;">Puesto o palabra clave</label>
-                        <input type="text" id="alerta-keyword" class="form-control" placeholder="Ej. Desarrollador Web"
-                               style="border-color:#e5e7eb;border-radius:8px;font-size:0.875rem;">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold" style="color:#374151;">Ubicación</label>
-                        <input type="text" id="alerta-ubicacion" class="form-control" placeholder="Ej. San Salvador"
-                               style="border-color:#e5e7eb;border-radius:8px;font-size:0.875rem;">
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label small fw-semibold" style="color:#374151;">Tipo de trabajo</label>
-                        <select id="alerta-tipo" class="form-select" style="border-color:#e5e7eb;border-radius:8px;font-size:0.875rem;">
-                            <option value="">Cualquier tipo</option>
-                            <option value="tiempo_completo">Tiempo completo</option>
-                            <option value="medio_tiempo">Medio tiempo</option>
-                            <option value="freelance">Freelance</option>
-                            <option value="practicas">Prácticas</option>
-                        </select>
-                    </div>
-
-                    <button id="btn-guardar-alerta" class="btn btn-warning w-100 fw-semibold rounded-pill py-2">
-                        <i class="bi bi-bell-plus me-2"></i>Guardar alerta
-                    </button>
-                    <div id="alerta-feedback" class="mt-2" style="font-size:0.8rem;"></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <footer id="footer-website" class="py-3 mt-4"></footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmDEEgt7pkS3R4LxQmvO2iM8KS3e" crossorigin="anonymous"></script>
-    <script src="/js/app.js"></script>
-    <script>
-        // ── Verificar sesión ───────────────────────────────────────────────────
-        (async () => {
-            const res = await fetch('/api/auth/check-session', { credentials: 'include' });
-            const data = await res.json();
-            if (!data.logged || data.user.rol !== 'candidato') {
-                window.location.href = '/usuario/usuario-login.html';
-                return;
-            }
-            loadAlertas();
-        })();
-
-        // ── Cargar alertas desde el backend ────────────────────────────────────
-        async function loadAlertas() {
-            const res = await fetch('/api/candidato/alertas', { credentials: 'include' });
-            const data = await res.json();
-            renderAlertas(data.ok ? data.alertas : []);
-        }
-
-        // ── Renderizar lista ───────────────────────────────────────────────────
-        function renderAlertas(alertas) {
-            const el       = document.getElementById('lista-alertas');
-            const contador = document.getElementById('contador-alertas');
-            const activas  = alertas.filter(a => a.activo);
-            contador.textContent = activas.length;
-
-            if (!alertas || alertas.length === 0) {
-                el.innerHTML = '<p class="text-muted small py-2 mb-0">No tienes alertas configuradas aún.</p>';
-                return;
-            }
-
-            const tipoLabel = {
-                tiempo_completo: 'Tiempo completo',
-                medio_tiempo:    'Medio tiempo',
-                freelance:       'Freelance',
-                practicas:       'Prácticas'
-            };
-
-            el.innerHTML = alertas.map(a => `
-                <div class="alerta-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="fw-semibold mb-0" style="font-size:0.875rem;color:#1a1d2e;">${a.palabra_clave}</p>
-                        <p class="text-muted mb-0" style="font-size:0.78rem;">
-                            ${a.ubicacion ? '<i class="bi bi-geo-alt-fill text-danger" style="font-size:0.65rem;"></i> ' + a.ubicacion + ' · ' : ''}
-                            ${a.tipo_trabajo ? '<i class="bi bi-briefcase" style="font-size:0.65rem;"></i> ' + (tipoLabel[a.tipo_trabajo] || a.tipo_trabajo) : ''}
-                        </p>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="form-check form-switch mb-0">
-                            <input class="form-check-input" type="checkbox" id="sw-${a.id_alerta}"
-                                   ${a.activo ? 'checked' : ''}
-                                   onchange="toggleAlerta(${a.id_alerta})"
-                                   style="width:2.2em;height:1.1em;cursor:pointer;">
-                        </div>
-                        <button class="btn btn-sm p-1" onclick="eliminarAlerta(${a.id_alerta})"
-                                style="color:#dc2626;background:none;border:none;line-height:1;">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // ── Toggle alerta ──────────────────────────────────────────────────────
-        async function toggleAlerta(id) {
-            await fetch(`/api/candidato/alertas/${id}/toggle`, {
-                method: 'PUT', credentials: 'include'
-            });
-            loadAlertas();
-        }
-
-        // ── Eliminar alerta ────────────────────────────────────────────────────
-        async function eliminarAlerta(id) {
-            await fetch(`/api/candidato/alertas/${id}`, {
-                method: 'DELETE', credentials: 'include'
-            });
-            loadAlertas();
-        }
-
-        // ── Guardar nueva alerta ───────────────────────────────────────────────
-        document.getElementById('btn-guardar-alerta').addEventListener('click', async () => {
-            const keyword   = document.getElementById('alerta-keyword').value.trim();
-            const ubicacion = document.getElementById('alerta-ubicacion').value.trim();
-            const tipo      = document.getElementById('alerta-tipo').value;
-            const feedback  = document.getElementById('alerta-feedback');
-
-            if (!keyword) {
-                feedback.innerHTML = '<span class="text-danger">Ingresa un puesto o palabra clave.</span>';
-                return;
-            }
-
-            try {
-                const res = await fetch('/api/candidato/alertas', {
-                    method:  'POST',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' },
-                    body:    JSON.stringify({
-                        palabra_clave: keyword,
-                        ubicacion:     ubicacion || null,
-                        tipo_trabajo:  tipo      || null
-                    })
-                });
-                const data = await res.json();
-
-                if (data.ok) {
-                    document.getElementById('alerta-keyword').value  = '';
-                    document.getElementById('alerta-ubicacion').value = '';
-                    document.getElementById('alerta-tipo').value      = '';
-                    feedback.innerHTML = '<span class="text-success"><i class="bi bi-check-circle me-1"></i>Alerta guardada.</span>';
-                    setTimeout(() => feedback.innerHTML = '', 3000);
-                    loadAlertas();
-                } else {
-                    feedback.innerHTML = `<span class="text-danger">${data.message}</span>`;
-                }
-            } catch (err) {
-                feedback.innerHTML = '<span class="text-danger">Error de conexión.</span>';
-            }
+        await fetch(`/api/candidato/alertas/${id}`, {
+            method:'DELETE',
+            credentials:'include'
         });
-    </script>
+
+        loadAlertas();
+    }
+
+});
+
+document.addEventListener("change", async (e) => {
+    if (e.target.classList.contains("toggle-alerta")) {
+        const id = e.target.dataset.id;
+
+        await fetch(`/api/candidato/alertas/${id}/toggle`, {
+            method:'PUT',
+            credentials:'include'
+        });
+
+        loadAlertas();
+    }
+});
+
+document.getElementById('btn-guardar-alerta').addEventListener('click', async () => {
+
+    const keyword = document.getElementById('alerta-keyword').value.trim();
+    const ubicacion = document.getElementById('alerta-ubicacion').value.trim();
+    const tipo = document.getElementById('alerta-tipo').value;
+    const feedback = document.getElementById('alerta-feedback');
+
+    if (!keyword) {
+        feedback.innerHTML = '<span class="text-danger">Ingresa un puesto.</span>';
+        return;
+    }
+
+    const res = await fetch('/api/candidato/alertas', {
+        method:'POST',
+        credentials:'include',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+            palabra_clave: keyword,
+            ubicacion: ubicacion || null,
+            tipo_trabajo: tipo || null
+        })
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+        document.getElementById('alerta-keyword').value = '';
+        document.getElementById('alerta-ubicacion').value = '';
+        document.getElementById('alerta-tipo').value = '';
+
+        feedback.innerHTML = '<span class="text-success">✔ Guardado</span>';
+        setTimeout(()=>feedback.innerHTML='',2000);
+
+        loadAlertas();
+    } else {
+        feedback.innerHTML = '<span class="text-danger">Error</span>';
+    }
+});
+
+loadAlertas();
+</script>
+
 </body>
 </html>
