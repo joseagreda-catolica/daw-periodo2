@@ -67,6 +67,12 @@
 
         .table thead { background-color: var(--ts-light); }
         .estado-badge { font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; }
+        .title-logo {
+            color: goldenrod;
+        }
+        .bg-custom1 {
+            background-color: rgb(215, 160, 20);
+        }
     </style>
 </head>
 <body class="d-flex">
@@ -76,7 +82,7 @@
             <div class="rounded-2 d-flex align-items-center justify-content-center me-2" style="width:32px; height:32px; background: var(--ts-accent);">
                 <i class="bi bi-buildings text-white fs-6"></i>
             </div>
-            TrabajoSV
+            Trabajo<span class="title-logo">SV</span>
         </div>
         
         <nav class="nav flex-column">
@@ -100,7 +106,7 @@
                 <h5 class="fw-bold mb-0 text-custom-blue">Panel Corporativo</h5>
                 <small class="text-muted" id="empresa-nombre-nav">Gestionando Reclutamiento</small>
             </div>
-            <button class="btn btn-custom-accent fw-semibold px-4 rounded-pill shadow-sm" id="btn-nueva-vacante">
+            <button class="btn btn-custom-accent fw-semibold px-4 rounded-pill shadow-sm bg-custom1" id="btn-nueva-vacante">
                 <i class="bi bi-plus-lg me-1"></i>Publicar Vacante
             </button>
         </div>

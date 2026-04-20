@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const flash = require('express-flash');
 const path = require('path');
-require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
+require('dotenv').config();
 
 const app = express();
 
