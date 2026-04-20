@@ -25,6 +25,27 @@ async function loadAdmin() {
   }
 }
 
+
+//----------------SIDEBAR---------------------------------------------
+function activarSidebar() {
+  const currentPath = window.location.pathname;
+
+  const links = document.querySelectorAll('.sidebar .nav-link');
+
+  if (!links.length) return; 
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+
+    if (!href) return; 
+
+    if (currentPath.endsWith(href) || currentPath.includes(href)) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
 // ── Stats ─────────────────────────────────────────────────────────────────────
 async function loadStats() {
   const statsRes = await fetch('/api/admin/stats', { credentials: 'include' });
