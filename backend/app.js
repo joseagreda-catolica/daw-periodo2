@@ -8,7 +8,6 @@ const session = require('express-session');
 const flash = require('express-flash');
 const path = require('path');
 
-
 const app = express();
 
 // Middlewares

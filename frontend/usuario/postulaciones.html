@@ -1,221 +1,227 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Postulaciones - TrabajoSV</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-        body { background-color: #f0f2f8; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis Postulaciones - TrabajoSV</title>
 
-        .page-hero {
-            background: linear-gradient(135deg, #2e3266 0%, #4a51b5 100%);
-            padding: 36px 0 60px;
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-        .content-wrapper {
-            margin-top: -36px;
-        }
+<style>
+:root {
+    --ts-blue: #2c3e60;
+    --ts-beige: #e9e6d9;
+    --ts-bg: #ffffff;
+    --ts-text: #4a4a4a;
+}
 
-        .info-card {
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #eef0f5;
-            box-shadow: 0 2px 12px rgba(46,50,102,0.07);
-            padding: 24px;
-        }
+body {
+    background-color: var(--ts-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        .postulacion-item {
-            padding: 14px 0;
-            border-bottom: 1px solid #f0f2f8;
-        }
-        .postulacion-item:last-child { border-bottom: none; }
+/* NAV SIMULADA */
+.navbar-simulada {
+    background-color: var(--ts-blue);
+    height: 60px;
+    margin-bottom: 40px;
+}
 
-        .estado-dot {
-            display: inline-block;
-            width: 7px; height: 7px;
-            border-radius: 50%;
-            margin-right: 5px;
-            vertical-align: middle;
-        }
+/* CARDS */
+.ts-card {
+    background-color: var(--ts-beige);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    border: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
 
-        .filter-check .form-check-input:checked {
-            background-color: #2e3266;
-            border-color: #2e3266;
-        }
-    </style>
+.ts-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+/* TITULOS */
+.page-title {
+    color: var(--ts-blue);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-title {
+    color: var(--ts-blue);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* TEXTO */
+.card-title {
+    color: var(--ts-blue);
+    font-size: 1.25rem;
+}
+
+.card-company {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.card-date {
+    color: #8c8c8c;
+    font-size: 0.9rem;
+}
+
+.card-status-label {
+    color: var(--ts-blue);
+    font-weight: 700;
+}
+
+/* BOTON */
+.btn-ver-detalle {
+    border: 2px solid var(--ts-blue);
+    color: var(--ts-blue);
+    background: transparent;
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-ver-detalle:hover {
+    background: var(--ts-blue);
+    color: white;
+}
+
+.btn-ver-detalle:active {
+    transform: scale(0.97);
+}
+
+/* BADGES */
+.badge-estado {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.bg-aceptado { background: #4ade80; }
+.bg-revision { background: #facc15; }
+.bg-enviado { background: #3b82f6; color: #fff; }
+.bg-rechazado { background: #ef4444; color: #fff; }
+
+/* CHECKBOX */
+.form-check-input:checked {
+    background-color: var(--ts-blue);
+    border-color: var(--ts-blue);
+}
+</style>
 </head>
+
 <body>
 
-    <nav id="nav-website" class="navbar navbar-expand-lg sticky-top"></nav>
+<div class="navbar-simulada"></div>
 
-    <!-- Hero -->
-    <div class="page-hero">
-        <div class="container">
-            <div class="d-flex align-items-center gap-3">
-                <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
-                     style="width:48px;height:48px;background:rgba(255,255,255,0.15);">
-                    <i class="bi bi-file-earmark-check-fill text-white" style="font-size:1.4rem;"></i>
-                </div>
-                <div>
-                    <h4 class="text-white fw-bold mb-0">Mis Postulaciones</h4>
-                    <p class="text-white mb-0" style="opacity:0.75;font-size:0.875rem;">Historial y estado de tus aplicaciones</p>
-                </div>
-            </div>
-        </div>
+<div class="container pb-5">
+
+<h2 class="page-title">Mis Postulaciones</h2>
+
+<div class="row g-4">
+
+<!-- LISTA -->
+<div class="col-lg-8" id="lista-postulaciones">
+    <div class="ts-card text-center py-5">
+        <div class="spinner-border text-secondary"></div>
+        <p class="mt-2">Cargando...</p>
     </div>
+</div>
 
-    <!-- Content -->
-    <div class="container content-wrapper pb-5">
-        <div class="row g-4">
+<!-- SIDEBAR -->
+<div class="col-lg-4">
 
-            <!-- Postulaciones list -->
-            <div class="col-lg-8">
-                <div class="info-card">
-                    <h6 class="fw-bold mb-3" style="color:#1a1d2e;">Todas tus postulaciones</h6>
-                    <div id="lista-postulaciones">
-                        <div class="text-center py-4">
-                            <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
-                            <p class="text-muted small mt-2 mb-0">Cargando...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="ts-card mb-4">
+<h5 class="sidebar-title">Filtrar por Estado</h5>
 
-            <!-- Sidebar: resumen -->
-            <div class="col-lg-4 d-flex flex-column gap-3">
-                <div class="info-card">
-                    <h6 class="fw-bold mb-3" style="color:#1a1d2e;">Resumen</h6>
-                    <div class="d-flex justify-content-between align-items-center py-2" style="border-bottom:1px solid #f0f2f8;">
-                        <span class="text-muted small">Total aplicaciones</span>
-                        <span class="fw-bold" id="resumen-total">—</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center py-2" style="border-bottom:1px solid #f0f2f8;">
-                        <span class="text-muted small">En revisión</span>
-                        <span class="fw-bold" style="color:#d97706;" id="resumen-revision">—</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center py-2" style="border-bottom:1px solid #f0f2f8;">
-                        <span class="text-muted small">Entrevista</span>
-                        <span class="fw-bold" style="color:#0891b2;" id="resumen-entrevista">—</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center py-2">
-                        <span class="text-muted small">Contratadas</span>
-                        <span class="fw-bold" style="color:#059669;" id="resumen-contratado">—</span>
-                    </div>
-                </div>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" value="enviado" checked>
+<label class="form-check-label">Enviado</label>
+</div>
 
-                <div class="info-card">
-                    <h6 class="fw-bold mb-3" style="color:#1a1d2e;">Filtrar por estado</h6>
-                    <div class="filter-check d-flex flex-column gap-2">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="f-enviada" value="enviada" checked>
-                            <label class="form-check-label small" for="f-enviada">Enviada</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="f-revision" value="en_revision" checked>
-                            <label class="form-check-label small" for="f-revision">En revisión</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="f-entrevista" value="entrevista" checked>
-                            <label class="form-check-label small" for="f-entrevista">Entrevista</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="f-contratado" value="contratado" checked>
-                            <label class="form-check-label small" for="f-contratado">Contratado</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="f-rechazada" value="rechazada" checked>
-                            <label class="form-check-label small" for="f-rechazada">Rechazada</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" value="en_revision" checked>
+<label class="form-check-label">En revisión</label>
+</div>
 
-        </div>
-    </div>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" value="aceptado" checked>
+<label class="form-check-label">Aceptado</label>
+</div>
 
-    <footer id="footer-website" class="py-3 mt-4"></footer>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" value="rechazado" checked>
+<label class="form-check-label">Rechazado</label>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmDEEgt7pkS3R4LxQmvO2iM8KS3e" crossorigin="anonymous"></script>
-    <script src="/js/app.js"></script>
-    <script>
-        const estadoConfig = {
-            enviada:     { label: 'Enviada',     dot: '#6b7280', bg: '#f3f4f6', color: '#374151' },
-            en_revision: { label: 'En revisión', dot: '#d97706', bg: '#fffbeb', color: '#92400e' },
-            entrevista:  { label: 'Entrevista',  dot: '#0891b2', bg: '#ecfeff', color: '#164e63' },
-            contratado:  { label: 'Contratado',  dot: '#059669', bg: '#ecfdf5', color: '#065f46' },
-            rechazada:   { label: 'Rechazada',   dot: '#dc2626', bg: '#fef2f2', color: '#991b1b' }
-        };
+</div>
 
-        function estadoBadge(estado) {
-            const cfg = estadoConfig[estado] || { label: estado, dot: '#6b7280', bg: '#f3f4f6', color: '#374151' };
-            return `<span style="background:${cfg.bg};color:${cfg.color};font-size:0.72rem;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap;">
-                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${cfg.dot};margin-right:5px;vertical-align:middle;"></span>${cfg.label}
-            </span>`;
-        }
+<div class="ts-card">
+<h5 class="sidebar-title">Resumen</h5>
+<p>Aplicaciones: <span id="resumen-total">0</span></p>
+<p>Aceptadas: <span id="resumen-aceptado">0</span></p>
+</div>
 
-        let todasPostulaciones = [];
+</div>
+</div>
+</div>
 
-        function renderPostulaciones(lista) {
-            const el = document.getElementById('lista-postulaciones');
-            if (!lista || lista.length === 0) {
-                el.innerHTML = '<p class="text-muted small py-3 mb-0">No hay postulaciones para mostrar.</p>';
-                return;
-            }
-            el.innerHTML = lista.map(p => `
-                <div class="postulacion-item d-flex justify-content-between align-items-center gap-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
-                             style="width:40px;height:40px;background:#eef2ff;">
-                            <i class="bi bi-briefcase-fill" style="color:#2e3266;"></i>
-                        </div>
-                        <div>
-                            <p class="fw-semibold mb-0" style="font-size:0.875rem;color:#1a1d2e;">${p.titulo}</p>
-                            <p class="text-muted mb-0" style="font-size:0.78rem;">${p.nombre_empresa || ''}${p.ubicacion ? ' · ' + p.ubicacion : ''}</p>
-                        </div>
-                    </div>
-                    ${estadoBadge(p.estado)}
-                </div>
-            `).join('');
-        }
+<script>
+const datos = [
+{ titulo:"Desarrollador web", empresa:"Tech Solutions Inc.", fecha:"10 Oct 2024", estado:"aceptado", bg:"bg-aceptado", label:"Aceptado" },
+{ titulo:"DBA Junior", empresa:"DataCorp.", fecha:"22 Ene 2025", estado:"en_revision", bg:"bg-revision", label:"En revisión" },
+{ titulo:"Administrador de Redes", empresa:"Networks Inc.", fecha:"02 Mar 2026", estado:"enviado", bg:"bg-enviado", label:"Enviado" }
+];
 
-        function actualizarResumen(postulaciones) {
-            document.getElementById('resumen-total').textContent = postulaciones.length;
-            document.getElementById('resumen-revision').textContent = postulaciones.filter(p => p.estado === 'en_revision').length;
-            document.getElementById('resumen-entrevista').textContent = postulaciones.filter(p => p.estado === 'entrevista').length;
-            document.getElementById('resumen-contratado').textContent = postulaciones.filter(p => p.estado === 'contratado').length;
-        }
+function crearCard(p){
+return `
+<div class="ts-card d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+<div>
+<h4 class="card-title fw-bold mb-1">${p.titulo}</h4>
+<p class="card-company">${p.empresa}</p>
+<p class="card-date">${p.fecha}</p>
+<span class="card-status-label">Estado</span>
+<span class="badge-estado ${p.bg}">${p.label}</span>
+</div>
+<a class="btn-ver-detalle mt-3 mt-md-0">Ver Detalle</a>
+</div>
+`;
+}
 
-        function aplicarFiltros() {
-            const checked = Array.from(document.querySelectorAll('.filter-check input:checked')).map(i => i.value);
-            renderPostulaciones(todasPostulaciones.filter(p => checked.includes(p.estado)));
-        }
+function render(lista){
+document.getElementById("lista-postulaciones").innerHTML =
+lista.map(crearCard).join("");
+}
 
-        document.querySelectorAll('.filter-check input').forEach(cb => cb.addEventListener('change', aplicarFiltros));
+function filtros(){
+return [...document.querySelectorAll(".form-check-input:checked")]
+.map(e=>e.value);
+}
 
-        async function loadPostulaciones() {
-            try {
-                const res = await fetch('/api/candidato/perfil', { credentials: 'include' });
-                if (res.status === 401 || res.status === 403) {
-                    window.location.href = '/usuario/usuario-login.html';
-                    return;
-                }
-                const data = await res.json();
-                if (!data.ok) throw new Error(data.message);
+function aplicar(){
+const activos=filtros();
+const filtrados=datos.filter(d=>activos.includes(d.estado));
+render(filtrados);
 
-                todasPostulaciones = data.postulaciones || [];
-                actualizarResumen(todasPostulaciones);
-                renderPostulaciones(todasPostulaciones);
-            } catch (err) {
-                console.error('Error cargando postulaciones:', err);
-                document.getElementById('lista-postulaciones').innerHTML =
-                    '<p class="text-danger small py-3 mb-0">Error al cargar las postulaciones.</p>';
-            }
-        }
+document.getElementById("resumen-total").textContent=filtrados.length;
+document.getElementById("resumen-aceptado").textContent=
+filtrados.filter(d=>d.estado==="aceptado").length;
+}
 
-        loadPostulaciones();
-    </script>
+document.querySelectorAll(".form-check-input")
+.forEach(cb=>cb.addEventListener("change", aplicar));
+
+setTimeout(()=>aplicar(),500);
+</script>
+
 </body>
 </html>
