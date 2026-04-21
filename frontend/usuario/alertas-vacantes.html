@@ -153,6 +153,16 @@ Guardar alerta
 </div>
 
 <script>
+// Verificar sesión al inicio
+document.addEventListener('DOMContentLoaded', async () => {
+    const sess = await fetch('/api/auth/check-session', { credentials: 'include' }).then(r => r.json());
+    if (!sess.logged) {
+        window.location.href = '/usuario/usuario-login.html';
+        return;
+    }
+    loadAlertas();
+});
+
 async function loadAlertas() {
     const res = await fetch('/api/candidato/alertas', { credentials:'include' });
     const data = await res.json();

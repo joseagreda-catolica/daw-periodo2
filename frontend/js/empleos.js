@@ -88,7 +88,6 @@ export async function loadEmpleoById(idEmpleo) {
 
 // ── Render tarjetas ───────────────────────────────────────────────────────────
 export async function loadCardsEmpleos(empleosDataList) {
-  const TEXT_REPLACE = '{{}}';
   const cardEmpleoComp = await fetch(pathCardEmpleo).then(r => r.text());
   const div = document.getElementById('container-card-empleos');
   div.innerHTML = '';
@@ -100,12 +99,11 @@ export async function loadCardsEmpleos(empleosDataList) {
 
   for (const empleo of empleosDataList) {
     let card = cardEmpleoComp
-      .replace(TEXT_REPLACE, empleo.titulo)
-      .replace(TEXT_REPLACE, empleo.ubicacion)
-      .replace(TEXT_REPLACE, empleo.salario)
-      .replace(TEXT_REPLACE, empleo.tipoEmpleo)
-      .replace(TEXT_REPLACE, empleo.id)
-      .replace(TEXT_REPLACE, empleo.id)
+      .replaceAll('{{titulo}}', empleo.titulo)
+      .replaceAll('{{ubicacion}}', empleo.ubicacion)
+      .replaceAll('{{tipo}}', empleo.tipoEmpleo)
+      .replaceAll('{{salario}}', empleo.salario)
+      .replaceAll('{{id}}', empleo.id)
       .replace(/<!--[\s\S]*?-->/, '');
     div.insertAdjacentHTML('beforeend', card);
   }

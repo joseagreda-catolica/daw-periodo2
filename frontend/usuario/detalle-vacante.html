@@ -94,21 +94,17 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-dark" style="background-color: var(--ts-blue); border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <div class="container">
-            <span class="navbar-brand fw-bold">TrabajoSV</span>
-        </div>
-    </nav>
+    <nav id="nav-website" class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: var(--ts-blue); border-bottom: 1px solid rgba(255,255,255,0.1);"></nav>
 
     <header class="hero-vacante">
         <div class="container">
-            <a href="#" class="text-white-50 text-decoration-none small mb-3 d-inline-block">
+            <a href="/website/empleos.html" class="text-white-50 text-decoration-none small mb-3 d-inline-block">
                 <i class="bi bi-arrow-left me-1"></i> Volver al listado de empleos
             </a>
-            <h1 class="fw-bold mb-2" id="vac-titulo text-white">Desarrollador Fullstack Senior</h1>
+            <h1 class="fw-bold mb-2 text-white" id="vac-titulo">Cargando...</h1>
             <div class="d-flex gap-4 text-white-50">
-                <span><i class="bi bi-building me-2"></i> Tech Corp El Salvador</span>
-                <span><i class="bi bi-geo-alt me-2"></i> San Salvador (Híbrido)</span>
+                <span><i class="bi bi-building me-2"></i> <span id="vac-empresa">—</span></span>
+                <span><i class="bi bi-geo-alt me-2"></i> <span id="vac-ubicacion">—</span></span>
             </div>
         </div>
     </header>
@@ -119,20 +115,14 @@
             <div class="col-lg-8">
                 <div class="info-card">
                     <div class="d-flex flex-wrap gap-2 mb-5">
-                        <div class="meta-chip"><i class="bi bi-clock"></i> Tiempo Completo</div>
-                        <div class="meta-chip"><i class="bi bi-briefcase"></i> 3-5 años exp.</div>
-                        <div class="meta-chip"><i class="bi bi-cash-stack"></i> $1,500 - $2,200</div>
+                        <div class="meta-chip"><i class="bi bi-clock"></i> <span id="vac-tipo">—</span></div>
+                        <div class="meta-chip"><i class="bi bi-briefcase"></i> <span id="vac-nivel">—</span></div>
+                        <div class="meta-chip"><i class="bi bi-cash-stack"></i> <span id="vac-salario">—</span></div>
                     </div>
 
                     <h5 class="section-title text-custom-blue">Descripción del puesto</h5>
-                    <div class="text-muted" style="line-height: 1.8;">
-                        <p>Estamos en la búsqueda de un Desarrollador Fullstack Senior para unirse a nuestro equipo dinámico. El candidato ideal tendrá experiencia sólida en tecnologías modernas y pasión por resolver problemas complejos.</p>
-                        <p><strong>Responsabilidades:</strong></p>
-                        <ul>
-                            <li>Diseñar y desarrollar arquitecturas escalables.</li>
-                            <li>Colaborar con equipos multidisciplinarios.</li>
-                            <li>Optimizar aplicaciones para máxima velocidad y escalabilidad.</li>
-                        </ul>
+                    <div class="text-muted" style="line-height: 1.8;" id="vac-descripcion">
+                        <p>Cargando descripción...</p>
                     </div>
                 </div>
             </div>
@@ -140,37 +130,37 @@
             <div class="col-lg-4">
                 <div class="sidebar-card">
                     <h6 class="text-center fw-bold mb-4 text-custom-blue">DETALLES CLAVE</h6>
-                    
+
                     <div class="mb-4">
                         <label class="text-muted small d-block mb-1">Empresa</label>
                         <div class="d-flex align-items-center">
                             <div class="bg-light p-2 rounded me-3">
                                 <i class="bi bi-buildings fs-4 text-custom-blue"></i>
                             </div>
-                            <span class="fw-bold text-custom-blue">Tech Corp El Salvador</span>
+                            <span class="fw-bold text-custom-blue" id="vac-empresa-sidebar">—</span>
                         </div>
                     </div>
 
                     <div class="row mb-4">
                         <div class="col-6">
                             <label class="text-muted small d-block mb-1">Contrato</label>
-                            <span class="fw-semibold">Permanente</span>
+                            <span class="fw-semibold" id="vac-tipo-label">—</span>
                         </div>
                         <div class="col-6">
                             <label class="text-muted small d-block mb-1">Experiencia</label>
-                            <span class="fw-semibold">Senior</span>
+                            <span class="fw-semibold" id="vac-nivel-label">—</span>
                         </div>
                     </div>
 
                     <div class="p-3 mb-4 text-center" style="background-color: var(--ts-beige); border-radius: 4px;">
                         <small class="d-block text-muted">Fecha límite para aplicar:</small>
-                        <span class="fw-bold text-custom-blue">30 de Abril, 2026</span>
+                        <span class="fw-bold text-custom-blue" id="vac-fecha-cierre">—</span>
                     </div>
 
-                    <button class="btn-apply mb-3 shadow-sm">
+                    <button id="btn-postular-detalle" class="btn-apply mb-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalPostularEmpleos">
                         Aplicar a esta vacante
                     </button>
-                    
+
                     <p class="text-center text-muted mb-0" style="font-size: 0.75rem;">
                         <i class="bi bi-shield-check me-1"></i> Postulación segura vía TrabajoSV
                     </p>
@@ -180,6 +170,151 @@
         </div>
     </main>
 
+    <!-- Modal: Aplicar a Vacante -->
+    <div class="modal fade" id="modalPostularEmpleos" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-1">
+                <div class="modal-header border-0 bg-custom-blue text-white">
+                    <h5 class="modal-title fw-bold">Aplicar a <span id="modal-vacante-titulo">Vacante</span></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-muted">Carta de presentación</label>
+                        <textarea id="carta-empleos" class="form-control form-control-sm border-0 bg-light shadow-sm" rows="5"
+                            placeholder="Cuéntanos por qué eres el candidato ideal..."></textarea>
+                    </div>
+                    <div id="modal-feedback-empleos"></div>
+                    <button id="btn-enviar-postulacion-empleos" class="btn btn-primary w-100 fw-semibold rounded-pill">
+                        <i class="bi bi-send-fill me-1"></i>Enviar postulación
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+        import { loadNavbar } from '/js/app.js';
+
+        let idVacanteActual = null;
+
+        async function cargarVacante() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+
+            if (!id) {
+                document.querySelector('.main-content').innerHTML = '<div class="alert alert-danger">Error: No se especificó una vacante.</div>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/vacantes/${id}`, { credentials: 'include' });
+                const data = await res.json();
+
+                if (!data.ok || !data.vacante) {
+                    throw new Error('Vacante no encontrada');
+                }
+
+                const v = data.vacante;
+                idVacanteActual = v.id_vacante;
+
+                // Llenar datos del header
+                document.getElementById('vac-titulo').textContent = v.titulo;
+                document.getElementById('vac-empresa').textContent = v.nombre_empresa || '—';
+                document.getElementById('vac-ubicacion').textContent = v.ubicacion || '—';
+
+                // Chips
+                const tipoLabel = v.tipo_contrato ? v.tipo_contrato.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '—';
+                const nivelLabel = v.nivel_experiencia ? v.nivel_experiencia.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '—';
+                const salario = v.salario_min && v.salario_max
+                  ? `$${v.salario_min} - $${v.salario_max}`
+                  : 'A convenir';
+
+                document.getElementById('vac-tipo').textContent = tipoLabel;
+                document.getElementById('vac-nivel').textContent = nivelLabel;
+                document.getElementById('vac-salario').textContent = salario;
+
+                // Descripción
+                document.getElementById('vac-descripcion').innerHTML = `<p>${v.descripcion || 'Sin descripción disponible.'}</p>`;
+
+                // Sidebar
+                document.getElementById('vac-empresa-sidebar').textContent = v.nombre_empresa || '—';
+                document.getElementById('vac-tipo-label').textContent = tipoLabel;
+                document.getElementById('vac-nivel-label').textContent = nivelLabel;
+                document.getElementById('vac-fecha-cierre').textContent = v.fecha_cierre
+                  ? new Date(v.fecha_cierre).toLocaleDateString('es-SV', { year: 'numeric', month: 'long', day: 'numeric' })
+                  : '—';
+
+                // Modal title
+                document.getElementById('modal-vacante-titulo').textContent = v.titulo;
+
+                // Botón aplicar
+                document.getElementById('btn-postular-detalle').dataset.idVacante = v.id_vacante;
+
+                // Verificar si ya postuló
+                if (data.yaPostulado) {
+                    const btn = document.getElementById('btn-postular-detalle');
+                    btn.disabled = true;
+                    btn.textContent = '✓ Ya postulado';
+                    btn.classList.add('btn-secondary');
+                    btn.removeAttribute('data-bs-toggle');
+                    btn.removeAttribute('data-bs-target');
+                }
+
+            } catch (err) {
+                console.error('Error cargando vacante:', err);
+                document.querySelector('.main-content').innerHTML =
+                  `<div class="container"><div class="alert alert-danger">Error al cargar la vacante: ${err.message}</div></div>`;
+            }
+        }
+
+        // Enviar postulación
+        document.getElementById('btn-enviar-postulacion-empleos')?.addEventListener('click', async () => {
+            const btn = document.getElementById('btn-enviar-postulacion-empleos');
+            const carta = document.getElementById('carta-empleos')?.value?.trim() || '';
+            const feedback = document.getElementById('modal-feedback-empleos');
+
+            if (!idVacanteActual) return;
+
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+
+            try {
+                const res = await fetch(`/api/vacantes/${idVacanteActual}/postular`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ carta_presentacion: carta })
+                });
+
+                if (res.status === 401) {
+                    window.location.href = '/usuario/usuario-login.html';
+                    return;
+                }
+
+                const data = await res.json();
+                if (data.ok) {
+                    bootstrap.Modal.getInstance(document.getElementById('modalPostularEmpleos'))?.hide();
+                    cargarVacante(); // Recargar para mostrar "Ya postulado"
+                } else {
+                    feedback.innerHTML = `<div class="alert alert-danger py-2 small mb-2">${data.message}</div>`;
+                    btn.disabled = false;
+                    btn.textContent = 'Enviar postulación';
+                }
+            } catch (err) {
+                console.error(err);
+                feedback.innerHTML = '<div class="alert alert-danger py-2 small mb-2">Error de conexión.</div>';
+                btn.disabled = false;
+                btn.textContent = 'Enviar postulación';
+            }
+        });
+
+        // Inicializar
+        (async () => {
+            await loadNavbar();
+            await cargarVacante();
+        })();
+    </script>
 </body>
 </html>

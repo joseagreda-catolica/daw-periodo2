@@ -176,26 +176,26 @@
                 <div class="row mb-4">
                     <div class="col-md-3">
                         <div class="stat-card">
-                            <div class="stat-value">42%</div>
-                            <div class="stat-label">Tasa de conversión</div>
+                            <div class="stat-value" id="stat-usuarios">0</div>
+                            <div class="stat-label">Total Usuarios</div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="stat-card">
-                            <div class="stat-value">4.2 min</div>
-                            <div class="stat-label">Tiempo prom. sesión</div>
+                            <div class="stat-value" id="stat-empresas">0</div>
+                            <div class="stat-label">Total Empresas</div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="stat-card">
-                            <div class="stat-value">68%</div>
-                            <div class="stat-label">Usuarios recurrentes</div>
+                            <div class="stat-value" id="stat-vacantes">0</div>
+                            <div class="stat-label">Vacantes Activas</div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="stat-card">
-                            <div class="stat-value">22 días</div>
-                            <div class="stat-label">Prom. cobertura vacante</div>
+                            <div class="stat-value" id="stat-postulaciones">0</div>
+                            <div class="stat-label">Postulaciones</div>
                         </div>
                     </div>
                 </div>
@@ -272,7 +272,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
-            fetch('/backend/public/components/sidebar.html')
+            fetch('/components/sidebar.html')
                 .then(res => res.text())
                 .then(data => {
                     document.getElementById('sidebar-container').innerHTML = data;
@@ -299,6 +299,8 @@
 
         });
     </script>
+
+    <script type="module" src="/js/admin.js"></script>
 
 </body>
 

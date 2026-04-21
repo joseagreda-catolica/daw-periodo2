@@ -550,14 +550,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
 
-        document.querySelectorAll('.filter-tab').forEach(tab => {
-            tab.addEventListener('click', function () {
-                document.querySelectorAll('.filter-tab').forEach(t => {
-                    t.classList.remove('active-tab');
-
-                });
-                this.classList.add('active-tab');
+        const filtroRol = {
+          btnTodos: null, btnCandidatos: 'candidato',
+          btnEmpresas: 'empresa', btnAdmins: 'admin', btnSuspendidos: '__inactivo__'
+        };
+        Object.keys(filtroRol).forEach(id => {
+          document.getElementById(id)?.addEventListener('click', () => {
+            const rol = filtroRol[id];
+            document.querySelectorAll('.filter-tab').forEach(t => {
+              t.classList.remove('active-tab');
             });
+            document.getElementById(id)?.classList.add('active-tab');
+            document.querySelectorAll('#tabla-usuarios tr[data-rol]').forEach(tr => {
+              if (rol === null) tr.style.display = '';
+              else if (rol === '__inactivo__') tr.style.display = tr.dataset.activo === '0' ? '' : 'none';
+              else tr.style.display = tr.dataset.rol === rol ? '' : 'none';
+            });
+          });
         });
 
 
@@ -569,11 +578,11 @@
             });
         });
 
-        fetch('/backend/public/components/sidebar.html')
+        fetch('/components/sidebar.html')
             .then(res => res.text())
             .then(data => {
                 document.getElementById('sidebar-container').innerHTML = data;
-                etTimeout(() => {
+                setTimeout(() => {
                     activarSidebar();
                 }, 0);
             })
@@ -594,6 +603,8 @@
             });
         }
     </script>
+
+    <script type="module" src="/js/admin.js"></script>
 
 </body>
 

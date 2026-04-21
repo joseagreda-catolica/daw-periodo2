@@ -5,6 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('#container-filter form');
   if (!form) return;
 
+  // Leer parámetros de URL y prellenar el formulario
+  const params = new URLSearchParams(window.location.search);
+  const buscarVal = params.get('buscar');
+  const ubicacionVal = params.get('ubicacion');
+  const tipoVal = params.get('tipo');
+  const nivelVal = params.get('nivel');
+  const salarioVal = params.get('salario_min');
+
+  if (buscarVal) form.querySelector('[name="buscar"]').value = buscarVal;
+  if (ubicacionVal) form.querySelector('[name="ubicacion"]').value = ubicacionVal;
+  if (tipoVal) form.querySelector('[name="tipo"]').value = tipoVal;
+  if (nivelVal) form.querySelector('[name="nivel"]').value = nivelVal;
+  if (salarioVal) form.querySelector('[name="salario_min"]').value = salarioVal;
+
+  // Si hay parámetros en URL, ejecutar búsqueda automáticamente
+  if (buscarVal || ubicacionVal || tipoVal || nivelVal || salarioVal) {
+    setTimeout(() => form.dispatchEvent(new Event('submit')), 100);
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 

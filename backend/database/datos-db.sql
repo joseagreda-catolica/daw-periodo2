@@ -175,3 +175,17 @@ INSERT INTO recurso (titulo, descripcion, url_contenido, tipo) VALUES
 ('Guía freelance','Cómo trabajar freelance','https://learning.linkedin.com/certifications-and-credentials','guia'),
 ('Artículo de Cloud','Introducción a cloud','https://learning.linkedin.com/certifications-and-credentials','articulo'),
 ('Curso DevOps','CI/CD básico','https://learning.linkedin.com/certifications-and-credentials','video');
+
+-- -----------------------------------------------
+-- USUARIOS INACTIVOS (para probar filtro "Suspendidos")
+-- -----------------------------------------------
+UPDATE usuario SET activo = 0 WHERE email IN ('pedro7@mail.com', 'empresa5@mail.com');
+
+-- -----------------------------------------------
+-- VALORACIONES PENDIENTES (para que moderación tenga contenido real)
+-- -----------------------------------------------
+INSERT INTO valoracion (id_empresa, id_candidato, puntuacion, comentario, aprobada) VALUES
+(1, 2, 2, 'No cumplieron lo prometido en la entrevista', 0),
+(3, 4, 1, 'Pésima organización interna', 0),
+(5, 6, 3, 'Ambiente de trabajo mejorable', 0),
+(2, 8, 4, 'Buenos beneficios pero salario bajo', 0);

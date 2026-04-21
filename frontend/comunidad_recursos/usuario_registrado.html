@@ -126,6 +126,8 @@
                         </select>
                     </div>
 
+                    <div id="lista-valoraciones-empresa" class="mb-3"></div>
+
                     <div id="form-valoracion" class="bg-white p-3 rounded shadow-sm">
                         <label class="form-label small fw-semibold text-muted">Tu valoración</label>
                         <div class="star-radio mb-2" id="star-rating">
@@ -137,13 +139,85 @@
                         </div>
                         <textarea id="valoracion-comentario" class="form-control form-control-sm mb-3 border-0 bg-light" rows="3"
                             placeholder="Comparte tu experiencia..."></textarea>
-                        
+                        <div id="valoracion-feedback"></div>
                         <button id="btn-enviar-valoracion" class="btn btn-custom-blue btn-sm w-100 fw-semibold rounded-pill py-2 shadow-sm">
                             <i class="bi bi-send me-1"></i>Enviar valoración
                         </button>
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Ver Tema de Foro -->
+    <div class="modal fade" id="modalTema" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 rounded-1">
+                <div class="modal-header border-0 bg-custom-blue text-white">
+                    <h5 class="modal-title fw-bold" id="modal-tema-titulo">Tema</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <small class="text-muted d-block mb-3" id="modal-tema-autor">Autor · Fecha</small>
+
+                    <div class="border rounded-3 p-3 mb-4" style="background:#fafbff;">
+                        <p class="small mb-0 text-secondary"></p>
+                    </div>
+
+                    <h6 class="fw-bold mb-3">Respuestas</h6>
+                    <div id="lista-respuestas">
+                        <p class="text-muted small text-center py-3">Cargando respuestas...</p>
+                    </div>
+
+                    <div id="responder-login-msg" class="alert alert-info py-2 small mb-0" style="display:none;">
+                        <i class="bi bi-info-circle me-1"></i>Inicia sesión para responder.
+                    </div>
+
+                    <form id="form-responder" class="mt-4" style="display:none;">
+                        <label class="form-label small fw-semibold text-muted">Tu respuesta</label>
+                        <textarea id="respuesta-contenido" class="form-control form-control-sm mb-2 border-0 bg-light" rows="3"
+                            placeholder="Escribe tu respuesta..."></textarea>
+                        <div id="respuesta-feedback"></div>
+                        <button type="button" id="btn-enviar-respuesta" class="btn btn-custom-blue btn-sm fw-semibold rounded-pill px-3 shadow-sm">
+                            <i class="bi bi-send me-1"></i>Responder
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Nuevo Debate -->
+    <div class="modal fade" id="modalNuevoDebate" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-1">
+                <div class="modal-header border-0 bg-custom-blue text-white">
+                    <h5 class="modal-title fw-bold">Nuevo Debate</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-muted">Título del debate</label>
+                        <input type="text" id="debate-titulo" class="form-control form-control-sm border-0 bg-light shadow-sm"
+                            placeholder="Ej. Cómo prepararse para una entrevista">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-muted">Categoría</label>
+                        <select id="debate-categoria" class="form-select form-select-sm border-0 bg-light shadow-sm">
+                            <option value="general">General</option>
+                            <option value="empleo">Empleo</option>
+                            <option value="networking">Networking</option>
+                            <option value="recursos">Recursos</option>
+                        </select>
+                    </div>
+
+                    <div id="debate-feedback"></div>
+                    <button id="btn-crear-debate" class="btn btn-custom-blue btn-sm w-100 fw-semibold rounded-pill py-2 shadow-sm">
+                        <i class="bi bi-chat-dots me-1"></i>Publicar debate
+                    </button>
+                </div>
             </div>
         </div>
     </div>

@@ -1,8 +1,4 @@
-//require('dotenv').config();
 require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
-
-
-console.log("SECRET:", process.env.SESSION_SECRET);
 const express = require('express');
 const session = require('express-session');
 const flash = require('express-flash');
@@ -51,9 +47,9 @@ app.use((err, req, res, _next) => {
   res.status(status).send('<h1>Error del servidor</h1>');
 });
 
-app.get('/', (req, res)=>{
-  res.send('Servidor Funciona');
-} );
+app.get('/', (req, res) => {
+  res.redirect('/website/home-website.html');
+});
 // 404
 app.use((req, res) => {
   if (req.path.startsWith('/api/')) {

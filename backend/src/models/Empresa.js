@@ -42,7 +42,12 @@ const Empresa = {
   },
 
   async listarTodas() {
-    const [rows] = await pool.execute('SELECT * FROM empresa ORDER BY nombre_empresa');
+    const [rows] = await pool.execute(`
+      SELECT e.*, u.activo, u.id_usuario, u.email
+      FROM empresa e
+      JOIN usuario u ON u.id_usuario = e.id_usuario
+      ORDER BY e.nombre_empresa
+    `);
     return rows;
   },
 

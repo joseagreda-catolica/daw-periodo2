@@ -56,21 +56,23 @@
     <!-- Search Box -->
     <div class="container">
         <div class="search-box">
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label class="form-label fw-semibold small">¿Qué tipo de trabajo buscas?</label>
-                    <input type="text" class="form-control" placeholder="Ej. Desarrollador, Diseñador...">
+            <form action="/website/empleos.html" method="GET">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold small">¿Qué tipo de trabajo buscas?</label>
+                        <input type="text" name="buscar" class="form-control" placeholder="Ej. Desarrollador, Diseñador...">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold small">Ubicación</label>
+                        <input type="text" name="ubicacion" class="form-control" placeholder="Ej. San Salvador">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-warning w-100 fw-semibold rounded-3">
+                            <i class="bi bi-search me-1"></i>Buscar
+                        </button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold small">Ubicación</label>
-                    <input type="text" class="form-control" placeholder="Ej. San Salvador">
-                </div>
-                <div class="col-md-2 d-flex align-items-end">
-                    <a href="/website/empleos.html" class="btn btn-warning w-100 fw-semibold rounded-3">
-                        <i class="bi bi-search me-1"></i>Buscar
-                    </a>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 

@@ -209,7 +209,7 @@
                         <tr>
                             <th>Empresa</th>
                             <th>Sector</th>
-                            <th>Vacantes</th>
+                            <th>Ubicación</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -233,31 +233,60 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    
-    document.querySelectorAll('.filter-tab').forEach(tab => {
+
+    function actualizarContadoresEmpresas() {
+      const filas = [...document.querySelectorAll('#tabla-empresas tr[data-activo]')];
+      const tabs = document.querySelectorAll('.filter-tab');
+      const totalEmpresas = filas.length;
+      const activas = filas.filter(t => t.dataset.activo === '1').length;
+      const suspendidas = filas.filter(t => t.dataset.activo === '0').length;
+
+      if (tabs[0]) tabs[0].textContent = `Todas (${totalEmpresas})`;
+      if (tabs[1]) tabs[1].textContent = `Activas (${activas})`;
+      if (tabs[2]) tabs[2].textContent = `Pendientes (0)`;
+      if (tabs[3]) tabs[3].textContent = `Suspendidas (${suspendidas})`;
+    }
+
+    const filtroEmpresas = {
+      0: null, // Todas
+      1: '1',  // Activas
+      2: null, // Pendientes - no show
+      3: '0'   // Suspendidas
+    };
+
+    document.querySelectorAll('.filter-tab').forEach((tab, index) => {
         tab.addEventListener('click', function() {
             document.querySelectorAll('.filter-tab').forEach(t => {
                 t.classList.remove('active-tab');
-           
             });
             this.classList.add('active-tab');
+
+            const filterValue = filtroEmpresas[index];
+            document.querySelectorAll('#tabla-empresas tr[data-activo]').forEach(tr => {
+              if (filterValue === null && index !== 2) tr.style.display = '';
+              else if (index === 2) tr.style.display = 'none'; // Pendientes muestra nada
+              else tr.style.display = tr.dataset.activo === filterValue ? '' : 'none';
+            });
         });
     });
 
-
     document.querySelector('.search-box input').addEventListener('input', function() {
         const query = this.value.toLowerCase();
-        document.querySelectorAll('#tabla-usuarios tr').forEach(row => {
+        document.querySelectorAll('#tabla-empresas tr').forEach(row => {
             const text = row.textContent.toLowerCase();
             row.style.display = text.includes(query) ? '' : 'none';
         });
     });
 
-    fetch('/backend/public/components/sidebar.html')
+    // Observar cuando admin.js llena la tabla
+    const obs = new MutationObserver(actualizarContadoresEmpresas);
+    obs.observe(document.getElementById('tabla-empresas'), { childList: true });
+
+    fetch('/components/sidebar.html')
     .then(res => res.text())
     .then(data => {
         document.getElementById('sidebar-container').innerHTML = data;
-        etTimeout(() => {
+        setTimeout(() => {
       activarSidebar();
     }, 0);
     })
@@ -279,5 +308,8 @@
 }
 
 </script>
+
+  <script type="module" src="/js/admin.js"></script>
+
 </body>
 </html>

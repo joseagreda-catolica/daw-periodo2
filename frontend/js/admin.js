@@ -82,7 +82,7 @@ async function loadUsuarios() {
     const btnClass = activo ? 'btn-outline-danger' : 'btn-outline-success';
     const btnLabel = activo ? 'Desactivar' : 'Activar';
     return `
-      <tr>
+      <tr data-rol="${u.rol}" data-activo="${u.activo}">
         <td>
           <div class="d-flex align-items-center gap-3">
             <div class="user-avatar">${initials}</div>
@@ -112,18 +112,30 @@ async function loadEmpresas() {
   if (!data.ok || !tbody) return;
 
   if (!data.empresas || data.empresas.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-3">No hay empresas.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No hay empresas.</td></tr>';
     return;
   }
 
-  tbody.innerHTML = data.empresas.map(e => `
-    <tr>
-      <td class="fw-semibold">${e.nombre_empresa}</td>
-      <td class="text-muted small">${e.sector || '—'}</td>
-      <td class="text-muted small">${e.ubicacion || '—'}</td>
-      <td class="text-muted small">${e.email || '—'}</td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = data.empresas.map(e => {
+    const estadoBadge = e.activo
+      ? '<span class="badge rounded-pill" style="background:#ecfdf5;color:#059669;font-size:0.72rem;">● Activa</span>'
+      : '<span class="badge rounded-pill" style="background:#f3f4f6;color:#6b7280;font-size:0.72rem;">● Suspendida</span>';
+    const btnClass = e.activo ? 'btn-outline-danger' : 'btn-outline-success';
+    const btnLabel = e.activo ? 'Suspender' : 'Activar';
+    return `
+      <tr data-activo="${e.activo}">
+        <td class="fw-semibold">${e.nombre_empresa}</td>
+        <td class="text-muted small">${e.sector || '—'}</td>
+        <td class="text-muted small">${e.ubicacion || '—'}</td>
+        <td>${estadoBadge}</td>
+        <td class="text-end">
+          <button class="btn btn-sm ${btnClass} rounded-pill px-3" style="font-size:0.78rem;" onclick="toggleUsuario(${e.id_usuario})">
+            ${btnLabel}
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
 }
 
 // ── Vacantes ──────────────────────────────────────────────────────────────────

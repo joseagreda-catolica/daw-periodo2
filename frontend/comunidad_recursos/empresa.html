@@ -205,24 +205,138 @@
                     </div>
                 </div>
             </section>
+
+            <section id="recursos-corp" class="section-card">
+                <h5 class="fw-bold mb-4 text-custom-blue"><i class="bi bi-journal-bookmark-fill me-2"></i>Capacitación Corporativa</h5>
+                <p class="text-muted text-center py-4">Sección en desarrollo...</p>
+            </section>
         </div>
     </div>
 
+    <!-- Modal: Nueva/Editar Vacante -->
     <div class="modal fade" id="modalVacante" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content border-0 rounded-1">
                 <div class="modal-header border-0 bg-custom-blue text-white">
-                    <h5 class="modal-title fw-bold">Nueva Vacante</h5>
+                    <h5 class="modal-title fw-bold" id="modal-vacante-titulo">Nueva Vacante</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4 bg-light">
+                    <input type="hidden" id="vacante-id-edit">
+                    <div id="vacante-feedback"></div>
+
                     <div class="row g-3">
                         <div class="col-12">
                             <label class="form-label small fw-bold">Título del puesto</label>
-                            <input type="text" class="form-control border-0 shadow-sm" placeholder="Ej. Contador General">
+                            <input type="text" id="vac-titulo" class="form-control border-0 shadow-sm" placeholder="Ej. Desarrollador Senior Java">
                         </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Ubicación</label>
+                            <input type="text" id="vac-ubicacion" class="form-control border-0 shadow-sm" placeholder="Ej. San Salvador">
                         </div>
-                    <button class="btn btn-custom-accent w-100 mt-4 py-2 fw-bold shadow-sm">PUBLICAR AHORA</button>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Tipo de Contrato</label>
+                            <select id="vac-tipo" class="form-select border-0 shadow-sm">
+                                <option value="tiempo_completo">Tiempo Completo</option>
+                                <option value="medio_tiempo">Tiempo Parcial</option>
+                                <option value="temporal">Contrato Temporal</option>
+                                <option value="freelance">Freelance</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Nivel de Experiencia</label>
+                            <select id="vac-nivel" class="form-select border-0 shadow-sm">
+                                <option value="junior">Junior</option>
+                                <option value="mid">Semi-Senior</option>
+                                <option value="senior">Senior</option>
+                                <option value="directivo">Directivo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Estado</label>
+                            <select id="vac-estado" class="form-select border-0 shadow-sm">
+                                <option value="activa">Activa</option>
+                                <option value="cerrada">Cerrada</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Salario Mínimo</label>
+                            <input type="number" id="vac-salario-min" class="form-control border-0 shadow-sm" placeholder="Ej. 1500">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Salario Máximo</label>
+                            <input type="number" id="vac-salario-max" class="form-control border-0 shadow-sm" placeholder="Ej. 2500">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Fecha Cierre</label>
+                            <input type="date" id="vac-fecha-cierre" class="form-control border-0 shadow-sm">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label small fw-bold">Descripción</label>
+                            <textarea id="vac-descripcion" class="form-control border-0 shadow-sm" rows="4" placeholder="Describe los requisitos y responsabilidades..."></textarea>
+                        </div>
+                    </div>
+                    <button id="btn-guardar-vacante" class="btn btn-custom-accent w-100 mt-4 py-2 fw-bold shadow-sm">PUBLICAR AHORA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Editar Perfil de Empresa -->
+    <div class="modal fade" id="modalEditarEmpresa" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 rounded-1">
+                <div class="modal-header border-0 bg-custom-blue text-white">
+                    <h5 class="modal-title fw-bold">Actualizar Datos de Empresa</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 bg-light">
+                    <div id="empresa-edit-feedback"></div>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label small fw-bold">Nombre Comercial</label>
+                            <input type="text" id="emp-nombre" class="form-control border-0 shadow-sm" placeholder="Tech Solutions El Salvador">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Sector</label>
+                            <input type="text" id="emp-sector" class="form-control border-0 shadow-sm" placeholder="Ej. Tecnología e Información">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Ubicación</label>
+                            <input type="text" id="emp-ubicacion" class="form-control border-0 shadow-sm" placeholder="Ej. San Salvador">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Teléfono</label>
+                            <input type="tel" id="emp-telefono" class="form-control border-0 shadow-sm" placeholder="+503 7777-7777">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Sitio Web</label>
+                            <input type="url" id="emp-sitio-web" class="form-control border-0 shadow-sm" placeholder="https://ejemplo.com">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label small fw-bold">Descripción</label>
+                            <textarea id="emp-descripcion" class="form-control border-0 shadow-sm" rows="4" placeholder="Describe tu empresa..."></textarea>
+                        </div>
+                    </div>
+                    <button id="btn-guardar-empresa" class="btn btn-custom-accent w-100 mt-4 py-2 fw-bold shadow-sm">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Ver Postulaciones de una Vacante -->
+    <div class="modal fade" id="modalPostulaciones" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content border-0 rounded-1">
+                <div class="modal-header border-0 bg-custom-blue text-white">
+                    <h5 class="modal-title fw-bold" id="modal-postulaciones-titulo">Postulaciones</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="lista-postulaciones">
+                        <p class="text-muted text-center py-3">Cargando postulaciones...</p>
+                    </div>
                 </div>
             </div>
         </div>

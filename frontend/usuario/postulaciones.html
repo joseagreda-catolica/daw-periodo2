@@ -121,7 +121,7 @@ body {
 
 <body>
 
-<div class="navbar-simulada"></div>
+<nav id="nav-website" class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: var(--ts-blue); border-bottom: 1px solid rgba(255,255,255,0.1);"></nav>
 
 <div class="container pb-5">
 
@@ -144,8 +144,8 @@ body {
 <h5 class="sidebar-title">Filtrar por Estado</h5>
 
 <div class="form-check">
-<input type="checkbox" class="form-check-input" value="enviado" checked>
-<label class="form-check-label">Enviado</label>
+<input type="checkbox" class="form-check-input" value="enviada" checked>
+<label class="form-check-label">Enviada</label>
 </div>
 
 <div class="form-check">
@@ -154,13 +154,18 @@ body {
 </div>
 
 <div class="form-check">
-<input type="checkbox" class="form-check-input" value="aceptado" checked>
-<label class="form-check-label">Aceptado</label>
+<input type="checkbox" class="form-check-input" value="entrevista" checked>
+<label class="form-check-label">Entrevista</label>
 </div>
 
 <div class="form-check">
-<input type="checkbox" class="form-check-input" value="rechazado" checked>
-<label class="form-check-label">Rechazado</label>
+<input type="checkbox" class="form-check-input" value="contratado" checked>
+<label class="form-check-label">Contratado</label>
+</div>
+
+<div class="form-check">
+<input type="checkbox" class="form-check-input" value="rechazada" checked>
+<label class="form-check-label">Rechazada</label>
 </div>
 
 </div>
@@ -175,52 +180,117 @@ body {
 </div>
 </div>
 
-<script>
-const datos = [
-{ titulo:"Desarrollador web", empresa:"Tech Solutions Inc.", fecha:"10 Oct 2024", estado:"aceptado", bg:"bg-aceptado", label:"Aceptado" },
-{ titulo:"DBA Junior", empresa:"DataCorp.", fecha:"22 Ene 2025", estado:"en_revision", bg:"bg-revision", label:"En revisión" },
-{ titulo:"Administrador de Redes", empresa:"Networks Inc.", fecha:"02 Mar 2026", estado:"enviado", bg:"bg-enviado", label:"Enviado" }
-];
+<script type="module">
+import { loadNavbar, loadFooter } from '/js/app.js';
 
-function crearCard(p){
-return `
-<div class="ts-card d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-<div>
-<h4 class="card-title fw-bold mb-1">${p.titulo}</h4>
-<p class="card-company">${p.empresa}</p>
-<p class="card-date">${p.fecha}</p>
-<span class="card-status-label">Estado</span>
-<span class="badge-estado ${p.bg}">${p.label}</span>
-</div>
-<a class="btn-ver-detalle mt-3 mt-md-0">Ver Detalle</a>
-</div>
-`;
+let datos = [];
+
+async function verificarSesion() {
+  try {
+    const res = await fetch('/api/auth/check-session', { credentials: 'include' });
+    const data = await res.json();
+    if (!data.logged) {
+      window.location.href = '/usuario/usuario-login.html';
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('Error verificando sesión:', err);
+    return false;
+  }
 }
 
-function render(lista){
-document.getElementById("lista-postulaciones").innerHTML =
-lista.map(crearCard).join("");
+async function cargarPostulaciones() {
+  try {
+    const res = await fetch('/api/candidato/postulaciones', { credentials: 'include' });
+
+    if (res.status === 401) {
+      window.location.href = '/usuario/usuario-login.html';
+      return;
+    }
+
+    const data = await res.json();
+    if (!data.ok || !data.postulaciones) {
+      document.getElementById("lista-postulaciones").innerHTML =
+        '<div class="ts-card text-center py-5"><p class="text-muted">No tienes postulaciones aún.</p></div>';
+      return;
+    }
+
+    datos = data.postulaciones.map(p => {
+      const estadoMap = {
+        'enviada': { bg: 'bg-enviado', label: 'Enviada' },
+        'en_revision': { bg: 'bg-revision', label: 'En revisión' },
+        'entrevista': { bg: 'bg-revision', label: 'Entrevista' },
+        'contratado': { bg: 'bg-aceptado', label: 'Contratado' },
+        'rechazada': { bg: 'bg-rechazado', label: 'Rechazada' }
+      };
+      const estado = estadoMap[p.estado] || { bg: 'bg-enviado', label: p.estado };
+      return {
+        id: p.id_vacante,
+        titulo: p.titulo,
+        empresa: p.nombre_empresa,
+        fecha: new Date(p.fecha_postulacion).toLocaleDateString('es-SV'),
+        estado: p.estado,
+        ...estado
+      };
+    });
+
+    aplicar();
+  } catch (err) {
+    console.error('Error cargando postulaciones:', err);
+    document.getElementById("lista-postulaciones").innerHTML =
+      '<div class="ts-card text-center py-5"><p class="text-danger">Error al cargar postulaciones.</p></div>';
+  }
 }
 
-function filtros(){
-return [...document.querySelectorAll(".form-check-input:checked")]
-.map(e=>e.value);
+function crearCard(p) {
+  return `
+    <div class="ts-card d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+      <div>
+        <h4 class="card-title fw-bold mb-1">${p.titulo}</h4>
+        <p class="card-company">${p.empresa}</p>
+        <p class="card-date">${p.fecha}</p>
+        <span class="card-status-label">Estado</span>
+        <span class="badge-estado ${p.bg}">${p.label}</span>
+      </div>
+      <a href="/usuario/detalle-vacante.html?id=${p.id}" target="_blank" class="btn-ver-detalle mt-3 mt-md-0">Ver Detalle</a>
+    </div>
+  `;
 }
 
-function aplicar(){
-const activos=filtros();
-const filtrados=datos.filter(d=>activos.includes(d.estado));
-render(filtrados);
-
-document.getElementById("resumen-total").textContent=filtrados.length;
-document.getElementById("resumen-aceptado").textContent=
-filtrados.filter(d=>d.estado==="aceptado").length;
+function render(lista) {
+  if (lista.length === 0) {
+    document.getElementById("lista-postulaciones").innerHTML =
+      '<div class="ts-card text-center py-5"><p class="text-muted">No hay postulaciones con los filtros seleccionados.</p></div>';
+  } else {
+    document.getElementById("lista-postulaciones").innerHTML = lista.map(crearCard).join("");
+  }
 }
 
-document.querySelectorAll(".form-check-input")
-.forEach(cb=>cb.addEventListener("change", aplicar));
+function filtros() {
+  return [...document.querySelectorAll(".form-check-input:checked")].map(e => e.value);
+}
 
-setTimeout(()=>aplicar(),500);
+function aplicar() {
+  const activos = filtros();
+  const filtrados = datos.filter(d => activos.includes(d.estado));
+  render(filtrados);
+
+  document.getElementById("resumen-total").textContent = datos.length;
+  document.getElementById("resumen-aceptado").textContent =
+    datos.filter(d => d.estado === 'contratado').length;
+}
+
+// Inicializar
+(async () => {
+  if (await verificarSesion()) {
+    await loadNavbar();
+    await cargarPostulaciones();
+
+    document.querySelectorAll(".form-check-input")
+      .forEach(cb => cb.addEventListener("change", aplicar));
+  }
+})();
 </script>
 
 </body>

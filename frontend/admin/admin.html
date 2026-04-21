@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <style>
         body {
-            background-color: E8E5D9;
+            background-color: #E8E5D9;
         }
 
         /* Layout */
@@ -494,7 +494,7 @@
         }
 
 
-        fetch('/backend/public/components/sidebar.html')
+        fetch('/components/sidebar.html')
             .then(res => res.text())
             .then(data => {
                 document.getElementById('sidebar-container').innerHTML = data;
@@ -524,7 +524,6 @@
 
 
     <script type="module" src="/js/admin.js"></script>
-    </script>
 
 </body>
 
