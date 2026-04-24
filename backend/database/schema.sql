@@ -2,7 +2,7 @@
 -- Portal de Trabajo - Schema de Base de Datos
 -- =============================================
 
-CREATE DATABASE IF NOT EXISTS portal_trabajo;
+CREATE DATABASE IF NOT EXISTS portal_trabajo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE portal_trabajo;
 
 -- -----------------------------------------------

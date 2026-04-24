@@ -1,4 +1,5 @@
 USE portal_trabajo;
+SET NAMES 'utf8mb4';
 
 -- USUARIOS
 -- -----------------------------------------------
