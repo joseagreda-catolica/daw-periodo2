@@ -69,6 +69,7 @@ router.post('/vacantes', apiAuth, apiRole('empresa'), async (req, res) => {
     const empresa = await Empresa.buscarPorUsuario(req.session.user.id);
     if (!empresa) return res.status(404).json({ ok: false, message: 'Empresa no encontrada' });
     if (!req.body.titulo) return res.status(400).json({ ok: false, message: 'El título es requerido' });
+    if (!req.body.descripcion) return res.status(400).json({ ok: false, message: 'La descripción es requerida' });
 
     // Validar salarios si ambos están presentes
     const salarioMin = req.body.salario_min ? parseFloat(req.body.salario_min) : null;

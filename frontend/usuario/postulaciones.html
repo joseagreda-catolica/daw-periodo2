@@ -180,9 +180,8 @@ body {
 </div>
 </div>
 
+<script type="module" src="/js/app.js"></script>
 <script type="module">
-import { loadNavbar, loadFooter } from '/js/app.js';
-
 let datos = [];
 
 async function verificarSesion() {
@@ -284,7 +283,6 @@ function aplicar() {
 // Inicializar
 (async () => {
   if (await verificarSesion()) {
-    await loadNavbar();
     await cargarPostulaciones();
 
     document.querySelectorAll(".form-check-input")

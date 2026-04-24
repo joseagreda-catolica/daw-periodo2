@@ -1,5 +1,6 @@
 const router     = require('express').Router();
 const { apiAuth, apiRole } = require('../../middlewares/auth');
+const pool = require('../../config/database');
 const Usuario    = require('../../models/Usuario');
 const Empresa    = require('../../models/Empresa');
 const Vacante    = require('../../models/Vacante');
@@ -71,7 +72,9 @@ router.get('/empresas', ...adminAuth, async (req, res) => {
 
 router.get('/vacantes', ...adminAuth, async (req, res) => {
   try {
-    const vacantes = await Vacante.buscar({});
+    const [vacantes] = await pool.query(
+      'SELECT v.*, e.nombre_empresa FROM vacante v JOIN empresa e ON v.id_empresa = e.id_empresa ORDER BY v.fecha_publicacion DESC'
+    );
     res.json({ ok: true, vacantes });
   } catch (err) {
     console.error(err);
