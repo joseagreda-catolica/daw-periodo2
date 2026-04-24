@@ -56,7 +56,61 @@ async function loadStats() {
     document.getElementById('stat-empresas').textContent      = s.totalEmpresas;
     document.getElementById('stat-vacantes').textContent      = s.totalVacantes;
     document.getElementById('stat-postulaciones').textContent = s.totalPostulaciones;
+
+    // Renderizar gráficas con datos reales
+    renderGraficaSectores(s.postPorSector || []);
+    renderListaSectores(s.vacPorSector || []);
+    renderFechaStats();
   }
+}
+
+function renderFechaStats() {
+  const now = new Date();
+  const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  const mes = meses[now.getMonth()];
+  const year = now.getFullYear();
+  document.getElementById('stats-fecha').textContent = `Datos de desempeño — ${mes.charAt(0).toUpperCase() + mes.slice(1)} ${year}`;
+}
+
+function renderGraficaSectores(data) {
+  const container = document.getElementById('grafica-sectores');
+  if (!data || data.length === 0) {
+    container.innerHTML = '<p class="text-muted small">Sin datos disponibles</p>';
+    return;
+  }
+
+  const maxValue = Math.max(...data.map(d => d.total));
+  const colors = ['#2e3266', '#c9a84c', '#ddd', '#ddd', '#ddd'];
+
+  container.innerHTML = data.map((sector, idx) => {
+    const height = (sector.total / maxValue) * 140;
+    const color = colors[idx] || '#ddd';
+    return `<div style="width:40px;height:${height}px;background:${color};" title="${sector.sector}: ${sector.total}"></div>`;
+  }).join('');
+}
+
+function renderListaSectores(data) {
+  const container = document.getElementById('lista-sectores');
+  if (!data || data.length === 0) {
+    container.innerHTML = '<p class="text-muted small">Sin datos disponibles</p>';
+    return;
+  }
+
+  const maxValue = Math.max(...data.map(d => d.total));
+
+  container.innerHTML = data.map((sector, idx) => {
+    const width = (sector.total / maxValue) * 100;
+    const isGold = idx % 2 === 1;
+    const barClass = isGold ? 'bar-gold' : '';
+    return `
+      <div class="mt-3">
+        ${sector.sector} ${sector.total}
+        <div class="bar">
+          <div class="bar-fill ${barClass}" style="width:${width}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 // ── Usuarios ─────────────────────────────────────────────────────────────────

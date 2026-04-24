@@ -20,7 +20,39 @@ router.get('/stats', ...adminAuth, async (req, res) => {
       Vacante.contar(),
       Postulacion.contar()
     ]);
-    res.json({ ok: true, stats: { totalUsuarios, totalEmpresas, totalVacantes, totalPostulaciones } });
+
+    const [postPorSector] = await pool.query(`
+      SELECT e.sector, COUNT(p.id_postulacion) AS total
+      FROM postulacion p
+      JOIN vacante v ON p.id_vacante = v.id_vacante
+      JOIN empresa e ON v.id_empresa = e.id_empresa
+      WHERE e.sector IS NOT NULL
+      GROUP BY e.sector
+      ORDER BY total DESC
+      LIMIT 5
+    `);
+
+    const [vacPorSector] = await pool.query(`
+      SELECT e.sector, COUNT(v.id_vacante) AS total
+      FROM vacante v
+      JOIN empresa e ON v.id_empresa = e.id_empresa
+      WHERE v.estado = 'activa' AND e.sector IS NOT NULL
+      GROUP BY e.sector
+      ORDER BY total DESC
+      LIMIT 5
+    `);
+
+    res.json({
+      ok: true,
+      stats: {
+        totalUsuarios,
+        totalEmpresas,
+        totalVacantes,
+        totalPostulaciones,
+        postPorSector: postPorSector || [],
+        vacPorSector: vacPorSector || []
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ ok: false, message: 'Error al obtener stats' });

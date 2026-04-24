@@ -162,7 +162,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <div class="page-title">Estadísticas del sistema</div>
-                        <small class="text-muted">Datos de desempeño — Marzo 2026</small>
+                        <small class="text-muted" id="stats-fecha">Datos de desempeño</small>
                     </div>
                     <div>
                         <select class="form-select d-inline w-auto">
@@ -207,13 +207,7 @@
                     <div class="col-md-6">
                         <div class="box">
                             <h6>Postulaciones por sector</h6>
-                            <div class="d-flex align-items-end gap-3 mt-3" style="height:150px;">
-                                <div style="width:40px;height:120px;background:#2e3266;"></div>
-                                <div style="width:40px;height:90px;background:#c9a84c;"></div>
-                                <div style="width:40px;height:70px;background:#ddd;"></div>
-                                <div style="width:40px;height:60px;background:#ddd;"></div>
-                                <div style="width:40px;height:50px;background:#ddd;"></div>
-                            </div>
+                            <div id="grafica-sectores" class="d-flex align-items-end gap-3 mt-3" style="height:150px;"></div>
                         </div>
                     </div>
 
@@ -221,42 +215,7 @@
                     <div class="col-md-6">
                         <div class="box">
                             <h6>Top sectores — Vacantes</h6>
-
-                            <div class="mt-3">
-                                Tecnología 420
-                                <div class="bar">
-                                    <div class="bar-fill" style="width:100%"></div>
-                                </div>
-                            </div>
-
-                            <div class="mt-3">
-                                Finanzas 310
-                                <div class="bar">
-                                    <div class="bar-fill bar-gold" style="width:75%"></div>
-                                </div>
-                            </div>
-
-                            <div class="mt-3">
-                                Salud 280
-                                <div class="bar">
-                                    <div class="bar-fill bar-gold" style="width:65%"></div>
-                                </div>
-                            </div>
-
-                            <div class="mt-3">
-                                Logística 195
-                                <div class="bar">
-                                    <div class="bar-fill" style="width:45%"></div>
-                                </div>
-                            </div>
-
-                            <div class="mt-3">
-                                Marketing 175
-                                <div class="bar">
-                                    <div class="bar-fill" style="width:40%"></div>
-                                </div>
-                            </div>
-
+                            <div id="lista-sectores" class="mt-2"></div>
                         </div>
                     </div>
 
